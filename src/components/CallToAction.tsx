@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Contact, Properties } from "lucide-react";
+import { Contact, Building } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CallToAction = () => {
@@ -24,7 +24,7 @@ const CallToAction = () => {
                 className="hover-scale bg-white text-blue-600 hover:bg-gray-100"
               >
                 <Link to="/properties" className="flex items-center gap-2">
-                  <Properties className="w-5 h-5" />
+                  <Building className="w-5 h-5" />
                   Browse Properties
                 </Link>
               </Button>

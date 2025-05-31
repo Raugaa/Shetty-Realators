@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Home, Properties, Contact, ArrowDown, ArrowUp } from "lucide-react";
+import { Home, Building, Contact, ArrowDown, ArrowUp } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 interface NavigationProps {
@@ -16,7 +15,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
 
   const navItems = [
     { name: "Home", path: "/", icon: Home },
-    { name: "Properties", path: "/properties", icon: Properties },
+    { name: "Properties", path: "/properties", icon: Building },
     { name: "About", path: "/about", icon: Contact },
     { name: "Contact", path: "/contact", icon: Contact },
   ];

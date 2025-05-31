@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDown, ArrowUp, Home, Contact, Properties } from "lucide-react";
+import { ArrowDown, ArrowUp, Home, Contact, Building } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import StatsSection from "@/components/StatsSection";
@@ -36,7 +36,7 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="hover-scale">
                 <Link to="/properties" className="flex items-center gap-2">
-                  <Properties className="w-5 h-5" />
+                  <Building className="w-5 h-5" />
                   View Properties
                 </Link>
               </Button>
