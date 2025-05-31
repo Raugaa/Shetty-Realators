@@ -64,7 +64,7 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
                 alt="Sudhir Realtors Logo" 
-                className="w-32 h-32 mx-auto mb-8 hover-scale"
+                className="w-48 h-24 mx-auto mb-8 hover-scale object-contain"
               />
             </div>
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 animate-scale-in">
@@ -81,7 +81,7 @@ const Index = () => {
                   Explore Properties
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="hover-lift border-white text-white hover:bg-white hover:text-slate-900 px-8 py-4 text-lg font-semibold rounded-xl">
+              <Button size="lg" className="hover-lift professional-btn bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl">
                 <Link to="/contact" className="flex items-center gap-3">
                   <Contact className="w-6 h-6" />
                   Get Expert Consultation

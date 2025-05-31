@@ -21,7 +21,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-effect backdrop-blur-xl border-b border-white/10 transition-all duration-500">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-white/10 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Company Name */}
@@ -30,7 +30,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
               <img 
                 src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
                 alt="Sudhir Realtors" 
-                className="w-12 h-12 rounded-lg group-hover:shadow-lg transition-all duration-300"
+                className="w-12 h-12 rounded-lg group-hover:shadow-lg transition-all duration-300 object-contain"
               />
             </div>
             <div className="hidden sm:block">
@@ -90,7 +90,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-6 animate-fade-in">
-            <div className="glass-effect rounded-2xl p-6 m-4">
+            <div className="bg-slate-800/95 backdrop-blur-xl rounded-2xl p-6 m-4">
               {navItems.map((item, index) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;

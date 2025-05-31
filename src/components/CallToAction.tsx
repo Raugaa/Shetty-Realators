@@ -1,42 +1,35 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Contact, Building } from "lucide-react";
+import { Phone, Building } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-800 dark:to-indigo-800 border-0 text-white animate-fade-in">
-          <CardContent className="p-8 md:p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Find Your Dream Home?
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-100 dark:bg-slate-800">
+      <div className="max-w-7xl mx-auto">
+        <Card className="professional-card bg-slate-600 dark:bg-slate-700 border-none text-white overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-700/50 to-slate-800/50"></div>
+          <CardContent className="relative z-10 p-12 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
+              Ready to Find Your Dream Property?
             </h2>
-            <p className="text-xl mb-8 text-blue-100">
-              Let our experienced team help you navigate the real estate market with confidence.
+            <p className="text-xl mb-10 max-w-3xl mx-auto text-white/90 animate-fade-in animate-delay-200">
+              Let our expert team guide you through India's best real estate opportunities. 
+              From luxury apartments to commercial spaces, we have something for everyone.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                variant="secondary" 
-                size="lg" 
-                asChild
-                className="hover-scale bg-white text-blue-600 hover:bg-gray-100"
-              >
-                <Link to="/properties" className="flex items-center gap-2">
-                  <Building className="w-5 h-5" />
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animate-delay-400">
+              <Button size="lg" className="hover-lift professional-btn bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl">
+                <Link to="/properties" className="flex items-center gap-3">
+                  <Building className="w-6 h-6" />
                   Browse Properties
                 </Link>
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                asChild
-                className="hover-scale border-white text-white hover:bg-white hover:text-blue-600"
-              >
-                <Link to="/contact" className="flex items-center gap-2">
-                  <Contact className="w-5 h-5" />
-                  Get In Touch
+              <Button size="lg" className="hover-lift professional-btn bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl">
+                <Link to="/contact" className="flex items-center gap-3">
+                  <Phone className="w-6 h-6" />
+                  Contact Our Experts
                 </Link>
               </Button>
             </div>
