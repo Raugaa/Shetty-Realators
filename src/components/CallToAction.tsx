@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-100 dark:bg-slate-800">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-200 dark:bg-gray-700">
       <div className="max-w-7xl mx-auto">
-        <Card className="professional-card bg-slate-600 dark:bg-slate-700 border-none text-white overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-700/50 to-slate-800/50"></div>
+        <Card className="professional-card bg-gray-600 dark:bg-gray-700 border-none text-white overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-700/50 to-gray-800/50"></div>
           <CardContent className="relative z-10 p-12 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
               Ready to Find Your Dream Property?

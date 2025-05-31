@@ -1,5 +1,4 @@
 
-import { Home } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -10,13 +9,15 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <Home className="w-5 h-5 text-white" />
-              </div>
+              <img 
+                src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
+                alt="Sudhir Realtors Logo" 
+                className="w-12 h-6 object-contain"
+              />
               <span className="text-lg font-bold">Sudhir Realtors</span>
             </div>
             <p className="text-gray-400 mb-4">
-              Your trusted partner in real estate. Helping families find their perfect homes for over 15 years.
+              Your trusted partner in real estate. Helping families find their perfect homes for over 15 years across India.
             </p>
           </div>
 
@@ -51,9 +52,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <div className="space-y-2 text-gray-400">
-              <p>📧 info@sudhirrealtors.com</p>
-              <p>📞 +1 (555) 123-4567</p>
-              <p>📍 123 Real Estate Ave, City, State 12345</p>
+              <p>📧 Shettyrealtorspune@gmail.com</p>
+              <p>📞 9422005110</p>
+              <p>📍 Pune, Maharashtra, India</p>
             </div>
           </div>
         </div>

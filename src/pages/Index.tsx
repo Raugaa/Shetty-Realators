@@ -10,6 +10,7 @@ import StatsSection from "@/components/StatsSection";
 import CallToAction from "@/components/CallToAction";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
+import EnhancedAboutUs from "@/components/EnhancedAboutUs";
 
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -21,10 +22,16 @@ const Index = () => {
   };
 
   useEffect(() => {
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 100);
-    return () => clearTimeout(timer);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
   }, []);
 
   const policies = [
@@ -64,7 +71,7 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
                 alt="Sudhir Realtors Logo" 
-                className="w-48 h-24 mx-auto mb-8 hover-scale object-contain"
+                className="w-64 h-32 mx-auto mb-8 hover-scale object-contain"
               />
             </div>
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 animate-scale-in">
@@ -97,84 +104,7 @@ const Index = () => {
         </section>
 
         <StatsSection />
-
-        {/* Enhanced About Us Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                About <span className="professional-text">Sudhir Realtors</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Leading the Indian real estate market with expertise, integrity, and innovation
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
-              <div className="animate-fade-in">
-                <img 
-                  src="https://images.unsplash.com/photo-1466442929976-97f336a657be" 
-                  alt="Indian Real Estate" 
-                  className="w-full h-96 object-cover rounded-2xl shadow-xl hover-scale"
-                />
-              </div>
-              <div className="animate-fade-in animate-delay-200">
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                  15+ Years of Excellence in Indian Real Estate
-                </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                  Established in 2008, Sudhir Realtors has been at the forefront of India's real estate revolution. 
-                  From Mumbai's skyline to Delhi's commercial hubs, from Bangalore's IT corridors to Chennai's 
-                  residential complexes, we have facilitated thousands of property transactions across major Indian cities.
-                </p>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                  Our deep understanding of local markets, regulatory compliance, and cultural nuances makes us 
-                  the preferred choice for both domestic and NRI clients looking to invest in Indian real estate.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white">2500+</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Happy Families</div>
-                  </div>
-                  <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white">15+</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Cities Covered</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="animate-fade-in animate-delay-300 order-2 lg:order-1">
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                  Serving Every Corner of India
-                </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                  From luxury apartments in South Mumbai to affordable housing in Tier-2 cities, 
-                  from commercial spaces in Gurgaon to villa projects in Goa, our portfolio spans 
-                  every segment of the Indian real estate market.
-                </p>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                  We specialize in residential, commercial, and industrial properties, offering 
-                  end-to-end services including legal documentation, home loans, and post-sales support.
-                </p>
-                <Button asChild className="hover-scale professional-btn">
-                  <Link to="/about" className="flex items-center gap-2">
-                    Learn More About Our Journey
-                    <ArrowDown className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </div>
-              <div className="animate-fade-in animate-delay-400 order-1 lg:order-2">
-                <img 
-                  src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e" 
-                  alt="Indian Architecture" 
-                  className="w-full h-96 object-cover rounded-2xl shadow-xl hover-scale"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <EnhancedAboutUs />
 
         {/* Why Choose Us - Policies Section */}
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800">

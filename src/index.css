@@ -197,6 +197,12 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Enhanced glasomorphism for dark mode */
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* Loading Animation */
 .loading-bar {
   position: fixed;

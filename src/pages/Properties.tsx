@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowDown, ArrowUp, Home, Contact, Bed, Bath, Square, MapPin, Camera, X, Filter } from "lucide-react";
+import { ArrowDown, ArrowUp, Home, Contact, Bed, Bath, Square, MapPin, Camera, X, Filter, Plus, UserCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -18,6 +17,7 @@ const Properties = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentPropertyImages, setCurrentPropertyImages] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   
   // Filter states
   const [selectedLocation, setSelectedLocation] = useState("all");
@@ -81,7 +81,7 @@ const Properties = () => {
     }
   ];
 
-  const allFeatures = ["Sea View", "Parking", "Garden", "24x7 Security", "Gym", "Swimming Pool", "Connectivity", "Solar Panels", "Club House", "Children's Play Area"];
+  const allFeatures = ["Sea View", "Parking", "Garden", "24x7 Security", "Gym", "Swimming Pool", "Connectivity", "Solar Panels", "Club House", "Children's Play Area", "Shopping Mall Nearby", "School Zone", "Hospital Access"];
   const locations = ["Mumbai", "Bangalore", "Noida", "Delhi", "Chennai", "Pune"];
   const propertyTypes = ["Apartment", "Villa", "Independent House"];
   const bhkOptions = ["1 BHK", "2 BHK", "3 BHK", "4 BHK", "5+ BHK"];
@@ -129,29 +129,50 @@ const Properties = () => {
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-12 animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Premium Properties Across India
-              </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-                Discover your dream home from our carefully curated selection of properties in major Indian cities
-              </p>
+            <div className="flex justify-between items-center mb-12 animate-fade-in">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                  Premium Properties Across India
+                </h1>
+                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
+                  Discover your dream home from our carefully curated selection of properties in major Indian cities
+                </p>
+              </div>
+              
+              {/* Admin Toggle Button */}
+              <div className="flex items-center gap-4">
+                <Button 
+                  onClick={() => setIsAdmin(!isAdmin)}
+                  variant={isAdmin ? "default" : "outline"}
+                  className="flex items-center gap-2"
+                >
+                  <UserCheck className="w-4 h-4" />
+                  {isAdmin ? 'Admin Mode' : 'Switch to Admin'}
+                </Button>
+                
+                {isAdmin && (
+                  <Button className="flex items-center gap-2 professional-btn">
+                    <Plus className="w-4 h-4" />
+                    Add Property
+                  </Button>
+                )}
+              </div>
             </div>
 
-            {/* Search and Filter Section */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+            {/* Search and Filter Section with Glasomorphism */}
+            <div className="glass-effect rounded-xl shadow-lg p-6 mb-8 backdrop-blur-md bg-white/20 dark:bg-gray-800/20 border border-white/30">
               <div className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-4">
                 <Input
                   type="text"
                   placeholder="Search by location or property name..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-1 max-w-md"
+                  className="flex-1 max-w-md bg-white/50 dark:bg-gray-800/50 border-white/30"
                 />
                 <Button 
                   onClick={() => setShowFilters(!showFilters)}
                   variant="outline"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 bg-white/50 dark:bg-gray-800/50 border-white/30"
                 >
                   <Filter className="w-4 h-4" />
                   {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -159,11 +180,12 @@ const Properties = () => {
               </div>
 
               {showFilters && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-white/30">
+                  {/* ... keep existing filter controls but with glasomorphism styling */}
                   <div>
-                    <label className="block text-sm font-medium mb-2">Location</label>
+                    <label className="block text-sm font-medium mb-2 text-gray-800 dark:text-gray-200">Location</label>
                     <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-white/50 dark:bg-gray-800/50 border-white/30">
                         <SelectValue placeholder="Any Location" />
                       </SelectTrigger>
                       <SelectContent>
@@ -176,9 +198,9 @@ const Properties = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Property Type</label>
+                    <label className="block text-sm font-medium mb-2 text-gray-800 dark:text-gray-200">Property Type</label>
                     <Select value={selectedType} onValueChange={setSelectedType}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-white/50 dark:bg-gray-800/50 border-white/30">
                         <SelectValue placeholder="Any Type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -191,9 +213,9 @@ const Properties = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">BHK</label>
+                    <label className="block text-sm font-medium mb-2 text-gray-800 dark:text-gray-200">BHK</label>
                     <Select value={selectedBHK} onValueChange={setSelectedBHK}>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-white/50 dark:bg-gray-800/50 border-white/30">
                         <SelectValue placeholder="Any BHK" />
                       </SelectTrigger>
                       <SelectContent>
@@ -206,7 +228,7 @@ const Properties = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Features</label>
+                    <label className="block text-sm font-medium mb-2 text-gray-800 dark:text-gray-200">Features</label>
                     <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
                       {allFeatures.map(feature => (
                         <div key={feature} className="flex items-center space-x-2">
@@ -215,7 +237,7 @@ const Properties = () => {
                             checked={selectedFeatures.includes(feature)}
                             onCheckedChange={() => handleFeatureToggle(feature)}
                           />
-                          <label htmlFor={feature} className="text-xs">{feature}</label>
+                          <label htmlFor={feature} className="text-xs text-gray-800 dark:text-gray-200">{feature}</label>
                         </div>
                       ))}
                     </div>
