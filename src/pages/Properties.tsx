@@ -20,9 +20,9 @@ const Properties = () => {
   const [showFilters, setShowFilters] = useState(false);
   
   // Filter states
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedBHK, setSelectedBHK] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedBHK, setSelectedBHK] = useState("all");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
 
   const toggleTheme = () => {
@@ -112,9 +112,9 @@ const Properties = () => {
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          property.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLocation = !selectedLocation || property.location.includes(selectedLocation);
-    const matchesType = !selectedType || property.type === selectedType;
-    const matchesBHK = !selectedBHK || property.bedrooms === selectedBHK;
+    const matchesLocation = selectedLocation === "all" || property.location.includes(selectedLocation);
+    const matchesType = selectedType === "all" || property.type === selectedType;
+    const matchesBHK = selectedBHK === "all" || property.bedrooms === selectedBHK;
     const matchesFeatures = selectedFeatures.length === 0 || 
                            selectedFeatures.every(feature => property.features.includes(feature));
     
@@ -167,7 +167,7 @@ const Properties = () => {
                         <SelectValue placeholder="Any Location" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Any Location</SelectItem>
+                        <SelectItem value="all">Any Location</SelectItem>
                         {locations.map(location => (
                           <SelectItem key={location} value={location}>{location}</SelectItem>
                         ))}
@@ -182,7 +182,7 @@ const Properties = () => {
                         <SelectValue placeholder="Any Type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Any Type</SelectItem>
+                        <SelectItem value="all">Any Type</SelectItem>
                         {propertyTypes.map(type => (
                           <SelectItem key={type} value={type}>{type}</SelectItem>
                         ))}
@@ -197,7 +197,7 @@ const Properties = () => {
                         <SelectValue placeholder="Any BHK" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">Any BHK</SelectItem>
+                        <SelectItem value="all">Any BHK</SelectItem>
                         {bhkOptions.map(bhk => (
                           <SelectItem key={bhk} value={bhk}>{bhk}</SelectItem>
                         ))}
