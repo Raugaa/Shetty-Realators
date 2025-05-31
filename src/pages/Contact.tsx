@@ -5,10 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { ArrowDown, ArrowUp, Home } from "lucide-react";
+import { Home, Mail, Phone, MapPin, Clock, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Map from "@/components/Map";
+import LoadingBar from "@/components/LoadingBar";
 import { toast } from "@/components/ui/use-toast";
 
 const Contact = () => {
@@ -36,14 +38,12 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
     console.log("Form submitted:", formData);
     toast({
-      title: "Message Sent!",
-      description: "Thank you for your message. We'll get back to you soon.",
+      title: "Message Sent Successfully!",
+      description: "Thank you for contacting us. We'll get back to you within 24 hours.",
     });
     
-    // Reset form
     setFormData({
       name: "",
       email: "",
@@ -53,39 +53,90 @@ const Contact = () => {
     });
   };
 
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: "Email Us",
+      details: ["info@sudhirrealtors.com", "sales@sudhirrealtors.com"],
+      color: "bg-blue-500"
+    },
+    {
+      icon: Phone,
+      title: "Call Us",
+      details: ["+1 (555) 123-4567", "+1 (555) 987-6543"],
+      color: "bg-green-500"
+    },
+    {
+      icon: MapPin,
+      title: "Visit Us",
+      details: ["123 Real Estate Avenue", "City, State 12345", "United States"],
+      color: "bg-purple-500"
+    },
+    {
+      icon: Clock,
+      title: "Business Hours",
+      details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat: 10:00 AM - 4:00 PM", "Sun: By appointment"],
+      color: "bg-orange-500"
+    }
+  ];
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-all duration-500">
+      <LoadingBar />
+      <div className="animated-bg min-h-screen transition-all duration-700">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-16 animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Contact Us
+            <div className="text-center mb-20 animate-fade-in-up">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-8">
+                Get In <span className="gradient-text">Touch</span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Ready to start your real estate journey? Get in touch with our expert team today.
+              <p className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+                Ready to find your dream property? Our expert team is here to guide you through every step of your real estate journey.
               </p>
+            </div>
+
+            {/* Contact Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              {contactInfo.map((info, index) => {
+                const Icon = info.icon;
+                return (
+                  <Card 
+                    key={info.title} 
+                    className={`glass-effect border-white/20 hover-lift animate-fade-in animate-delay-${(index + 1) * 100}`}
+                  >
+                    <CardContent className="p-6 text-center">
+                      <div className={`w-14 h-14 ${info.color} rounded-xl flex items-center justify-center mx-auto mb-4 hover-scale`}>
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="font-semibold text-white mb-3 text-lg">{info.title}</h3>
+                      {info.details.map((detail, idx) => (
+                        <p key={idx} className="text-white/70 text-sm mb-1">{detail}</p>
+                      ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
-              <Card className="hover-scale bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-gray-200 dark:border-gray-700 animate-fade-in">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+              <Card className="glass-effect border-white/20 hover-lift animate-fade-in animate-delay-200">
+                <CardHeader className="pb-6">
+                  <CardTitle className="text-3xl font-bold text-white">
                     Send us a Message
                   </CardTitle>
-                  <CardDescription>
-                    Fill out the form below and we'll get back to you within 24 hours.
+                  <CardDescription className="text-white/70 text-lg">
+                    Fill out the form below and we'll respond within 24 hours.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="name">Full Name</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="name" className="text-white font-medium">Full Name</Label>
                         <Input
                           id="name"
                           name="name"
@@ -93,11 +144,12 @@ const Contact = () => {
                           value={formData.name}
                           onChange={handleInputChange}
                           required
-                          className="mt-1"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/50 focus:ring-white/50 rounded-xl py-3"
+                          placeholder="Enter your full name"
                         />
                       </div>
-                      <div>
-                        <Label htmlFor="email">Email</Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="text-white font-medium">Email Address</Label>
                         <Input
                           id="email"
                           name="email"
@@ -105,25 +157,27 @@ const Contact = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           required
-                          className="mt-1"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/50 focus:ring-white/50 rounded-xl py-3"
+                          placeholder="Enter your email"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="phone">Phone Number</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="text-white font-medium">Phone Number</Label>
                         <Input
                           id="phone"
                           name="phone"
                           type="tel"
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="mt-1"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/50 focus:ring-white/50 rounded-xl py-3"
+                          placeholder="Your phone number"
                         />
                       </div>
-                      <div>
-                        <Label htmlFor="subject">Subject</Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="subject" className="text-white font-medium">Subject</Label>
                         <Input
                           id="subject"
                           name="subject"
@@ -131,13 +185,14 @@ const Contact = () => {
                           value={formData.subject}
                           onChange={handleInputChange}
                           required
-                          className="mt-1"
+                          className="bg-white/10 border-white/20 text-white placeholder-white/50 focus:ring-white/50 rounded-xl py-3"
+                          placeholder="What's this about?"
                         />
                       </div>
                     </div>
 
-                    <div>
-                      <Label htmlFor="message">Message</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="text-white font-medium">Message</Label>
                       <Textarea
                         id="message"
                         name="message"
@@ -145,90 +200,46 @@ const Contact = () => {
                         onChange={handleInputChange}
                         required
                         rows={6}
-                        className="mt-1"
-                        placeholder="Tell us about your property needs..."
+                        className="bg-white/10 border-white/20 text-white placeholder-white/50 focus:ring-white/50 rounded-xl resize-none"
+                        placeholder="Tell us about your property needs, budget, and any specific requirements..."
                       />
                     </div>
 
-                    <Button type="submit" className="w-full hover-scale">
+                    <Button 
+                      type="submit" 
+                      className="w-full hover-lift bg-white text-blue-600 hover:bg-gray-100 py-4 text-lg font-semibold rounded-xl"
+                    >
                       Send Message
                     </Button>
                   </form>
                 </CardContent>
               </Card>
 
-              {/* Contact Information */}
-              <div className="space-y-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <Card className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-gray-200 dark:border-gray-700">
+              {/* Map and Additional Info */}
+              <div className="space-y-8 animate-fade-in animate-delay-300">
+                <Card className="glass-effect border-white/20">
                   <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-                      Get in Touch
+                    <CardTitle className="text-2xl font-bold text-white">
+                      Find Our Office
                     </CardTitle>
-                    <CardDescription>
-                      Multiple ways to reach our team
+                    <CardDescription className="text-white/70">
+                      Visit us for a personal consultation
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">📧</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
-                        <p className="text-gray-600 dark:text-gray-300">info@sudhirrealtors.com</p>
-                        <p className="text-gray-600 dark:text-gray-300">sales@sudhirrealtors.com</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">📞</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Phone</h3>
-                        <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
-                        <p className="text-gray-600 dark:text-gray-300">+1 (555) 987-6543</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">📍</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Office</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                          123 Real Estate Avenue<br />
-                          City, State 12345<br />
-                          United States
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
-                        <span className="text-xl">🕒</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Business Hours</h3>
-                        <p className="text-gray-600 dark:text-gray-300">
-                          Monday - Friday: 9:00 AM - 6:00 PM<br />
-                          Saturday: 10:00 AM - 4:00 PM<br />
-                          Sunday: By appointment only
-                        </p>
-                      </div>
-                    </div>
+                  <CardContent className="p-6">
+                    <Map />
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-800 dark:to-indigo-800 border-0 text-white">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-3">Ready to get started?</h3>
-                    <p className="mb-4 text-blue-100">
-                      Schedule a free consultation with one of our real estate experts.
+                <Card className="glass-effect border-white/20">
+                  <CardContent className="p-8 text-center">
+                    <Calendar className="w-12 h-12 text-blue-400 mx-auto mb-4 animate-float" />
+                    <h3 className="text-2xl font-bold text-white mb-4">Ready to get started?</h3>
+                    <p className="text-white/80 mb-6 leading-relaxed">
+                      Schedule a free consultation with one of our real estate experts and let us help you find your perfect property.
                     </p>
-                    <Button variant="secondary" className="bg-white text-blue-600 hover:bg-gray-100">
-                      Schedule Consultation
+                    <Button className="hover-lift bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">
+                      Schedule Free Consultation
                     </Button>
                   </CardContent>
                 </Card>
@@ -236,10 +247,10 @@ const Contact = () => {
             </div>
 
             {/* Back to Home */}
-            <div className="text-center mt-12">
-              <Button variant="outline" asChild className="hover-scale">
-                <Link to="/" className="flex items-center gap-2">
-                  <Home className="w-4 h-4" />
+            <div className="text-center mt-16">
+              <Button variant="outline" asChild className="hover-lift border-white/30 text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-xl font-semibold">
+                <Link to="/" className="flex items-center gap-3">
+                  <Home className="w-5 h-5" />
                   Back to Home
                 </Link>
               </Button>

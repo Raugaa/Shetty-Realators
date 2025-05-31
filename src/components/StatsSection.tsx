@@ -1,70 +1,70 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Home, Users, Award, TrendingUp } from "lucide-react";
 
 const StatsSection = () => {
   const stats = [
     {
-      number: "500+",
+      icon: Users,
+      number: "2500+",
       label: "Happy Clients",
-      description: "Satisfied families in their dream homes",
+      description: "Satisfied customers worldwide",
       color: "bg-blue-500"
     },
     {
+      icon: Home,
       number: "15+",
       label: "Years Experience",
-      description: "Decades of real estate expertise",
+      description: "In real estate industry",
       color: "bg-green-500"
     },
     {
+      icon: Award,
       number: "50+",
       label: "Awards Won",
-      description: "Recognition for excellence",
+      description: "Industry recognition",
       color: "bg-purple-500"
     },
     {
-      number: "1000+",
+      icon: TrendingUp,
+      number: "5000+",
       label: "Properties Sold",
-      description: "Successful transactions completed",
+      description: "Successful transactions",
       color: "bg-orange-500"
     }
   ];
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/5 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Our Achievements
+        <div className="text-center mb-16 animate-fade-in-up">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Why Choose <span className="gradient-text">Sudhir Realtors</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Numbers that speak for our commitment to excellence in real estate services
+          <p className="text-xl text-white/80 max-w-3xl mx-auto">
+            Your trusted partner in real estate with proven track record of excellence
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <Card
-              key={index}
-              className="text-center hover-scale bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-lg"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <CardContent className="pt-6">
-                <div className={`w-16 h-16 ${stat.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                  <span className="text-2xl font-bold text-white">{stat.number.charAt(0)}</span>
-                </div>
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  {stat.number}
-                </h3>
-                <Badge variant="outline" className="mb-3">
-                  {stat.label}
-                </Badge>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {stat.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <Card 
+                key={stat.label} 
+                className={`glass-effect border-white/20 hover-lift animate-fade-in-up animate-delay-${(index + 1) * 100}`}
+              >
+                <CardContent className="p-8 text-center">
+                  <div className={`w-16 h-16 ${stat.color} rounded-2xl flex items-center justify-center mx-auto mb-6 hover-scale`}>
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-2">{stat.number}</h3>
+                  <p className="text-lg font-semibold text-white/90 mb-2">{stat.label}</p>
+                  <p className="text-sm text-white/70">{stat.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
