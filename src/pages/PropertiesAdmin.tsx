@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Eye,
   Camera,
+  Plus,
   Filter,
   X
 } from "lucide-react";
@@ -25,7 +26,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 
-const Properties = () => {
+const PropertiesAdmin = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
@@ -164,14 +165,27 @@ const Properties = () => {
             <div className="text-center mb-12 animate-fade-in-up">
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                 Premium <span className="professional-text">Properties</span>
+                <Badge className="ml-4 bg-red-600 hover:bg-red-700 text-white">ADMIN MODE</Badge>
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Discover your perfect home from our curated collection of premium properties across India
+                Admin Dashboard - Manage premium properties across India
               </p>
             </div>
 
-            {/* Filters Toggle - No Admin Controls */}
-            <div className="flex justify-end items-center mb-8">
+            {/* Admin Controls */}
+            <div className="flex justify-between items-center mb-8">
+              <div className="flex items-center gap-4">
+                <Button className="bg-green-600 hover:bg-green-700 text-white">
+                  👨‍💼 Admin Mode Active
+                </Button>
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Property
+                </Button>
+                <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+                  Manage Properties
+                </Button>
+              </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
                 className="glass-effect border-white/20 text-gray-900 dark:text-white hover:bg-white/20"
@@ -332,6 +346,15 @@ const Properties = () => {
                       <Badge className="bg-slate-700 text-white hover:bg-slate-800">
                         {property.type}
                       </Badge>
+                    </div>
+                    {/* Admin overlay */}
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs">
+                        Edit
+                      </Button>
+                      <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white text-xs">
+                        Delete
+                      </Button>
                     </div>
                   </div>
                   
@@ -515,4 +538,4 @@ const Properties = () => {
   );
 };
 
-export default Properties;
+export default PropertiesAdmin;
