@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +9,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
+import GoogleMap from "@/components/GoogleMap";
 import { toast } from "@/components/ui/use-toast";
 
 const Contact = () => {
@@ -220,18 +220,7 @@ const Contact = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-6">
-                    <div className="w-full h-64 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                      <div className="text-center">
-                        <MapPin className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Interactive Map</h3>
-                        <p className="text-gray-500 dark:text-gray-400 text-sm">
-                          Find us at 123 Real Estate Avenue, Pune
-                        </p>
-                        <p className="text-gray-500 dark:text-gray-400 text-xs mt-2">
-                          Free map integration available
-                        </p>
-                      </div>
-                    </div>
+                    <GoogleMap />
                   </CardContent>
                 </Card>
 
