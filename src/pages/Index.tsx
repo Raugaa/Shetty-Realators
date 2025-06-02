@@ -1,9 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowDown, ArrowUp, Home, Contact, Building, ChevronDown, Shield, Users, Award, Star } from "lucide-react";
+import { ChevronDown, Contact, Building } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import CallToAction from "@/components/CallToAction";
@@ -49,10 +47,10 @@ const Index = () => {
             }
           }, 1000);
         }
-      }, 100);
+      }, 150); // Slower typing speed for better visibility
 
       return () => clearInterval(typewriterInterval);
-    }, 2500);
+    }, 1000); // Start sooner
 
     return () => clearTimeout(timer);
   }, []);
@@ -69,29 +67,6 @@ const Index = () => {
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
-
-  const policies = [
-    {
-      icon: Shield,
-      title: "Trust & Transparency",
-      description: "We believe in complete transparency in all our dealings and building long-term trust with our clients."
-    },
-    {
-      icon: Users,
-      title: "Customer First",
-      description: "Our clients' satisfaction is our top priority. We go above and beyond to exceed expectations."
-    },
-    {
-      icon: Star,
-      title: "Excellence",
-      description: "We strive for excellence in every aspect of our service, from property selection to after-sales support."
-    },
-    {
-      icon: Award,
-      title: "Expert Team",
-      description: "Our team consists of experienced professionals who understand the Indian real estate market inside out."
-    }
-  ];
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
@@ -111,10 +86,17 @@ const Index = () => {
               />
             </div>
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 animate-scale-in">
-              Welcome to <span className="professional-text">
-                {showTypewriter ? typewriterText : "Sudhir Realtors"}
-                {showTypewriter && typewriterText.length < "Sudhir Realtors".length && (
-                  <span className="animate-pulse">|</span>
+              Welcome to{" "}
+              <span className="professional-text block mt-4">
+                {showTypewriter ? (
+                  <>
+                    {typewriterText}
+                    {typewriterText.length < "Sudhir Realtors".length && (
+                      <span className="animate-pulse text-white">|</span>
+                    )}
+                  </>
+                ) : (
+                  "Sudhir Realtors"
                 )}
               </span>
             </h1>
@@ -145,41 +127,6 @@ const Index = () => {
         </section>
 
         <EnhancedAboutUs />
-
-        {/* Why Choose Us - Policies Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Why Choose <span className="professional-text">Sudhir Realtors</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Our core values and principles that make us India's most trusted real estate partner
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {policies.map((policy, index) => {
-                const Icon = policy.icon;
-                return (
-                  <Card 
-                    key={policy.title} 
-                    className={`professional-card hover-lift animate-fade-in-up animate-delay-${(index + 1) * 100}`}
-                  >
-                    <CardContent className="p-8 text-center">
-                      <div className="w-16 h-16 bg-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-6 hover-scale">
-                        <Icon className="w-8 h-8 text-white" />
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{policy.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{policy.description}</p>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
         <CallToAction />
         <Footer />
       </div>
