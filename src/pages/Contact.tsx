@@ -9,7 +9,6 @@ import { Home, Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import Map from "@/components/Map";
 import LoadingBar from "@/components/LoadingBar";
 import { toast } from "@/components/ui/use-toast";
 
@@ -57,19 +56,19 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email Us",
-      details: ["info@sudhirrealtors.com", "sales@sudhirrealtors.com"],
+      details: ["Shettyrealtorspune@gmail.com", "sales@sudhirrealtors.com"],
       color: "bg-slate-600"
     },
     {
       icon: Phone,
       title: "Call Us",
-      details: ["+91 98765 43210", "+91 87654 32109"],
+      details: ["9422005110", "+91 87654 32109"],
       color: "bg-slate-700"
     },
     {
       icon: MapPin,
       title: "Visit Us",
-      details: ["123 Real Estate Avenue", "Mumbai, Maharashtra 400001", "India"],
+      details: ["123 Real Estate Avenue", "Pune, Maharashtra 400001", "India"],
       color: "bg-slate-800"
     }
   ];
@@ -77,7 +76,7 @@ const Contact = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
-      <div className="professional-bg min-h-screen transition-all duration-700">
+      <div className="min-h-screen transition-all duration-700 bg-gray-50 dark:bg-gray-900">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -99,7 +98,7 @@ const Contact = () => {
                 return (
                   <Card 
                     key={info.title} 
-                    className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100}`}
+                    className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
                   >
                     <CardContent className="p-8 text-center">
                       <div className={`w-16 h-16 ${info.color} rounded-2xl flex items-center justify-center mx-auto mb-6 hover-scale`}>
@@ -117,7 +116,7 @@ const Contact = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
-              <Card className="professional-card hover-lift animate-fade-in animate-delay-200">
+              <Card className="professional-card hover-lift animate-fade-in animate-delay-200 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                 <CardHeader className="pb-6">
                   <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white">
                     Send us a Message
@@ -201,7 +200,7 @@ const Contact = () => {
 
                     <Button 
                       type="submit" 
-                      className="w-full hover-lift professional-btn py-4 text-lg font-semibold rounded-xl"
+                      className="w-full hover-lift professional-btn py-4 text-lg font-semibold rounded-xl bg-slate-700 hover:bg-slate-800 text-white"
                     >
                       Send Message
                     </Button>
@@ -211,7 +210,7 @@ const Contact = () => {
 
               {/* Map and Additional Info */}
               <div className="space-y-8 animate-fade-in animate-delay-300">
-                <Card className="professional-card">
+                <Card className="professional-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                   <CardHeader>
                     <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
                       Find Our Office
@@ -221,18 +220,29 @@ const Contact = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-6">
-                    <Map />
+                    <div className="w-full h-64 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                      <div className="text-center">
+                        <MapPin className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Interactive Map</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">
+                          Find us at 123 Real Estate Avenue, Pune
+                        </p>
+                        <p className="text-gray-500 dark:text-gray-400 text-xs mt-2">
+                          Free map integration available
+                        </p>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
 
-                <Card className="professional-card">
+                <Card className="professional-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                   <CardContent className="p-8 text-center">
-                    <Calendar className="w-12 h-12 text-slate-600 mx-auto mb-4 animate-float" />
+                    <Calendar className="w-12 h-12 text-slate-600 dark:text-slate-400 mx-auto mb-4 animate-float" />
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to get started?</h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                       Schedule a free consultation with one of our real estate experts and let us help you find your perfect property.
                     </p>
-                    <Button className="hover-lift professional-btn px-8 py-3 rounded-xl font-semibold">
+                    <Button className="hover-lift professional-btn px-8 py-3 rounded-xl font-semibold bg-slate-700 hover:bg-slate-800 text-white">
                       Schedule Free Consultation
                     </Button>
                   </CardContent>
@@ -242,7 +252,7 @@ const Contact = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold">
+              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home

@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowDown, ArrowUp, Home, Contact, Building, ChevronDown, Shield, Users, Award, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
-import StatsSection from "@/components/StatsSection";
 import CallToAction from "@/components/CallToAction";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
@@ -15,11 +14,48 @@ import EnhancedAboutUs from "@/components/EnhancedAboutUs";
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [typewriterText, setTypewriterText] = useState("");
+  const [showTypewriter, setShowTypewriter] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
   };
+
+  // Typewriter animation
+  useEffect(() => {
+    const text = "Sudhir Realtors";
+    let currentIndex = 0;
+    let currentIteration = 0;
+    const maxIterations = 2;
+
+    const timer = setTimeout(() => {
+      setShowTypewriter(true);
+      
+      const typewriterInterval = setInterval(() => {
+        if (currentIndex <= text.length) {
+          setTypewriterText(text.slice(0, currentIndex));
+          currentIndex++;
+        } else {
+          // Pause for a moment, then clear and restart
+          setTimeout(() => {
+            setTypewriterText("");
+            currentIndex = 0;
+            currentIteration++;
+            
+            if (currentIteration >= maxIterations) {
+              clearInterval(typewriterInterval);
+              setTypewriterText(text); // Show final text
+            }
+          }, 1000);
+        }
+      }, 100);
+
+      return () => clearInterval(typewriterInterval);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // Add smooth scroll behavior
@@ -71,11 +107,16 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
                 alt="Sudhir Realtors Logo" 
-                className="w-64 h-32 mx-auto mb-8 hover-scale object-contain"
+                className="w-80 h-40 mx-auto mb-8 hover-scale object-contain"
               />
             </div>
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 animate-scale-in">
-              Welcome to <span className="professional-text">Sudhir Realtors</span>
+              Welcome to <span className="professional-text">
+                {showTypewriter ? typewriterText : "Sudhir Realtors"}
+                {showTypewriter && typewriterText.length < "Sudhir Realtors".length && (
+                  <span className="animate-pulse">|</span>
+                )}
+              </span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto animate-fade-in animate-delay-200">
               Your Trusted Partner in Indian Real Estate - Discover Premium Properties Across India
@@ -103,7 +144,6 @@ const Index = () => {
           </div>
         </section>
 
-        <StatsSection />
         <EnhancedAboutUs />
 
         {/* Why Choose Us - Policies Section */}

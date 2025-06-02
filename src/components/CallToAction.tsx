@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-200 dark:bg-gray-700">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900 dark:bg-black">
       <div className="max-w-7xl mx-auto">
-        <Card className="professional-card bg-gray-600 dark:bg-gray-700 border-none text-white overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-700/50 to-gray-800/50"></div>
+        <Card className="professional-card bg-gray-800 dark:bg-gray-900 border-none text-white overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-800/50 to-gray-900/50"></div>
           <CardContent className="relative z-10 p-12 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in text-white">
               Ready to Find Your Dream Property?
             </h2>
-            <p className="text-xl mb-10 max-w-3xl mx-auto text-white/90 animate-fade-in animate-delay-200">
+            <p className="text-xl mb-10 max-w-3xl mx-auto text-gray-300 animate-fade-in animate-delay-200">
               Let our expert team guide you through India's best real estate opportunities. 
               From luxury apartments to commercial spaces, we have something for everyone.
             </p>
