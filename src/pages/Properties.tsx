@@ -183,7 +183,7 @@ const Properties = () => {
 
             {/* Filters */}
             {showFilters && (
-              <Card className="mb-8 glass-effect border-white/20 bg-white/10 dark:bg-black/10 backdrop-blur-md">
+              <Card className="mb-8 filter-card">
                 <CardContent className="p-6">
                   {/* Search */}
                   <div className="mb-6">
@@ -193,7 +193,7 @@ const Properties = () => {
                         placeholder="Search properties..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 glass-effect border-white/20 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        className="pl-10 professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       />
                     </div>
                   </div>
@@ -201,7 +201,7 @@ const Properties = () => {
                   {/* Filter Options */}
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
                     <Select value={filters.location} onValueChange={(value) => setFilters({...filters, location: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -214,7 +214,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.propertyType} onValueChange={(value) => setFilters({...filters, propertyType: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -227,7 +227,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.bhk} onValueChange={(value) => setFilters({...filters, bhk: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="BHK" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -241,7 +241,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.priceRange} onValueChange={(value) => setFilters({...filters, priceRange: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Price" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -254,7 +254,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.seaView} onValueChange={(value) => setFilters({...filters, seaView: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Sea View" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -265,7 +265,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.parking} onValueChange={(value) => setFilters({...filters, parking: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Parking" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -276,7 +276,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.garden} onValueChange={(value) => setFilters({...filters, garden: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Garden" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -287,7 +287,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.connectivity} onValueChange={(value) => setFilters({...filters, connectivity: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
                         <SelectValue placeholder="Connectivity" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -302,7 +302,7 @@ const Properties = () => {
                   <Button 
                     onClick={resetFilters}
                     variant="outline"
-                    className="glass-effect border-white/20 text-gray-900 dark:text-white hover:bg-white/20"
+                    className="professional-btn-outline border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-white/50 dark:hover:bg-gray-700/50"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Clear All Filters

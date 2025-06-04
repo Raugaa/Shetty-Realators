@@ -127,8 +127,16 @@ const Index = () => {
         </section>
 
         <EnhancedAboutUs />
-        <CallToAction />
-        <Footer />
+        
+        {/* Add spacing and visual separation before CallToAction */}
+        <div className="py-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+          <CallToAction />
+        </div>
+        
+        {/* Add spacing before footer */}
+        <div className="py-8 bg-white dark:bg-gray-800">
+          <Footer />
+        </div>
       </div>
     </div>
   );

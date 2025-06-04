@@ -1,16 +1,18 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Home, Mail, Phone, MapPin, Calendar } from "lucide-react";
+import { Home, Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
-import GoogleMap from "@/components/GoogleMap";
+import ConsultationForm from "@/components/ConsultationForm";
 import { toast } from "@/components/ui/use-toast";
+import emailjs from 'emailjs-com';
 
 const Contact = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -37,18 +39,40 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    toast({
-      title: "Message Sent Successfully!",
-      description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-    });
     
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: ""
+    emailjs.send(
+      'service_949txpg',
+      'template_u1f3ju4',
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'Shettyrealtorspune@gmail.com'
+      },
+      'RRyLeIklwDC07w7WT'
+    ).then((result) => {
+      console.log(result.text);
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+      });
+      
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      });
+    }).catch((error) => {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive"
+      });
     });
   };
 
@@ -208,34 +232,9 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              {/* Map and Additional Info */}
+              {/* Consultation Form */}
               <div className="space-y-8 animate-fade-in animate-delay-300">
-                <Card className="professional-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-                      Find Our Office
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 dark:text-gray-300">
-                      Visit us for a personal consultation
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <GoogleMap />
-                  </CardContent>
-                </Card>
-
-                <Card className="professional-card bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                  <CardContent className="p-8 text-center">
-                    <Calendar className="w-12 h-12 text-slate-600 dark:text-slate-400 mx-auto mb-4 animate-float" />
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to get started?</h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                      Schedule a free consultation with one of our real estate experts and let us help you find your perfect property.
-                    </p>
-                    <Button className="hover-lift professional-btn px-8 py-3 rounded-xl font-semibold bg-slate-700 hover:bg-slate-800 text-white">
-                      Schedule Free Consultation
-                    </Button>
-                  </CardContent>
-                </Card>
+                <ConsultationForm />
               </div>
             </div>
 
