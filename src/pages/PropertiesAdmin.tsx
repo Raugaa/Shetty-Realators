@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { 
   Home, 
   Search, 
@@ -19,7 +20,10 @@ import {
   Camera,
   Plus,
   Filter,
-  X
+  X,
+  Edit,
+  Trash2,
+  Settings
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -32,25 +36,9 @@ const PropertiesAdmin = () => {
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
-  
-  // Filter states
-  const [filters, setFilters] = useState({
-    location: "all",
-    propertyType: "all",
-    bhk: "all",
-    priceRange: "all",
-    seaView: "all",
-    parking: "all",
-    garden: "all",
-    connectivity: "all"
-  });
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
-
-  const properties = [
+  const [showAddProperty, setShowAddProperty] = useState(false);
+  const [showManageProperties, setShowManageProperties] = useState(false);
+  const [properties, setProperties] = useState([
     {
       id: 1,
       title: "Luxury 3BHK Apartment",
@@ -99,7 +87,38 @@ const PropertiesAdmin = () => {
       features: ["Parking", "Gym", "Security"],
       description: "Well-designed 2BHK flat with modern amenities and excellent connectivity."
     }
-  ];
+  ]);
+  
+  // Filter states
+  const [filters, setFilters] = useState({
+    location: "all",
+    propertyType: "all",
+    bhk: "all",
+    priceRange: "all",
+    seaView: "all",
+    parking: "all",
+    garden: "all",
+    connectivity: "all"
+  });
+
+  // Add Property Form State
+  const [newProperty, setNewProperty] = useState({
+    title: "",
+    location: "",
+    type: "Apartment",
+    bhk: "1BHK",
+    area: "",
+    bedrooms: 1,
+    bathrooms: 1,
+    description: "",
+    features: [] as string[],
+    images: [] as string[]
+  });
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark');
+  };
 
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -150,21 +169,91 @@ const PropertiesAdmin = () => {
     setSearchTerm("");
   };
 
+  const handleAddProperty = () => {
+    const property = {
+      id: properties.length + 1,
+      ...newProperty,
+      images: newProperty.images.length > 0 ? newProperty.images : ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"]
+    };
+    setProperties([...properties, property]);
+    setNewProperty({
+      title: "",
+      location: "",
+      type: "Apartment",
+      bhk: "1BHK",
+      area: "",
+      bedrooms: 1,
+      bathrooms: 1,
+      description: "",
+      features: [],
+      images: []
+    });
+    setShowAddProperty(false);
+    alert("Property added successfully!");
+  };
+
+  const handleEditProperty = (propertyId: number) => {
+    const property = properties.find(p => p.id === propertyId);
+    if (property) {
+      setNewProperty(property);
+      setShowAddProperty(true);
+    }
+  };
+
+  const handleDeleteProperty = (propertyId: number) => {
+    if (confirm("Are you sure you want to delete this property?")) {
+      setProperties(properties.filter(p => p.id !== propertyId));
+      alert("Property deleted successfully!");
+    }
+  };
+
+  const addFeature = (feature: string) => {
+    if (feature && !newProperty.features.includes(feature)) {
+      setNewProperty({
+        ...newProperty,
+        features: [...newProperty.features, feature]
+      });
+    }
+  };
+
+  const removeFeature = (feature: string) => {
+    setNewProperty({
+      ...newProperty,
+      features: newProperty.features.filter(f => f !== feature)
+    });
+  };
+
+  const addImageUrl = (url: string) => {
+    if (url && !newProperty.images.includes(url)) {
+      setNewProperty({
+        ...newProperty,
+        images: [...newProperty.images, url]
+      });
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setNewProperty({
+      ...newProperty,
+      images: newProperty.images.filter((_, i) => i !== index)
+    });
+  };
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
-      <div className="min-h-screen transition-all duration-700 bg-gray-50 dark:bg-gray-900">
+      <div className="professional-bg min-h-screen transition-all duration-700">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
                 Premium <span className="professional-text">Properties</span>
                 <Badge className="ml-4 bg-red-600 hover:bg-red-700 text-white">ADMIN MODE</Badge>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
                 Admin Dashboard - Manage premium properties across India
               </p>
             </div>
@@ -175,17 +264,24 @@ const PropertiesAdmin = () => {
                 <Button className="bg-green-600 hover:bg-green-700 text-white">
                   👨‍💼 Admin Mode Active
                 </Button>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Button 
+                  onClick={() => setShowAddProperty(true)}
+                  className="professional-btn text-white"
+                >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Property
                 </Button>
-                <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+                <Button 
+                  onClick={() => setShowManageProperties(true)}
+                  className="professional-btn text-white"
+                >
+                  <Settings className="w-4 h-4 mr-2" />
                   Manage Properties
                 </Button>
               </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
-                className="glass-effect border-white/20 text-gray-900 dark:text-white hover:bg-white/20"
+                className="glass-effect border-white/20 text-white hover:bg-white/20"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -194,7 +290,7 @@ const PropertiesAdmin = () => {
 
             {/* Filters */}
             {showFilters && (
-              <Card className="mb-8 glass-effect border-white/20 bg-white/10 dark:bg-black/10 backdrop-blur-md">
+              <Card className="mb-8 filter-card">
                 <CardContent className="p-6">
                   {/* Search */}
                   <div className="mb-6">
@@ -204,7 +300,7 @@ const PropertiesAdmin = () => {
                         placeholder="Search properties..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 glass-effect border-white/20 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        className="pl-10 professional-input"
                       />
                     </div>
                   </div>
@@ -212,7 +308,7 @@ const PropertiesAdmin = () => {
                   {/* Filter Options */}
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
                     <Select value={filters.location} onValueChange={(value) => setFilters({...filters, location: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -225,7 +321,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.propertyType} onValueChange={(value) => setFilters({...filters, propertyType: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -238,7 +334,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.bhk} onValueChange={(value) => setFilters({...filters, bhk: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="BHK" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -252,7 +348,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.priceRange} onValueChange={(value) => setFilters({...filters, priceRange: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Price" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -265,7 +361,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.seaView} onValueChange={(value) => setFilters({...filters, seaView: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Sea View" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -276,7 +372,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.parking} onValueChange={(value) => setFilters({...filters, parking: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Parking" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -287,7 +383,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.garden} onValueChange={(value) => setFilters({...filters, garden: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Garden" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -298,7 +394,7 @@ const PropertiesAdmin = () => {
                     </Select>
 
                     <Select value={filters.connectivity} onValueChange={(value) => setFilters({...filters, connectivity: value})}>
-                      <SelectTrigger className="glass-effect border-white/20 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Connectivity" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -313,7 +409,7 @@ const PropertiesAdmin = () => {
                   <Button 
                     onClick={resetFilters}
                     variant="outline"
-                    className="glass-effect border-white/20 text-gray-900 dark:text-white hover:bg-white/20"
+                    className="professional-btn-outline text-white border-white/20 hover:bg-white/20"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Clear All Filters
@@ -327,7 +423,7 @@ const PropertiesAdmin = () => {
               {filteredProperties.map((property, index) => (
                 <Card 
                   key={property.id} 
-                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
+                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 dark:bg-gray-800/95 backdrop-blur-md`}
                 >
                   <div className="relative">
                     <img 
@@ -340,16 +436,26 @@ const PropertiesAdmin = () => {
                       <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </div>
                     <div className="absolute bottom-4 left-4">
-                      <Badge className="bg-slate-700 text-white hover:bg-slate-800">
+                      <Badge className="professional-btn text-white">
                         {property.type}
                       </Badge>
                     </div>
                     {/* Admin overlay */}
                     <div className="absolute top-4 left-4 flex gap-2">
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white text-xs">
+                      <Button 
+                        size="sm" 
+                        onClick={() => handleEditProperty(property.id)}
+                        className="professional-btn text-white text-xs"
+                      >
+                        <Edit className="w-3 h-3 mr-1" />
                         Edit
                       </Button>
-                      <Button size="sm" className="bg-red-600 hover:bg-red-700 text-white text-xs">
+                      <Button 
+                        size="sm" 
+                        onClick={() => handleDeleteProperty(property.id)}
+                        className="bg-red-600 hover:bg-red-700 text-white text-xs"
+                      >
+                        <Trash2 className="w-3 h-3 mr-1" />
                         Delete
                       </Button>
                     </div>
@@ -388,10 +494,10 @@ const PropertiesAdmin = () => {
                       ))}
                     </div>
                     
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 mt-auto">
                       <Button 
                         onClick={() => openGallery(property, 0)}
-                        className="flex-1 professional-btn bg-slate-700 hover:bg-slate-800 text-white"
+                        className="flex-1 professional-btn text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details & Gallery
@@ -401,6 +507,227 @@ const PropertiesAdmin = () => {
                 </Card>
               ))}
             </div>
+
+            {/* Add Property Dialog */}
+            <Dialog open={showAddProperty} onOpenChange={setShowAddProperty}>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-gray-800">
+                <DialogHeader>
+                  <DialogTitle>Add New Property</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Property Title</label>
+                      <Input
+                        value={newProperty.title}
+                        onChange={(e) => setNewProperty({...newProperty, title: e.target.value})}
+                        placeholder="Enter property title"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Location</label>
+                      <Input
+                        value={newProperty.location}
+                        onChange={(e) => setNewProperty({...newProperty, location: e.target.value})}
+                        placeholder="Enter location"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Property Type</label>
+                      <Select value={newProperty.type} onValueChange={(value) => setNewProperty({...newProperty, type: value})}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Apartment">Apartment</SelectItem>
+                          <SelectItem value="Villa">Villa</SelectItem>
+                          <SelectItem value="Penthouse">Penthouse</SelectItem>
+                          <SelectItem value="Studio">Studio</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">BHK</label>
+                      <Select value={newProperty.bhk} onValueChange={(value) => setNewProperty({...newProperty, bhk: value})}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1BHK">1 BHK</SelectItem>
+                          <SelectItem value="2BHK">2 BHK</SelectItem>
+                          <SelectItem value="3BHK">3 BHK</SelectItem>
+                          <SelectItem value="4BHK">4 BHK</SelectItem>
+                          <SelectItem value="5BHK">5+ BHK</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Area</label>
+                      <Input
+                        value={newProperty.area}
+                        onChange={(e) => setNewProperty({...newProperty, area: e.target.value})}
+                        placeholder="e.g., 1450 sq ft"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Bedrooms</label>
+                      <Input
+                        type="number"
+                        value={newProperty.bedrooms}
+                        onChange={(e) => setNewProperty({...newProperty, bedrooms: parseInt(e.target.value)})}
+                        min="1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Bathrooms</label>
+                      <Input
+                        type="number"
+                        value={newProperty.bathrooms}
+                        onChange={(e) => setNewProperty({...newProperty, bathrooms: parseInt(e.target.value)})}
+                        min="1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Description</label>
+                    <Textarea
+                      value={newProperty.description}
+                      onChange={(e) => setNewProperty({...newProperty, description: e.target.value})}
+                      placeholder="Enter property description"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Features</label>
+                    <div className="flex gap-2 mb-2">
+                      <Input
+                        placeholder="Add feature"
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            addFeature(e.currentTarget.value);
+                            e.currentTarget.value = '';
+                          }
+                        }}
+                      />
+                      <Button 
+                        onClick={() => {
+                          const input = document.querySelector('input[placeholder="Add feature"]') as HTMLInputElement;
+                          if (input) {
+                            addFeature(input.value);
+                            input.value = '';
+                          }
+                        }}
+                        className="professional-btn text-white"
+                      >
+                        Add
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {newProperty.features.map((feature, idx) => (
+                        <Badge key={idx} variant="secondary" className="cursor-pointer" onClick={() => removeFeature(feature)}>
+                          {feature} ×
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Image URLs</label>
+                    <div className="flex gap-2 mb-2">
+                      <Input
+                        placeholder="Add image URL"
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            addImageUrl(e.currentTarget.value);
+                            e.currentTarget.value = '';
+                          }
+                        }}
+                      />
+                      <Button 
+                        onClick={() => {
+                          const input = document.querySelector('input[placeholder="Add image URL"]') as HTMLInputElement;
+                          if (input) {
+                            addImageUrl(input.value);
+                            input.value = '';
+                          }
+                        }}
+                        className="professional-btn text-white"
+                      >
+                        Add
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {newProperty.images.map((url, idx) => (
+                        <div key={idx} className="relative">
+                          <img src={url} alt={`Property ${idx + 1}`} className="w-full h-20 object-cover rounded" />
+                          <Button
+                            size="sm"
+                            onClick={() => removeImage(idx)}
+                            className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 p-0"
+                          >
+                            ×
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Button onClick={handleAddProperty} className="professional-btn text-white flex-1">
+                      Add Property
+                    </Button>
+                    <Button variant="outline" onClick={() => setShowAddProperty(false)} className="flex-1">
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            {/* Manage Properties Dialog */}
+            <Dialog open={showManageProperties} onOpenChange={setShowManageProperties}>
+              <DialogContent className="max-w-6xl max-h-[90vh] overflow-auto bg-white dark:bg-gray-800">
+                <DialogHeader>
+                  <DialogTitle>Manage Properties</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  {properties.map((property) => (
+                    <Card key={property.id} className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <img src={property.images[0]} alt={property.title} className="w-16 h-16 object-cover rounded" />
+                          <div>
+                            <h4 className="font-semibold">{property.title}</h4>
+                            <p className="text-sm text-gray-600">{property.location}</p>
+                            <p className="text-sm text-gray-500">{property.type} • {property.bhk} • {property.area}</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleEditProperty(property.id)}
+                            className="professional-btn text-white"
+                          >
+                            <Edit className="w-4 h-4 mr-1" />
+                            Edit
+                          </Button>
+                          <Button
+                            size="sm"
+                            onClick={() => handleDeleteProperty(property.id)}
+                            className="bg-red-600 hover:bg-red-700 text-white"
+                          >
+                            <Trash2 className="w-4 h-4 mr-1" />
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Gallery Modal */}
             <Dialog open={!!selectedProperty} onOpenChange={() => setSelectedProperty(null)}>
@@ -455,8 +782,6 @@ const PropertiesAdmin = () => {
                       </div>
                       
                       <div>
-                        <div className="text-4xl font-bold text-slate-700 dark:text-slate-300 mb-6">{selectedProperty.price}</div>
-                        
                         <div className="space-y-4">
                           <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
                             <Bed className="w-5 h-5" />
@@ -472,7 +797,7 @@ const PropertiesAdmin = () => {
                           </div>
                         </div>
                         
-                        <Button className="w-full mt-6 professional-btn bg-slate-700 hover:bg-slate-800 text-white">
+                        <Button className="w-full mt-6 professional-btn text-white">
                           Contact for This Property
                         </Button>
                       </div>
@@ -502,14 +827,14 @@ const PropertiesAdmin = () => {
             {/* No Results */}
             {filteredProperties.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-gray-400 dark:text-gray-500 mb-4">
+                <div className="text-white/70 mb-4">
                   <Search className="w-16 h-16 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold">No properties found</h3>
                   <p>Try adjusting your search criteria</p>
                 </div>
                 <Button 
                   onClick={resetFilters}
-                  className="mt-4 professional-btn bg-slate-700 hover:bg-slate-800 text-white"
+                  className="mt-4 professional-btn text-white"
                 >
                   Clear All Filters
                 </Button>
@@ -518,7 +843,7 @@ const PropertiesAdmin = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-white/20 text-white hover:bg-white/20">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home
