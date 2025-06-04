@@ -55,7 +55,6 @@ const PropertiesAdmin = () => {
       id: 1,
       title: "Luxury 3BHK Apartment",
       location: "Bandra West, Mumbai",
-      price: "₹2.5 Cr",
       type: "Apartment",
       bhk: "3BHK",
       area: "1450 sq ft",
@@ -73,7 +72,6 @@ const PropertiesAdmin = () => {
       id: 2,
       title: "Premium Villa",
       location: "Juhu, Mumbai",
-      price: "₹8.5 Cr",
       type: "Villa",
       bhk: "4BHK",
       area: "3200 sq ft",
@@ -90,7 +88,6 @@ const PropertiesAdmin = () => {
       id: 3,
       title: "Modern 2BHK Flat",
       location: "Andheri East, Mumbai",
-      price: "₹1.8 Cr",
       type: "Apartment",
       bhk: "2BHK",
       area: "980 sq ft",
@@ -359,9 +356,8 @@ const PropertiesAdmin = () => {
                   </div>
                   
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="mb-4">
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">{property.title}</h3>
-                      <span className="text-2xl font-bold text-slate-700 dark:text-slate-300">{property.price}</span>
                     </div>
                     
                     <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">

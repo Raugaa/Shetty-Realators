@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Contact, Building } from "lucide-react";
@@ -128,15 +127,13 @@ const Index = () => {
 
         <EnhancedAboutUs />
         
-        {/* Add spacing and visual separation before CallToAction */}
-        <div className="py-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+        {/* Add proper spacing and visual separation before CallToAction */}
+        <div className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700">
           <CallToAction />
         </div>
         
-        {/* Add spacing before footer */}
-        <div className="py-8 bg-white dark:bg-gray-800">
-          <Footer />
-        </div>
+        {/* Footer - remove extra spacing */}
+        <Footer />
       </div>
     </div>
   );
