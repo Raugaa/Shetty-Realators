@@ -69,104 +69,19 @@
   }
 }
 
-/* Professional theme styles */
-.professional-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.hero-professional {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-  background-size: cover;
-  background-position: center;
-}
-
-.professional-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.professional-card {
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.professional-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.professional-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.professional-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-}
-
-.professional-btn-outline {
-  background: transparent;
-  border: 2px solid;
-  border-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 1;
-  transition: all 0.3s ease;
-}
-
-.professional-input {
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.professional-input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.glass-effect {
-  backdrop-filter: blur(16px) saturate(180%);
-  background-color: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(209, 213, 219, 0.3);
-}
-
-.dark .glass-effect {
-  background-color: rgba(17, 24, 39, 0.75);
-  border: 1px solid rgba(75, 85, 99, 0.3);
-}
-
-.filter-card {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(229, 231, 235, 0.8);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.dark .filter-card {
-  background: rgba(31, 41, 55, 0.95);
-  border: 1px solid rgba(75, 85, 99, 0.8);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-/* Timeline improvements */
+/* Timeline improvements - bringing cards closer and making them visible */
 .timeline-card {
   background: rgba(255, 255, 255, 0.95) !important;
-  border: 2px solid rgba(102, 126, 234, 0.3) !important;
+  border: 2px solid rgba(71, 85, 105, 0.3) !important;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2) !important;
-  margin: 0 16px !important; /* Bring cards closer to timeline */
+  box-shadow: 0 8px 32px rgba(71, 85, 105, 0.2) !important;
+  margin: 0 8px !important; /* Bringing cards much closer to timeline */
 }
 
 .dark .timeline-card {
   background: rgba(31, 41, 55, 0.95) !important;
-  border: 2px solid rgba(118, 75, 162, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(118, 75, 162, 0.2) !important;
+  border: 2px solid rgba(148, 163, 184, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(148, 163, 184, 0.2) !important;
 }
 
 /* Animation keyframes */
@@ -233,24 +148,6 @@
 .animate-delay-200 { animation-delay: 0.2s; }
 .animate-delay-300 { animation-delay: 0.3s; }
 .animate-delay-400 { animation-delay: 0.4s; }
-
-/* Hover effects */
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.hover-scale {
-  transition: transform 0.3s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
 
 /* Remove extra spacing from body and ensure footer is at bottom */
 html, body {

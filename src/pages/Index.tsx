@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Contact, Building } from "lucide-react";
@@ -70,23 +71,23 @@ const Index = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
-      <div className="professional-bg min-h-screen transition-all duration-700">
+      <div className="bg-gradient-to-br from-slate-900 to-gray-900 min-h-screen transition-all duration-700">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         {/* Hero Section */}
-        <section className="hero-professional pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <section className="bg-gradient-to-br from-slate-900/90 to-gray-900/90 pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 to-gray-900/20"></div>
           <div className={`max-w-7xl mx-auto text-center relative z-10 ${isLoaded ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="animate-float">
               <img 
                 src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
                 alt="Sudhir Realtors Logo" 
-                className="w-80 h-40 mx-auto mb-8 hover-scale object-contain"
+                className="w-80 h-40 mx-auto mb-8 hover:scale-105 transition-transform duration-300 object-contain"
               />
             </div>
             <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 animate-scale-in">
               Welcome to{" "}
-              <span className="professional-text block mt-4">
+              <span className="text-slate-300 block mt-4">
                 {showTypewriter ? (
                   <>
                     {typewriterText}
@@ -104,13 +105,13 @@ const Index = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animate-delay-400">
-              <Button size="lg" className="hover-lift professional-btn bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl">
+              <Button size="lg" className="bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                 <Link to="/properties" className="flex items-center gap-3">
                   <Building className="w-6 h-6" />
                   Explore Properties
                 </Link>
               </Button>
-              <Button size="lg" className="hover-lift professional-btn bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl">
+              <Button size="lg" className="bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                 <Link to="/contact" className="flex items-center gap-3">
                   <Contact className="w-6 h-6" />
                   Get Expert Consultation
@@ -132,7 +133,6 @@ const Index = () => {
           <CallToAction />
         </div>
         
-        {/* Footer - remove extra spacing */}
         <Footer />
       </div>
     </div>

@@ -152,7 +152,7 @@ const Properties = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
-      <div className="min-h-screen transition-all duration-700 bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen transition-all duration-700 bg-white dark:bg-gray-900">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -160,18 +160,18 @@ const Properties = () => {
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Premium <span className="professional-text">Properties</span>
+                Premium <span className="text-slate-700 dark:text-slate-300">Properties</span>
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                 Discover your perfect home from our curated collection of premium properties across India
               </p>
             </div>
 
-            {/* Filters Toggle - No Admin Controls */}
+            {/* Filters Toggle */}
             <div className="flex justify-end items-center mb-8">
               <Button
                 onClick={() => setShowFilters(!showFilters)}
-                className="glass-effect border-white/20 text-gray-900 dark:text-white hover:bg-white/20"
+                className="bg-slate-700 hover:bg-slate-800 text-white"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -180,7 +180,7 @@ const Properties = () => {
 
             {/* Filters */}
             {showFilters && (
-              <Card className="mb-8 filter-card">
+              <Card className="mb-8 bg-white/95 dark:bg-gray-800/95 backdrop-blur-12 border border-gray-200 dark:border-gray-700 shadow-lg">
                 <CardContent className="p-6">
                   {/* Search */}
                   <div className="mb-6">
@@ -190,7 +190,7 @@ const Properties = () => {
                         placeholder="Search properties..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                        className="pl-10 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
                       />
                     </div>
                   </div>
@@ -299,7 +299,7 @@ const Properties = () => {
                   <Button 
                     onClick={resetFilters}
                     variant="outline"
-                    className="professional-btn-outline border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-white/50 dark:hover:bg-gray-700/50"
+                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Clear All Filters
@@ -313,7 +313,7 @@ const Properties = () => {
               {filteredProperties.map((property, index) => (
                 <Card 
                   key={property.id} 
-                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
+                  className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
                   <div className="relative">
                     <img 
@@ -368,7 +368,7 @@ const Properties = () => {
                     <div className="flex gap-3 mt-auto">
                       <Button 
                         onClick={() => openGallery(property, 0)}
-                        className="flex-1 professional-btn bg-slate-700 hover:bg-slate-800 text-white"
+                        className="flex-1 bg-slate-700 hover:bg-slate-800 text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details & Gallery
@@ -495,7 +495,7 @@ const Properties = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+              <Button variant="outline" asChild className="px-8 py-4 rounded-xl font-semibold border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home
