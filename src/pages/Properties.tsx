@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { 
   Home, 
   Search, 
@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Eye,
   Camera,
+  Plus,
   Filter,
   X
 } from "lucide-react";
@@ -24,6 +25,8 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
+import { propertyStore, type Property } from "@/utils/propertyStore";
+import { processImageUrl } from "@/utils/imageUtils";
 
 const Properties = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -31,6 +34,7 @@ const Properties = () => {
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
+  const [properties, setProperties] = useState<Property[]>([]);
   
   // Filter states
   const [filters, setFilters] = useState({
@@ -44,61 +48,21 @@ const Properties = () => {
     connectivity: "all"
   });
 
+  // Load properties from store and subscribe to changes
+  useEffect(() => {
+    setProperties(propertyStore.getProperties());
+    
+    const unsubscribe = propertyStore.subscribe(() => {
+      setProperties(propertyStore.getProperties());
+    });
+    
+    return unsubscribe;
+  }, []);
+
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
   };
-
-  const properties = [
-    {
-      id: 1,
-      title: "Luxury 3BHK Apartment",
-      location: "Bandra West, Mumbai",
-      type: "Apartment",
-      bhk: "3BHK",
-      area: "1450 sq ft",
-      bedrooms: 3,
-      bathrooms: 2,
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80"
-      ],
-      features: ["Sea View", "Parking", "Garden", "Gym"],
-      description: "Stunning 3BHK apartment with panoramic sea views in prime Bandra location."
-    },
-    {
-      id: 2,
-      title: "Premium Villa",
-      location: "Juhu, Mumbai",
-      type: "Villa",
-      bhk: "4BHK",
-      area: "3200 sq ft",
-      bedrooms: 4,
-      bathrooms: 4,
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
-      ],
-      features: ["Sea View", "Parking", "Garden", "Pool"],
-      description: "Luxurious villa with private garden and swimming pool in prestigious Juhu area."
-    },
-    {
-      id: 3,
-      title: "Modern 2BHK Flat",
-      location: "Andheri East, Mumbai",
-      type: "Apartment",
-      bhk: "2BHK",
-      area: "980 sq ft",
-      bedrooms: 2,
-      bathrooms: 2,
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
-      ],
-      features: ["Parking", "Gym", "Security"],
-      description: "Well-designed 2BHK flat with modern amenities and excellent connectivity."
-    }
-  ];
 
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -152,26 +116,31 @@ const Properties = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
-      <div className="min-h-screen transition-all duration-700 bg-white dark:bg-gray-900">
+      <div className="professional-bg min-h-screen transition-all duration-700">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Premium <span className="text-slate-700 dark:text-slate-300">Properties</span>
+              <h1 className="text-5xl md:text-6xl font-bold text-slate-300 mb-6">
+                Premium <span className="text-slate-400">Properties</span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Discover your perfect home from our curated collection of premium properties across India
+              <p className="text-xl text-slate-200 max-w-3xl mx-auto">
+                Discover luxury properties across India with exclusive amenities and prime locations
               </p>
             </div>
 
-            {/* Filters Toggle */}
-            <div className="flex justify-end items-center mb-8">
+            {/* Filter Toggle */}
+            <div className="flex justify-between items-center mb-8">
+              <div className="flex items-center gap-4">
+                <Badge className="bg-blue-600 hover:bg-blue-700 text-white">
+                  {filteredProperties.length} Properties Found
+                </Badge>
+              </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
-                className="bg-slate-700 hover:bg-slate-800 text-white"
+                className="glass-effect border-white/20 text-white hover:bg-white/20"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -180,7 +149,7 @@ const Properties = () => {
 
             {/* Filters */}
             {showFilters && (
-              <Card className="mb-8 bg-white/95 dark:bg-gray-800/95 backdrop-blur-12 border border-gray-200 dark:border-gray-700 shadow-lg">
+              <Card className="mb-8 filter-card">
                 <CardContent className="p-6">
                   {/* Search */}
                   <div className="mb-6">
@@ -190,7 +159,7 @@ const Properties = () => {
                         placeholder="Search properties..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                        className="pl-10 professional-input"
                       />
                     </div>
                   </div>
@@ -198,7 +167,7 @@ const Properties = () => {
                   {/* Filter Options */}
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
                     <Select value={filters.location} onValueChange={(value) => setFilters({...filters, location: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -211,7 +180,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.propertyType} onValueChange={(value) => setFilters({...filters, propertyType: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -224,7 +193,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.bhk} onValueChange={(value) => setFilters({...filters, bhk: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="BHK" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -238,7 +207,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.priceRange} onValueChange={(value) => setFilters({...filters, priceRange: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Price" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -251,7 +220,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.seaView} onValueChange={(value) => setFilters({...filters, seaView: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Sea View" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -262,7 +231,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.parking} onValueChange={(value) => setFilters({...filters, parking: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Parking" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -273,7 +242,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.garden} onValueChange={(value) => setFilters({...filters, garden: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Garden" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -284,7 +253,7 @@ const Properties = () => {
                     </Select>
 
                     <Select value={filters.connectivity} onValueChange={(value) => setFilters({...filters, connectivity: value})}>
-                      <SelectTrigger className="professional-input bg-white/80 dark:bg-gray-700/80 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
+                      <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Connectivity" />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-800">
@@ -299,7 +268,7 @@ const Properties = () => {
                   <Button 
                     onClick={resetFilters}
                     variant="outline"
-                    className="border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+                    className="professional-btn-outline text-white border-white/20 hover:bg-white/20"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Clear All Filters
@@ -313,20 +282,23 @@ const Properties = () => {
               {filteredProperties.map((property, index) => (
                 <Card 
                   key={property.id} 
-                  className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 dark:bg-gray-800/95 backdrop-blur-md`}
                 >
                   <div className="relative">
                     <img 
-                      src={property.images[0]} 
+                      src={processImageUrl(property.images[0])} 
                       alt={property.title}
                       className="w-full h-64 object-cover rounded-t-xl cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => openGallery(property, 0)}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                      }}
                     />
                     <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2">
                       <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </div>
                     <div className="absolute bottom-4 left-4">
-                      <Badge className="bg-slate-700 text-white hover:bg-slate-800">
+                      <Badge className="professional-btn text-white">
                         {property.type}
                       </Badge>
                     </div>
@@ -368,7 +340,7 @@ const Properties = () => {
                     <div className="flex gap-3 mt-auto">
                       <Button 
                         onClick={() => openGallery(property, 0)}
-                        className="flex-1 bg-slate-700 hover:bg-slate-800 text-white"
+                        className="flex-1 professional-btn text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details & Gallery
@@ -387,9 +359,12 @@ const Properties = () => {
                     {/* Image Gallery */}
                     <div className="relative">
                       <img 
-                        src={selectedProperty.images[currentImageIndex]} 
+                        src={processImageUrl(selectedProperty.images[currentImageIndex])} 
                         alt={selectedProperty.title}
                         className="w-full h-96 object-cover rounded-lg"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                        }}
                       />
                       {selectedProperty.images.length > 1 && (
                         <>
@@ -449,7 +424,7 @@ const Properties = () => {
                           </div>
                         </div>
                         
-                        <Button className="w-full mt-6 professional-btn bg-slate-700 hover:bg-slate-800 text-white">
+                        <Button className="w-full mt-6 professional-btn text-white">
                           Contact for This Property
                         </Button>
                       </div>
@@ -461,12 +436,15 @@ const Properties = () => {
                         {selectedProperty.images.map((image: string, index: number) => (
                           <img
                             key={index}
-                            src={image}
+                            src={processImageUrl(image)}
                             alt={`${selectedProperty.title} ${index + 1}`}
                             className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
                               currentImageIndex === index ? 'border-slate-700' : 'border-transparent'
                             }`}
                             onClick={() => setCurrentImageIndex(index)}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                            }}
                           />
                         ))}
                       </div>
@@ -479,14 +457,14 @@ const Properties = () => {
             {/* No Results */}
             {filteredProperties.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-gray-400 dark:text-gray-500 mb-4">
+                <div className="text-white/70 mb-4">
                   <Search className="w-16 h-16 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold">No properties found</h3>
                   <p>Try adjusting your search criteria</p>
                 </div>
                 <Button 
                   onClick={resetFilters}
-                  className="mt-4 professional-btn bg-slate-700 hover:bg-slate-800 text-white"
+                  className="mt-4 professional-btn text-white"
                 >
                   Clear All Filters
                 </Button>
@@ -495,7 +473,7 @@ const Properties = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="px-8 py-4 rounded-xl font-semibold border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-white/20 text-white hover:bg-white/20">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home

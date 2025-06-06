@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,43 +67,6 @@ const About = () => {
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                 Building dreams, creating homes, and fostering communities for over a decade
               </p>
-            </div>
-
-            {/* Our Partners - Infinite Image Scroller */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                Our Trusted Partners
-              </h2>
-              <div className="relative overflow-hidden w-full bg-white dark:bg-gray-800 rounded-lg py-8 shadow-lg">
-                <div className="flex animate-scroll-infinite">
-                  {/* First set of images */}
-                  {partnerImages.map((image, index) => (
-                    <div
-                      key={`first-${index}`}
-                      className="flex-shrink-0 mx-4 partner-image-container"
-                    >
-                      <img
-                        src={image}
-                        alt={`Partner ${index + 1}`}
-                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
-                      />
-                    </div>
-                  ))}
-                  {/* Duplicate set for seamless loop */}
-                  {partnerImages.map((image, index) => (
-                    <div
-                      key={`second-${index}`}
-                      className="flex-shrink-0 mx-4 partner-image-container"
-                    >
-                      <img
-                        src={image}
-                        alt={`Partner ${index + 1}`}
-                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
 
             {/* Mission & Vision */}
@@ -207,6 +171,43 @@ const About = () => {
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+            </div>
+
+            {/* Our Partners - Infinite Image Scroller */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                Our Trusted Partners
+              </h2>
+              <div className="relative overflow-hidden w-full bg-white dark:bg-gray-800 rounded-lg py-8 shadow-lg">
+                <div className="flex animate-scroll-infinite">
+                  {/* First set of images */}
+                  {partnerImages.map((image, index) => (
+                    <div
+                      key={`first-${index}`}
+                      className="flex-shrink-0 mx-4 partner-image-container"
+                    >
+                      <img
+                        src={image}
+                        alt={`Partner ${index + 1}`}
+                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
+                      />
+                    </div>
+                  ))}
+                  {/* Duplicate set for seamless loop */}
+                  {partnerImages.map((image, index) => (
+                    <div
+                      key={`second-${index}`}
+                      className="flex-shrink-0 mx-4 partner-image-container"
+                    >
+                      <img
+                        src={image}
+                        alt={`Partner ${index + 1}`}
+                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

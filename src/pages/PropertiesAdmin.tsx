@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -29,6 +29,8 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
+import { propertyStore, type Property } from "@/utils/propertyStore";
+import { processImageUrl } from "@/utils/imageUtils";
 
 const PropertiesAdmin = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -38,56 +40,8 @@ const PropertiesAdmin = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [showAddProperty, setShowAddProperty] = useState(false);
   const [showManageProperties, setShowManageProperties] = useState(false);
-  const [properties, setProperties] = useState([
-    {
-      id: 1,
-      title: "Luxury 3BHK Apartment",
-      location: "Bandra West, Mumbai",
-      type: "Apartment",
-      bhk: "3BHK",
-      area: "1450 sq ft",
-      bedrooms: 3,
-      bathrooms: 2,
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80"
-      ],
-      features: ["Sea View", "Parking", "Garden", "Gym"],
-      description: "Stunning 3BHK apartment with panoramic sea views in prime Bandra location."
-    },
-    {
-      id: 2,
-      title: "Premium Villa",
-      location: "Juhu, Mumbai",
-      type: "Villa",
-      bhk: "4BHK",
-      area: "3200 sq ft",
-      bedrooms: 4,
-      bathrooms: 4,
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
-      ],
-      features: ["Sea View", "Parking", "Garden", "Pool"],
-      description: "Luxurious villa with private garden and swimming pool in prestigious Juhu area."
-    },
-    {
-      id: 3,
-      title: "Modern 2BHK Flat",
-      location: "Andheri East, Mumbai",
-      type: "Apartment",
-      bhk: "2BHK",
-      area: "980 sq ft",
-      bedrooms: 2,
-      bathrooms: 2,
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
-      ],
-      features: ["Parking", "Gym", "Security"],
-      description: "Well-designed 2BHK flat with modern amenities and excellent connectivity."
-    }
-  ]);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [editingPropertyId, setEditingPropertyId] = useState<number | null>(null);
   
   // Filter states
   const [filters, setFilters] = useState({
@@ -114,6 +68,17 @@ const PropertiesAdmin = () => {
     features: [] as string[],
     images: [] as string[]
   });
+
+  // Load properties from store and subscribe to changes
+  useEffect(() => {
+    setProperties(propertyStore.getProperties());
+    
+    const unsubscribe = propertyStore.subscribe(() => {
+      setProperties(propertyStore.getProperties());
+    });
+    
+    return unsubscribe;
+  }, []);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -170,12 +135,23 @@ const PropertiesAdmin = () => {
   };
 
   const handleAddProperty = () => {
-    const property = {
-      id: properties.length + 1,
+    // Process image URLs to convert Google Drive links
+    const processedImages = newProperty.images.map(url => processImageUrl(url));
+    
+    const propertyData = {
       ...newProperty,
-      images: newProperty.images.length > 0 ? newProperty.images : ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"]
+      images: processedImages.length > 0 ? processedImages : [processImageUrl("")]
     };
-    setProperties([...properties, property]);
+
+    if (editingPropertyId) {
+      propertyStore.updateProperty(editingPropertyId, propertyData);
+      setEditingPropertyId(null);
+      alert("Property updated successfully!");
+    } else {
+      propertyStore.addProperty(propertyData);
+      alert("Property added successfully!");
+    }
+    
     setNewProperty({
       title: "",
       location: "",
@@ -189,20 +165,31 @@ const PropertiesAdmin = () => {
       images: []
     });
     setShowAddProperty(false);
-    alert("Property added successfully!");
   };
 
   const handleEditProperty = (propertyId: number) => {
     const property = properties.find(p => p.id === propertyId);
     if (property) {
-      setNewProperty(property);
+      setNewProperty({
+        title: property.title,
+        location: property.location,
+        type: property.type,
+        bhk: property.bhk,
+        area: property.area,
+        bedrooms: property.bedrooms,
+        bathrooms: property.bathrooms,
+        description: property.description,
+        features: property.features,
+        images: property.images
+      });
+      setEditingPropertyId(propertyId);
       setShowAddProperty(true);
     }
   };
 
   const handleDeleteProperty = (propertyId: number) => {
     if (confirm("Are you sure you want to delete this property?")) {
-      setProperties(properties.filter(p => p.id !== propertyId));
+      propertyStore.deleteProperty(propertyId);
       alert("Property deleted successfully!");
     }
   };
@@ -265,7 +252,22 @@ const PropertiesAdmin = () => {
                   👨‍💼 Admin Mode Active
                 </Button>
                 <Button 
-                  onClick={() => setShowAddProperty(true)}
+                  onClick={() => {
+                    setEditingPropertyId(null);
+                    setNewProperty({
+                      title: "",
+                      location: "",
+                      type: "Apartment",
+                      bhk: "1BHK",
+                      area: "",
+                      bedrooms: 1,
+                      bathrooms: 1,
+                      description: "",
+                      features: [],
+                      images: []
+                    });
+                    setShowAddProperty(true);
+                  }}
                   className="professional-btn text-white"
                 >
                   <Plus className="w-4 h-4 mr-2" />
@@ -427,10 +429,14 @@ const PropertiesAdmin = () => {
                 >
                   <div className="relative">
                     <img 
-                      src={property.images[0]} 
+                      src={processImageUrl(property.images[0])} 
                       alt={property.title}
                       className="w-full h-64 object-cover rounded-t-xl cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => openGallery(property, 0)}
+                      onError={(e) => {
+                        // Fallback to default image if the processed URL fails
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                      }}
                     />
                     <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2">
                       <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300" />
@@ -512,7 +518,7 @@ const PropertiesAdmin = () => {
             <Dialog open={showAddProperty} onOpenChange={setShowAddProperty}>
               <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-gray-800">
                 <DialogHeader>
-                  <DialogTitle>Add New Property</DialogTitle>
+                  <DialogTitle>{editingPropertyId ? 'Edit Property' : 'Add New Property'}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -634,10 +640,13 @@ const PropertiesAdmin = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Image URLs</label>
+                    <label className="block text-sm font-medium mb-2">Image URLs (Google Drive links supported)</label>
+                    <div className="text-sm text-gray-600 mb-2">
+                      You can use Google Drive share links - they will be automatically converted to display properly.
+                    </div>
                     <div className="flex gap-2 mb-2">
                       <Input
-                        placeholder="Add image URL"
+                        placeholder="Add image URL (Google Drive links supported)"
                         onKeyPress={(e) => {
                           if (e.key === 'Enter') {
                             addImageUrl(e.currentTarget.value);
@@ -647,7 +656,7 @@ const PropertiesAdmin = () => {
                       />
                       <Button 
                         onClick={() => {
-                          const input = document.querySelector('input[placeholder="Add image URL"]') as HTMLInputElement;
+                          const input = document.querySelector('input[placeholder="Add image URL (Google Drive links supported)"]') as HTMLInputElement;
                           if (input) {
                             addImageUrl(input.value);
                             input.value = '';
@@ -661,7 +670,14 @@ const PropertiesAdmin = () => {
                     <div className="grid grid-cols-3 gap-2">
                       {newProperty.images.map((url, idx) => (
                         <div key={idx} className="relative">
-                          <img src={url} alt={`Property ${idx + 1}`} className="w-full h-20 object-cover rounded" />
+                          <img 
+                            src={processImageUrl(url)} 
+                            alt={`Property ${idx + 1}`} 
+                            className="w-full h-20 object-cover rounded"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                            }}
+                          />
                           <Button
                             size="sm"
                             onClick={() => removeImage(idx)}
@@ -676,9 +692,12 @@ const PropertiesAdmin = () => {
 
                   <div className="flex gap-4">
                     <Button onClick={handleAddProperty} className="professional-btn text-white flex-1">
-                      Add Property
+                      {editingPropertyId ? 'Update Property' : 'Add Property'}
                     </Button>
-                    <Button variant="outline" onClick={() => setShowAddProperty(false)} className="flex-1">
+                    <Button variant="outline" onClick={() => {
+                      setShowAddProperty(false);
+                      setEditingPropertyId(null);
+                    }} className="flex-1">
                       Cancel
                     </Button>
                   </div>
@@ -697,7 +716,14 @@ const PropertiesAdmin = () => {
                     <Card key={property.id} className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <img src={property.images[0]} alt={property.title} className="w-16 h-16 object-cover rounded" />
+                          <img 
+                            src={processImageUrl(property.images[0])} 
+                            alt={property.title} 
+                            className="w-16 h-16 object-cover rounded"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                            }}
+                          />
                           <div>
                             <h4 className="font-semibold">{property.title}</h4>
                             <p className="text-sm text-gray-600">{property.location}</p>
@@ -737,9 +763,12 @@ const PropertiesAdmin = () => {
                     {/* Image Gallery */}
                     <div className="relative">
                       <img 
-                        src={selectedProperty.images[currentImageIndex]} 
+                        src={processImageUrl(selectedProperty.images[currentImageIndex])} 
                         alt={selectedProperty.title}
                         className="w-full h-96 object-cover rounded-lg"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                        }}
                       />
                       {selectedProperty.images.length > 1 && (
                         <>
@@ -809,12 +838,15 @@ const PropertiesAdmin = () => {
                         {selectedProperty.images.map((image: string, index: number) => (
                           <img
                             key={index}
-                            src={image}
+                            src={processImageUrl(image)}
                             alt={`${selectedProperty.title} ${index + 1}`}
                             className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
                               currentImageIndex === index ? 'border-slate-700' : 'border-transparent'
                             }`}
                             onClick={() => setCurrentImageIndex(index)}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
+                            }}
                           />
                         ))}
                       </div>
