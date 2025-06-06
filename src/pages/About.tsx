@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,22 +39,16 @@ const About = () => {
     }
   ];
 
-  const achievements = [
-    {
-      year: "2023",
-      title: "Top Real Estate Agency",
-      organization: "City Real Estate Board"
-    },
-    {
-      year: "2022",
-      title: "Customer Excellence Award",
-      organization: "National Realty Association"
-    },
-    {
-      year: "2021",
-      title: "Innovation in Real Estate",
-      organization: "Industry Leaders Forum"
-    }
+  // Partner company images
+  const partnerImages = [
+    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&h=200&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=200&fit=crop&crop=center"
   ];
 
   return (
@@ -73,6 +66,43 @@ const About = () => {
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                 Building dreams, creating homes, and fostering communities for over a decade
               </p>
+            </div>
+
+            {/* Our Partners - Infinite Image Scroller */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                Our Trusted Partners
+              </h2>
+              <div className="relative overflow-hidden w-full bg-white dark:bg-gray-800 rounded-lg py-8 shadow-lg">
+                <div className="flex animate-scroll-infinite">
+                  {/* First set of images */}
+                  {partnerImages.map((image, index) => (
+                    <div
+                      key={`first-${index}`}
+                      className="flex-shrink-0 mx-4 partner-image-container"
+                    >
+                      <img
+                        src={image}
+                        alt={`Partner ${index + 1}`}
+                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
+                      />
+                    </div>
+                  ))}
+                  {/* Duplicate set for seamless loop */}
+                  {partnerImages.map((image, index) => (
+                    <div
+                      key={`second-${index}`}
+                      className="flex-shrink-0 mx-4 partner-image-container"
+                    >
+                      <img
+                        src={image}
+                        alt={`Partner ${index + 1}`}
+                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Mission & Vision */}
