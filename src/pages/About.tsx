@@ -210,40 +210,6 @@ const About = () => {
               </div>
             </div>
 
-            {/* Awards & Recognition */}
-            <Card className="mb-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-gray-200 dark:border-gray-700 animate-fade-in">
-              <CardHeader>
-                <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white text-center">
-                  Awards & Recognition
-                </CardTitle>
-                <CardDescription className="text-center text-lg">
-                  Our commitment to excellence has been recognized by industry leaders
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {achievements.map((achievement, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center space-x-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 rounded-lg"
-                    >
-                      <Badge variant="default" className="text-lg px-3 py-1">
-                        {achievement.year}
-                      </Badge>
-                      <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white">
-                          {achievement.title}
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
-                          {achievement.organization}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Back to Home */}
             <div className="text-center">
               <Button variant="outline" asChild className="hover-scale">
