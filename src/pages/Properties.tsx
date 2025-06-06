@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +18,6 @@ import {
   ChevronRight,
   Eye,
   Camera,
-  Plus,
   Filter,
   X
 } from "lucide-react";
@@ -121,22 +121,28 @@ const Properties = () => {
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            {/* Header */}
+            {/* Header - Fixed color to match navbar */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-slate-300 mb-6">
-                Premium <span className="text-slate-400">Properties</span>
+              <h1 className="text-5xl md:text-6xl font-bold text-slate-800 dark:text-slate-100 mb-6">
+                Premium <span className="text-slate-600 dark:text-slate-300">Properties</span>
               </h1>
-              <p className="text-xl text-slate-200 max-w-3xl mx-auto">
+              <p className="text-xl text-slate-700 dark:text-slate-200 max-w-3xl mx-auto">
                 Discover luxury properties across India with exclusive amenities and prime locations
               </p>
             </div>
 
-            {/* Filter Toggle */}
+            {/* Search and Filter Toggle */}
             <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center gap-4">
-                <Badge className="bg-blue-600 hover:bg-blue-700 text-white">
-                  {filteredProperties.length} Properties Found
-                </Badge>
+              <div className="flex-1 max-w-md">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input
+                    placeholder="Search properties..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 professional-input"
+                  />
+                </div>
               </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
@@ -151,19 +157,6 @@ const Properties = () => {
             {showFilters && (
               <Card className="mb-8 filter-card">
                 <CardContent className="p-6">
-                  {/* Search */}
-                  <div className="mb-6">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                      <Input
-                        placeholder="Search properties..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 professional-input"
-                      />
-                    </div>
-                  </div>
-
                   {/* Filter Options */}
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
                     <Select value={filters.location} onValueChange={(value) => setFilters({...filters, location: value})}>
@@ -291,6 +284,9 @@ const Properties = () => {
                       className="w-full h-64 object-cover rounded-t-xl cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => openGallery(property, 0)}
                       onError={(e) => {
+                        console.log('Image failed to load:', property.images[0]);
+                        console.log('Processed URL:', processImageUrl(property.images[0]));
+                        // Fallback to default image if the processed URL fails
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                       }}
                     />
@@ -363,6 +359,8 @@ const Properties = () => {
                         alt={selectedProperty.title}
                         className="w-full h-96 object-cover rounded-lg"
                         onError={(e) => {
+                          console.log('Gallery image failed to load:', selectedProperty.images[currentImageIndex]);
+                          console.log('Processed URL:', processImageUrl(selectedProperty.images[currentImageIndex]));
                           (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                         }}
                       />
@@ -407,8 +405,6 @@ const Properties = () => {
                       </div>
                       
                       <div>
-                        <div className="text-4xl font-bold text-slate-700 dark:text-slate-300 mb-6">{selectedProperty.price}</div>
-                        
                         <div className="space-y-4">
                           <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
                             <Bed className="w-5 h-5" />
@@ -443,6 +439,8 @@ const Properties = () => {
                             }`}
                             onClick={() => setCurrentImageIndex(index)}
                             onError={(e) => {
+                              console.log('Thumbnail image failed to load:', image);
+                              console.log('Processed URL:', processImageUrl(image));
                               (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                             }}
                           />
@@ -457,7 +455,7 @@ const Properties = () => {
             {/* No Results */}
             {filteredProperties.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-white/70 mb-4">
+                <div className="text-slate-700 dark:text-slate-200 mb-4">
                   <Search className="w-16 h-16 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold">No properties found</h3>
                   <p>Try adjusting your search criteria</p>
