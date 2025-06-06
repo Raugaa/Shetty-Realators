@@ -236,11 +236,11 @@ const PropertiesAdmin = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-slate-300 mb-6">
-                Premium <span className="text-slate-400">Properties</span>
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                Premium <span className="text-gray-300">Properties</span>
                 <Badge className="ml-4 bg-green-600 hover:bg-green-700 text-white">ADMIN MODE</Badge>
               </h1>
-              <p className="text-xl text-slate-200 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 Admin Dashboard - Manage premium properties across India
               </p>
             </div>
