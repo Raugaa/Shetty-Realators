@@ -29,8 +29,9 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
-import { propertyStore, type Property } from "@/utils/propertyStore";
-import { processImageUrl } from "@/utils/imageUtils";
+import ImageUpload from "@/components/ImageUpload";
+import { supabasePropertyStore, type Property } from "@/utils/supabasePropertyStore";
+import { useToast } from "@/hooks/use-toast";
 
 const PropertiesAdmin = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -41,7 +42,9 @@ const PropertiesAdmin = () => {
   const [showAddProperty, setShowAddProperty] = useState(false);
   const [showManageProperties, setShowManageProperties] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
-  const [editingPropertyId, setEditingPropertyId] = useState<number | null>(null);
+  const [editingPropertyId, setEditingPropertyId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
   
   // Filter states
   const [filters, setFilters] = useState({
@@ -65,16 +68,17 @@ const PropertiesAdmin = () => {
     bedrooms: 1,
     bathrooms: 1,
     description: "",
-    features: [] as string[],
-    images: [] as string[]
+    features: [] as string[]
   });
 
-  // Load properties from store and subscribe to changes
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+
+  // Load properties from Supabase and subscribe to changes
   useEffect(() => {
-    setProperties(propertyStore.getProperties());
+    setProperties(supabasePropertyStore.getProperties());
     
-    const unsubscribe = propertyStore.subscribe(() => {
-      setProperties(propertyStore.getProperties());
+    const unsubscribe = supabasePropertyStore.subscribe(() => {
+      setProperties(supabasePropertyStore.getProperties());
     });
     
     return unsubscribe;
@@ -105,7 +109,7 @@ const PropertiesAdmin = () => {
   };
 
   const nextImage = () => {
-    if (selectedProperty) {
+    if (selectedProperty && selectedProperty.images) {
       setCurrentImageIndex((prev) => 
         prev === selectedProperty.images.length - 1 ? 0 : prev + 1
       );
@@ -113,7 +117,7 @@ const PropertiesAdmin = () => {
   };
 
   const prevImage = () => {
-    if (selectedProperty) {
+    if (selectedProperty && selectedProperty.images) {
       setCurrentImageIndex((prev) => 
         prev === 0 ? selectedProperty.images.length - 1 : prev - 1
       );
@@ -134,40 +138,58 @@ const PropertiesAdmin = () => {
     setSearchTerm("");
   };
 
-  const handleAddProperty = () => {
-    // Process image URLs to convert Google Drive links
-    const processedImages = newProperty.images.map(url => processImageUrl(url));
-    
-    const propertyData = {
-      ...newProperty,
-      images: processedImages.length > 0 ? processedImages : [processImageUrl("")]
-    };
-
-    if (editingPropertyId) {
-      propertyStore.updateProperty(editingPropertyId, propertyData);
-      setEditingPropertyId(null);
-      alert("Property updated successfully!");
-    } else {
-      propertyStore.addProperty(propertyData);
-      alert("Property added successfully!");
+  const handleAddProperty = async () => {
+    if (!newProperty.title || !newProperty.location) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
     }
-    
-    setNewProperty({
-      title: "",
-      location: "",
-      type: "Apartment",
-      bhk: "1BHK",
-      area: "",
-      bedrooms: 1,
-      bathrooms: 1,
-      description: "",
-      features: [],
-      images: []
-    });
-    setShowAddProperty(false);
+
+    setIsLoading(true);
+    try {
+      if (editingPropertyId) {
+        await supabasePropertyStore.updateProperty(editingPropertyId, newProperty, selectedImages);
+        toast({
+          title: "Success",
+          description: "Property updated successfully!"
+        });
+        setEditingPropertyId(null);
+      } else {
+        await supabasePropertyStore.addProperty(newProperty, selectedImages);
+        toast({
+          title: "Success",
+          description: "Property added successfully!"
+        });
+      }
+      
+      setNewProperty({
+        title: "",
+        location: "",
+        type: "Apartment",
+        bhk: "1BHK",
+        area: "",
+        bedrooms: 1,
+        bathrooms: 1,
+        description: "",
+        features: []
+      });
+      setSelectedImages([]);
+      setShowAddProperty(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save property. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleEditProperty = (propertyId: number) => {
+  const handleEditProperty = (propertyId: string) => {
     const property = properties.find(p => p.id === propertyId);
     if (property) {
       setNewProperty({
@@ -178,19 +200,33 @@ const PropertiesAdmin = () => {
         area: property.area,
         bedrooms: property.bedrooms,
         bathrooms: property.bathrooms,
-        description: property.description,
-        features: property.features,
-        images: property.images
+        description: property.description || "",
+        features: property.features
       });
       setEditingPropertyId(propertyId);
+      setSelectedImages([]);
       setShowAddProperty(true);
     }
   };
 
-  const handleDeleteProperty = (propertyId: number) => {
-    if (confirm("Are you sure you want to delete this property?")) {
-      propertyStore.deleteProperty(propertyId);
-      alert("Property deleted successfully!");
+  const handleDeleteProperty = async (propertyId: string) => {
+    if (confirm("Are you sure you want to delete this property? This will also delete all associated images.")) {
+      setIsLoading(true);
+      try {
+        await supabasePropertyStore.deleteProperty(propertyId);
+        toast({
+          title: "Success",
+          description: "Property deleted successfully!"
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to delete property. Please try again.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -210,22 +246,6 @@ const PropertiesAdmin = () => {
     });
   };
 
-  const addImageUrl = (url: string) => {
-    if (url && !newProperty.images.includes(url)) {
-      setNewProperty({
-        ...newProperty,
-        images: [...newProperty.images, url]
-      });
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setNewProperty({
-      ...newProperty,
-      images: newProperty.images.filter((_, i) => i !== index)
-    });
-  };
-
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
@@ -241,7 +261,7 @@ const PropertiesAdmin = () => {
                 <Badge className="ml-4 bg-green-600 hover:bg-green-700 text-white">ADMIN MODE</Badge>
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Admin Dashboard - Manage premium properties across India
+                Admin Dashboard - Manage premium properties with cloud storage
               </p>
             </div>
 
@@ -263,12 +283,13 @@ const PropertiesAdmin = () => {
                       bedrooms: 1,
                       bathrooms: 1,
                       description: "",
-                      features: [],
-                      images: []
+                      features: []
                     });
+                    setSelectedImages([]);
                     setShowAddProperty(true);
                   }}
                   className="professional-btn text-white"
+                  disabled={isLoading}
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Property
@@ -278,7 +299,7 @@ const PropertiesAdmin = () => {
                   className="professional-btn text-white"
                 >
                   <Settings className="w-4 h-4 mr-2" />
-                  Manage Properties
+                  Manage Properties ({properties.length})
                 </Button>
               </div>
               <Button
@@ -429,12 +450,11 @@ const PropertiesAdmin = () => {
                 >
                   <div className="relative">
                     <img 
-                      src={processImageUrl(property.images[0])} 
+                      src={property.images && property.images.length > 0 ? property.images[0].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"} 
                       alt={property.title}
                       className="w-full h-64 object-cover rounded-t-xl cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => openGallery(property, 0)}
                       onError={(e) => {
-                        // Fallback to default image if the processed URL fails
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                       }}
                     />
@@ -452,6 +472,7 @@ const PropertiesAdmin = () => {
                         size="sm" 
                         onClick={() => handleEditProperty(property.id)}
                         className="professional-btn text-white text-xs"
+                        disabled={isLoading}
                       >
                         <Edit className="w-3 h-3 mr-1" />
                         Edit
@@ -460,6 +481,7 @@ const PropertiesAdmin = () => {
                         size="sm" 
                         onClick={() => handleDeleteProperty(property.id)}
                         className="bg-red-600 hover:bg-red-700 text-white text-xs"
+                        disabled={isLoading}
                       >
                         <Trash2 className="w-3 h-3 mr-1" />
                         Delete
@@ -506,7 +528,7 @@ const PropertiesAdmin = () => {
                         className="flex-1 professional-btn text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
-                        View Details & Gallery
+                        View Details ({property.images?.length || 0} photos)
                       </Button>
                     </div>
                   </CardContent>
@@ -523,7 +545,7 @@ const PropertiesAdmin = () => {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Property Title</label>
+                      <label className="block text-sm font-medium mb-2">Property Title *</label>
                       <Input
                         value={newProperty.title}
                         onChange={(e) => setNewProperty({...newProperty, title: e.target.value})}
@@ -531,7 +553,7 @@ const PropertiesAdmin = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Location</label>
+                      <label className="block text-sm font-medium mb-2">Location *</label>
                       <Input
                         value={newProperty.location}
                         onChange={(e) => setNewProperty({...newProperty, location: e.target.value})}
@@ -626,6 +648,7 @@ const PropertiesAdmin = () => {
                           }
                         }}
                         className="professional-btn text-white"
+                        type="button"
                       >
                         Add
                       </Button>
@@ -640,64 +663,32 @@ const PropertiesAdmin = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium mb-2">Image URLs (Google Drive links supported)</label>
-                    <div className="text-sm text-gray-600 mb-2">
-                      You can use Google Drive share links - they will be automatically converted to display properly.
-                    </div>
-                    <div className="flex gap-2 mb-2">
-                      <Input
-                        placeholder="Add image URL (Google Drive links supported)"
-                        onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
-                            addImageUrl(e.currentTarget.value);
-                            e.currentTarget.value = '';
-                          }
-                        }}
-                      />
-                      <Button 
-                        onClick={() => {
-                          const input = document.querySelector('input[placeholder="Add image URL (Google Drive links supported)"]') as HTMLInputElement;
-                          if (input) {
-                            addImageUrl(input.value);
-                            input.value = '';
-                          }
-                        }}
-                        className="professional-btn text-white"
-                      >
-                        Add
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {newProperty.images.map((url, idx) => (
-                        <div key={idx} className="relative">
-                          <img 
-                            src={processImageUrl(url)} 
-                            alt={`Property ${idx + 1}`} 
-                            className="w-full h-20 object-cover rounded"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
-                            }}
-                          />
-                          <Button
-                            size="sm"
-                            onClick={() => removeImage(idx)}
-                            className="absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 p-0"
-                          >
-                            ×
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
+                    <label className="block text-sm font-medium mb-2">Property Images</label>
+                    <ImageUpload
+                      onImagesChange={setSelectedImages}
+                      existingImages={editingPropertyId ? properties.find(p => p.id === editingPropertyId)?.images?.map(img => img.image_url) || [] : []}
+                      maxImages={10}
+                    />
                   </div>
 
                   <div className="flex gap-4">
-                    <Button onClick={handleAddProperty} className="professional-btn text-white flex-1">
-                      {editingPropertyId ? 'Update Property' : 'Add Property'}
+                    <Button 
+                      onClick={handleAddProperty} 
+                      className="professional-btn text-white flex-1"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Processing...' : (editingPropertyId ? 'Update Property' : 'Add Property')}
                     </Button>
-                    <Button variant="outline" onClick={() => {
-                      setShowAddProperty(false);
-                      setEditingPropertyId(null);
-                    }} className="flex-1">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        setShowAddProperty(false);
+                        setEditingPropertyId(null);
+                        setSelectedImages([]);
+                      }} 
+                      className="flex-1"
+                      disabled={isLoading}
+                    >
                       Cancel
                     </Button>
                   </div>
@@ -717,7 +708,7 @@ const PropertiesAdmin = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <img 
-                            src={processImageUrl(property.images[0])} 
+                            src={property.images && property.images.length > 0 ? property.images[0].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"} 
                             alt={property.title} 
                             className="w-16 h-16 object-cover rounded"
                             onError={(e) => {
@@ -763,14 +754,14 @@ const PropertiesAdmin = () => {
                     {/* Image Gallery */}
                     <div className="relative">
                       <img 
-                        src={processImageUrl(selectedProperty.images[currentImageIndex])} 
+                        src={selectedProperty.images && selectedProperty.images.length > 0 ? selectedProperty.images[currentImageIndex].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"} 
                         alt={selectedProperty.title}
                         className="w-full h-96 object-cover rounded-lg"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                         }}
                       />
-                      {selectedProperty.images.length > 1 && (
+                      {selectedProperty.images && selectedProperty.images.length > 1 && (
                         <>
                           <Button
                             onClick={prevImage}
@@ -787,7 +778,7 @@ const PropertiesAdmin = () => {
                         </>
                       )}
                       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                        {currentImageIndex + 1} / {selectedProperty.images.length}
+                        {currentImageIndex + 1} / {selectedProperty.images?.length || 0}
                       </div>
                     </div>
 
@@ -833,12 +824,12 @@ const PropertiesAdmin = () => {
                     </div>
 
                     {/* Thumbnail Gallery */}
-                    {selectedProperty.images.length > 1 && (
+                    {selectedProperty.images && selectedProperty.images.length > 1 && (
                       <div className="flex gap-2 overflow-x-auto">
-                        {selectedProperty.images.map((image: string, index: number) => (
+                        {selectedProperty.images.map((image: any, index: number) => (
                           <img
                             key={index}
-                            src={processImageUrl(image)}
+                            src={image.image_url}
                             alt={`${selectedProperty.title} ${index + 1}`}
                             className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
                               currentImageIndex === index ? 'border-slate-700' : 'border-transparent'
@@ -862,7 +853,7 @@ const PropertiesAdmin = () => {
                 <div className="text-white/70 mb-4">
                   <Search className="w-16 h-16 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold">No properties found</h3>
-                  <p>Try adjusting your search criteria</p>
+                  <p>Try adjusting your search criteria or add some properties</p>
                 </div>
                 <Button 
                   onClick={resetFilters}

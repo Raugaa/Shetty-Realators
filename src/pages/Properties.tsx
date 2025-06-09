@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,8 +24,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
-import { propertyStore, type Property } from "@/utils/propertyStore";
-import { processImageUrl } from "@/utils/imageUtils";
+import { supabasePropertyStore, type Property } from "@/utils/supabasePropertyStore";
 
 const Properties = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -48,12 +46,12 @@ const Properties = () => {
     connectivity: "all"
   });
 
-  // Load properties from store and subscribe to changes
+  // Load properties from Supabase and subscribe to changes
   useEffect(() => {
-    setProperties(propertyStore.getProperties());
+    setProperties(supabasePropertyStore.getProperties());
     
-    const unsubscribe = propertyStore.subscribe(() => {
-      setProperties(propertyStore.getProperties());
+    const unsubscribe = supabasePropertyStore.subscribe(() => {
+      setProperties(supabasePropertyStore.getProperties());
     });
     
     return unsubscribe;
@@ -84,7 +82,7 @@ const Properties = () => {
   };
 
   const nextImage = () => {
-    if (selectedProperty) {
+    if (selectedProperty && selectedProperty.images) {
       setCurrentImageIndex((prev) => 
         prev === selectedProperty.images.length - 1 ? 0 : prev + 1
       );
@@ -92,7 +90,7 @@ const Properties = () => {
   };
 
   const prevImage = () => {
-    if (selectedProperty) {
+    if (selectedProperty && selectedProperty.images) {
       setCurrentImageIndex((prev) => 
         prev === 0 ? selectedProperty.images.length - 1 : prev - 1
       );
@@ -121,28 +119,26 @@ const Properties = () => {
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            {/* Header - Fixed color to match navbar */}
+            {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-slate-800 dark:text-slate-100 mb-6">
-                Premium <span className="text-slate-600 dark:text-slate-300">Properties</span>
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                Premium <span className="text-gray-300">Properties</span>
               </h1>
-              <p className="text-xl text-slate-700 dark:text-slate-200 max-w-3xl mx-auto">
-                Discover luxury properties across India with exclusive amenities and prime locations
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Discover premium properties across India with stunning visuals and detailed information
               </p>
             </div>
 
-            {/* Search and Filter Toggle */}
             <div className="flex justify-between items-center mb-8">
-              <div className="flex-1 max-w-md">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input
-                    placeholder="Search properties..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 professional-input"
-                  />
-                </div>
+              <div className="flex items-center gap-4">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  🏠 {properties.length} Properties Available
+                </Button>
+                <Button asChild className="professional-btn text-white">
+                  <Link to="/properties-admin">
+                    👨‍💼 Admin Mode
+                  </Link>
+                </Button>
               </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
@@ -157,6 +153,19 @@ const Properties = () => {
             {showFilters && (
               <Card className="mb-8 filter-card">
                 <CardContent className="p-6">
+                  {/* Search */}
+                  <div className="mb-6">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <Input
+                        placeholder="Search properties..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10 professional-input"
+                      />
+                    </div>
+                  </div>
+
                   {/* Filter Options */}
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
                     <Select value={filters.location} onValueChange={(value) => setFilters({...filters, location: value})}>
@@ -279,14 +288,11 @@ const Properties = () => {
                 >
                   <div className="relative">
                     <img 
-                      src={processImageUrl(property.images[0])} 
+                      src={property.images && property.images.length > 0 ? property.images[0].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"} 
                       alt={property.title}
                       className="w-full h-64 object-cover rounded-t-xl cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => openGallery(property, 0)}
                       onError={(e) => {
-                        console.log('Image failed to load:', property.images[0]);
-                        console.log('Processed URL:', processImageUrl(property.images[0]));
-                        // Fallback to default image if the processed URL fails
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                       }}
                     />
@@ -339,7 +345,7 @@ const Properties = () => {
                         className="flex-1 professional-btn text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
-                        View Details & Gallery
+                        View Details ({property.images?.length || 0} photos)
                       </Button>
                     </div>
                   </CardContent>
@@ -355,12 +361,10 @@ const Properties = () => {
                     {/* Image Gallery */}
                     <div className="relative">
                       <img 
-                        src={processImageUrl(selectedProperty.images[currentImageIndex])} 
+                        src={selectedProperty.images && selectedProperty.images[currentImageIndex] ? selectedProperty.images[currentImageIndex].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"}
                         alt={selectedProperty.title}
                         className="w-full h-96 object-cover rounded-lg"
                         onError={(e) => {
-                          console.log('Gallery image failed to load:', selectedProperty.images[currentImageIndex]);
-                          console.log('Processed URL:', processImageUrl(selectedProperty.images[currentImageIndex]));
                           (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                         }}
                       />
@@ -429,18 +433,16 @@ const Properties = () => {
                     {/* Thumbnail Gallery */}
                     {selectedProperty.images.length > 1 && (
                       <div className="flex gap-2 overflow-x-auto">
-                        {selectedProperty.images.map((image: string, index: number) => (
+                        {selectedProperty.images.map((image: any, index: number) => (
                           <img
                             key={index}
-                            src={processImageUrl(image)}
+                            src={image.image_url}
                             alt={`${selectedProperty.title} ${index + 1}`}
                             className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
                               currentImageIndex === index ? 'border-slate-700' : 'border-transparent'
                             }`}
                             onClick={() => setCurrentImageIndex(index)}
                             onError={(e) => {
-                              console.log('Thumbnail image failed to load:', image);
-                              console.log('Processed URL:', processImageUrl(image));
                               (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                             }}
                           />
@@ -455,7 +457,7 @@ const Properties = () => {
             {/* No Results */}
             {filteredProperties.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-slate-700 dark:text-slate-200 mb-4">
+                <div className="text-white/70 mb-4">
                   <Search className="w-16 h-16 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold">No properties found</h3>
                   <p>Try adjusting your search criteria</p>

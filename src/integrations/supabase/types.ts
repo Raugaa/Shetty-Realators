@@ -9,7 +9,83 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      properties: {
+        Row: {
+          area: string
+          bathrooms: number
+          bedrooms: number
+          bhk: string
+          created_at: string | null
+          description: string | null
+          features: string[] | null
+          id: string
+          location: string
+          title: string
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          area: string
+          bathrooms: number
+          bedrooms: number
+          bhk: string
+          created_at?: string | null
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          location: string
+          title: string
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          area?: string
+          bathrooms?: number
+          bedrooms?: number
+          bhk?: string
+          created_at?: string | null
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          location?: string
+          title?: string
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      property_images: {
+        Row: {
+          created_at: string | null
+          id: string
+          image_order: number | null
+          image_url: string
+          property_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          image_order?: number | null
+          image_url: string
+          property_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          image_order?: number | null
+          image_url?: string
+          property_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_images_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
