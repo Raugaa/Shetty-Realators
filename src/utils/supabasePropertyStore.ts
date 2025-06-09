@@ -10,19 +10,19 @@ export interface Property {
   area: string;
   bedrooms: number;
   bathrooms: number;
-  description: string;
+  description: string | null;
   features: string[];
-  created_at?: string;
-  updated_at?: string;
+  created_at?: string | null;
+  updated_at?: string | null;
   images?: PropertyImage[];
 }
 
 export interface PropertyImage {
   id: string;
-  property_id: string;
+  property_id: string | null;
   image_url: string;
-  image_order: number;
-  created_at?: string;
+  image_order: number | null;
+  created_at?: string | null;
 }
 
 class SupabasePropertyStore {
@@ -71,8 +71,10 @@ class SupabasePropertyStore {
           *,
           property_images (
             id,
+            property_id,
             image_url,
-            image_order
+            image_order,
+            created_at
           )
         `)
         .order('created_at', { ascending: false });
@@ -83,8 +85,25 @@ class SupabasePropertyStore {
       }
 
       this.properties = properties.map(prop => ({
-        ...prop,
-        images: prop.property_images || []
+        id: prop.id,
+        title: prop.title,
+        location: prop.location,
+        type: prop.type,
+        bhk: prop.bhk,
+        area: prop.area,
+        bedrooms: prop.bedrooms,
+        bathrooms: prop.bathrooms,
+        description: prop.description,
+        features: prop.features || [],
+        created_at: prop.created_at,
+        updated_at: prop.updated_at,
+        images: (prop.property_images || []).map((img: any) => ({
+          id: img.id,
+          property_id: img.property_id,
+          image_url: img.image_url,
+          image_order: img.image_order,
+          created_at: img.created_at
+        }))
       }));
       
       this.notifyListeners();
