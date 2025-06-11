@@ -15,7 +15,6 @@ import { toast } from "@/components/ui/use-toast";
 import emailjs from 'emailjs-com';
 
 const Contact = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,11 +22,6 @@ const Contact = () => {
     subject: "",
     message: ""
   });
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -81,36 +75,36 @@ const Contact = () => {
       icon: Mail,
       title: "Email Us",
       details: ["Shettyrealtorspune@gmail.com", "sales@sudhirrealtors.com"],
-      color: "bg-slate-600"
+      color: "bg-dark-gray"
     },
     {
       icon: Phone,
       title: "Call Us",
       details: ["9422005110", "+91 87654 32109"],
-      color: "bg-slate-700"
+      color: "bg-dark-gray"
     },
     {
       icon: MapPin,
       title: "Visit Us",
       details: ["123 Real Estate Avenue", "Pune, Maharashtra 400001", "India"],
-      color: "bg-slate-800"
+      color: "bg-dark-gray"
     }
   ];
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
+    <div className="min-h-screen">
       <LoadingBar />
-      <div className="min-h-screen transition-all duration-700 bg-gray-50 dark:bg-gray-900">
-        <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <div className="min-h-screen transition-all duration-700 bg-gray-50">
+        <Navigation />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-20 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-8">
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8">
                 Get In <span className="professional-text">Touch</span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Ready to find your dream property? Our expert team is here to guide you through every step of your real estate journey.
               </p>
             </div>
@@ -122,15 +116,15 @@ const Contact = () => {
                 return (
                   <Card 
                     key={info.title} 
-                    className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
+                    className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white border-gray-200`}
                   >
                     <CardContent className="p-8 text-center">
                       <div className={`w-16 h-16 ${info.color} rounded-2xl flex items-center justify-center mx-auto mb-6 hover-scale`}>
                         <Icon className="w-8 h-8 text-white" />
                       </div>
-                      <h3 className="font-bold text-gray-900 dark:text-white mb-4 text-xl">{info.title}</h3>
+                      <h3 className="font-bold text-gray-900 mb-4 text-xl">{info.title}</h3>
                       {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-gray-600 dark:text-gray-300 text-sm mb-2">{detail}</p>
+                        <p key={idx} className="text-gray-600 text-sm mb-2">{detail}</p>
                       ))}
                     </CardContent>
                   </Card>
@@ -140,12 +134,12 @@ const Contact = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
-              <Card className="professional-card hover-lift animate-fade-in animate-delay-200 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <Card className="professional-card hover-lift animate-fade-in animate-delay-200 bg-white border-gray-200">
                 <CardHeader className="pb-6">
-                  <CardTitle className="text-3xl font-bold text-gray-900 dark:text-white">
+                  <CardTitle className="text-3xl font-bold text-gray-900">
                     Send us a Message
                   </CardTitle>
-                  <CardDescription className="text-gray-600 dark:text-gray-300 text-lg">
+                  <CardDescription className="text-gray-600 text-lg">
                     Fill out the form below and we'll respond within 24 hours.
                   </CardDescription>
                 </CardHeader>
@@ -153,7 +147,7 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="name" className="text-gray-900 dark:text-white font-medium">Full Name</Label>
+                        <Label htmlFor="name" className="text-gray-900 font-medium">Full Name</Label>
                         <Input
                           id="name"
                           name="name"
@@ -161,12 +155,12 @@ const Contact = () => {
                           value={formData.name}
                           onChange={handleInputChange}
                           required
-                          className="professional-input bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                          className="professional-input bg-white border-gray-300 text-gray-900"
                           placeholder="Enter your full name"
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email" className="text-gray-900 dark:text-white font-medium">Email Address</Label>
+                        <Label htmlFor="email" className="text-gray-900 font-medium">Email Address</Label>
                         <Input
                           id="email"
                           name="email"
@@ -174,7 +168,7 @@ const Contact = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           required
-                          className="professional-input bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                          className="professional-input bg-white border-gray-300 text-gray-900"
                           placeholder="Enter your email"
                         />
                       </div>
@@ -182,19 +176,19 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-gray-900 dark:text-white font-medium">Phone Number</Label>
+                        <Label htmlFor="phone" className="text-gray-900 font-medium">Phone Number</Label>
                         <Input
                           id="phone"
                           name="phone"
                           type="tel"
                           value={formData.phone}
                           onChange={handleInputChange}
-                          className="professional-input bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                          className="professional-input bg-white border-gray-300 text-gray-900"
                           placeholder="Your phone number"
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="subject" className="text-gray-900 dark:text-white font-medium">Subject</Label>
+                        <Label htmlFor="subject" className="text-gray-900 font-medium">Subject</Label>
                         <Input
                           id="subject"
                           name="subject"
@@ -202,14 +196,14 @@ const Contact = () => {
                           value={formData.subject}
                           onChange={handleInputChange}
                           required
-                          className="professional-input bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
+                          className="professional-input bg-white border-gray-300 text-gray-900"
                           placeholder="What's this about?"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-gray-900 dark:text-white font-medium">Message</Label>
+                      <Label htmlFor="message" className="text-gray-900 font-medium">Message</Label>
                       <Textarea
                         id="message"
                         name="message"
@@ -217,14 +211,14 @@ const Contact = () => {
                         onChange={handleInputChange}
                         required
                         rows={6}
-                        className="professional-input bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white resize-none"
+                        className="professional-input bg-white border-gray-300 text-gray-900 resize-none"
                         placeholder="Tell us about your property needs, budget, and any specific requirements..."
                       />
                     </div>
 
                     <Button 
                       type="submit" 
-                      className="w-full hover-lift professional-btn py-4 text-lg font-semibold rounded-xl bg-slate-700 hover:bg-slate-800 text-white"
+                      className="w-full hover-lift professional-btn py-4 text-lg font-semibold rounded-xl bg-dark-gray hover:bg-dark-gray/90 text-white"
                     >
                       Send Message
                     </Button>
@@ -240,7 +234,7 @@ const Contact = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-gray-300 text-gray-700 hover:bg-gray-100">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home

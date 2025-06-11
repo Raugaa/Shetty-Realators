@@ -34,7 +34,6 @@ import { supabasePropertyStore, type Property } from "@/utils/supabasePropertySt
 import { useToast } from "@/hooks/use-toast";
 
 const PropertiesAdmin = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -83,11 +82,6 @@ const PropertiesAdmin = () => {
     
     return unsubscribe;
   }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -247,10 +241,10 @@ const PropertiesAdmin = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
+    <div className="min-h-screen">
       <LoadingBar />
       <div className="professional-bg min-h-screen transition-all duration-700">
-        <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        <Navigation />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
@@ -883,3 +877,5 @@ const PropertiesAdmin = () => {
 };
 
 export default PropertiesAdmin;
+
+</edits_to_apply>

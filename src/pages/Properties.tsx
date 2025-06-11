@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,7 +28,6 @@ import LoadingBar from "@/components/LoadingBar";
 import { supabasePropertyStore, type Property } from "@/utils/supabasePropertyStore";
 
 const Properties = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -56,11 +56,6 @@ const Properties = () => {
     
     return unsubscribe;
   }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -112,10 +107,10 @@ const Properties = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
+    <div className="min-h-screen">
       <LoadingBar />
       <div className="professional-bg min-h-screen transition-all duration-700">
-        <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        <Navigation />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
@@ -135,7 +130,7 @@ const Properties = () => {
                   🏠 {properties.length} Properties Available
                 </Button>
                 <Button asChild className="professional-btn text-white">
-                  <Link to="/properties-admin">
+                  <Link to="/properties/admin-sr2024-mgmt-portal-xyz789">
                     👨‍💼 Admin Mode
                   </Link>
                 </Button>
@@ -172,7 +167,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">All Locations</SelectItem>
                         <SelectItem value="mumbai">Mumbai</SelectItem>
                         <SelectItem value="pune">Pune</SelectItem>
@@ -185,7 +180,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Type" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">All Types</SelectItem>
                         <SelectItem value="apartment">Apartment</SelectItem>
                         <SelectItem value="villa">Villa</SelectItem>
@@ -198,7 +193,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="BHK" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">All BHK</SelectItem>
                         <SelectItem value="1BHK">1 BHK</SelectItem>
                         <SelectItem value="2BHK">2 BHK</SelectItem>
@@ -212,7 +207,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Price" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">All Prices</SelectItem>
                         <SelectItem value="under-1cr">Under ₹1 Cr</SelectItem>
                         <SelectItem value="1-3cr">₹1-3 Cr</SelectItem>
@@ -225,7 +220,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Sea View" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">Any</SelectItem>
                         <SelectItem value="yes">Sea View</SelectItem>
                         <SelectItem value="no">No Sea View</SelectItem>
@@ -236,7 +231,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Parking" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">Any</SelectItem>
                         <SelectItem value="yes">Parking Available</SelectItem>
                         <SelectItem value="no">No Parking</SelectItem>
@@ -247,7 +242,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Garden" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">Any</SelectItem>
                         <SelectItem value="yes">Garden Available</SelectItem>
                         <SelectItem value="no">No Garden</SelectItem>
@@ -258,7 +253,7 @@ const Properties = () => {
                       <SelectTrigger className="professional-input">
                         <SelectValue placeholder="Connectivity" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white dark:bg-gray-800">
+                      <SelectContent className="bg-white">
                         <SelectItem value="all">Any</SelectItem>
                         <SelectItem value="metro">Near Metro</SelectItem>
                         <SelectItem value="highway">Highway Access</SelectItem>
@@ -284,7 +279,7 @@ const Properties = () => {
               {filteredProperties.map((property, index) => (
                 <Card 
                   key={property.id} 
-                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 dark:bg-gray-800/95 backdrop-blur-md`}
+                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 backdrop-blur-md`}
                 >
                   <div className="relative">
                     <img 
@@ -296,8 +291,8 @@ const Properties = () => {
                         (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
                       }}
                     />
-                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2">
-                      <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2">
+                      <Camera className="w-4 h-4 text-gray-600" />
                     </div>
                     <div className="absolute bottom-4 left-4">
                       <Badge className="professional-btn text-white">
@@ -308,15 +303,15 @@ const Properties = () => {
                   
                   <CardContent className="p-6">
                     <div className="mb-4">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">{property.title}</h3>
+                      <h3 className="text-xl font-bold text-gray-900">{property.title}</h3>
                     </div>
                     
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
+                    <div className="flex items-center text-gray-600 mb-4">
                       <MapPin className="w-4 h-4 mr-2" />
                       <span>{property.location}</span>
                     </div>
                     
-                    <div className="flex items-center gap-6 mb-4 text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center gap-6 mb-4 text-gray-600">
                       <div className="flex items-center">
                         <Bed className="w-4 h-4 mr-1" />
                         <span>{property.bedrooms}</span>
@@ -333,7 +328,7 @@ const Properties = () => {
 
                     <div className="flex flex-wrap gap-2 mb-4">
                       {property.features.map((feature, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                        <Badge key={idx} variant="secondary" className="text-xs bg-gray-100 text-gray-700">
                           {feature}
                         </Badge>
                       ))}
@@ -355,7 +350,7 @@ const Properties = () => {
 
             {/* Gallery Modal */}
             <Dialog open={!!selectedProperty} onOpenChange={() => setSelectedProperty(null)}>
-              <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-gray-800">
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white">
                 {selectedProperty && (
                   <div className="space-y-6">
                     {/* Image Gallery */}
@@ -392,16 +387,16 @@ const Properties = () => {
                     {/* Property Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{selectedProperty.title}</h2>
-                        <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
+                        <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedProperty.title}</h2>
+                        <div className="flex items-center text-gray-600 mb-4">
                           <MapPin className="w-5 h-5 mr-2" />
                           <span>{selectedProperty.location}</span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4">{selectedProperty.description}</p>
+                        <p className="text-gray-600 mb-4">{selectedProperty.description}</p>
                         
                         <div className="flex flex-wrap gap-2 mb-4">
                           {selectedProperty.features.map((feature: string, idx: number) => (
-                            <Badge key={idx} variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            <Badge key={idx} variant="secondary" className="bg-gray-100 text-gray-700">
                               {feature}
                             </Badge>
                           ))}
@@ -410,15 +405,15 @@ const Properties = () => {
                       
                       <div>
                         <div className="space-y-4">
-                          <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center gap-4 text-gray-600">
                             <Bed className="w-5 h-5" />
                             <span>{selectedProperty.bedrooms} Bedrooms</span>
                           </div>
-                          <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center gap-4 text-gray-600">
                             <Bath className="w-5 h-5" />
                             <span>{selectedProperty.bathrooms} Bathrooms</span>
                           </div>
-                          <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center gap-4 text-gray-600">
                             <Square className="w-5 h-5" />
                             <span>{selectedProperty.area}</span>
                           </div>
