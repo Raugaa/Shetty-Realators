@@ -71,12 +71,12 @@ const Index = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <LoadingBar />
-      <div className="bg-gradient-to-br from-slate-900 to-gray-900 min-h-screen transition-all duration-700">
+      <div className="bg-gradient-to-br from-yellow-primary to-yellow-primary/80 min-h-screen transition-all duration-700">
         <Navigation isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-slate-900/90 to-gray-900/90 pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 to-gray-900/20"></div>
+        <section className="bg-gradient-to-br from-yellow-primary/90 to-yellow-primary/80 pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-yellow-primary/20 to-yellow-primary/30"></div>
           <div className={`max-w-7xl mx-auto text-center relative z-10 ${isLoaded ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <div className="animate-float">
               <img 
@@ -85,14 +85,14 @@ const Index = () => {
                 className="w-80 h-40 mx-auto mb-8 hover:scale-105 transition-transform duration-300 object-contain"
               />
             </div>
-            <h1 className="text-6xl md:text-8xl font-bold text-white mb-8 animate-scale-in">
+            <h1 className="text-6xl md:text-8xl font-bold text-dark-gray mb-8 animate-scale-in">
               Welcome to{" "}
-              <span className="text-slate-300 block mt-4">
+              <span className="text-dark-gray/80 block mt-4">
                 {showTypewriter ? (
                   <>
                     {typewriterText}
                     {typewriterText.length < "Sudhir Realtors".length && (
-                      <span className="animate-pulse text-white">|</span>
+                      <span className="animate-pulse text-dark-gray">|</span>
                     )}
                   </>
                 ) : (
@@ -100,18 +100,18 @@ const Index = () => {
                 )}
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto animate-fade-in animate-delay-200">
+            <p className="text-xl md:text-2xl text-dark-gray/90 mb-12 max-w-4xl mx-auto animate-fade-in animate-delay-200">
               Your Trusted Partner in Indian Real Estate - Discover Premium Properties Across India
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animate-delay-400">
-              <Button size="lg" className="bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+              <Button size="lg" className="bg-dark-gray text-yellow-primary hover:bg-dark-gray/90 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                 <Link to="/properties" className="flex items-center gap-3">
                   <Building className="w-6 h-6" />
                   Explore Properties
                 </Link>
               </Button>
-              <Button size="lg" className="bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
+              <Button size="lg" className="bg-dark-gray text-yellow-primary hover:bg-dark-gray/90 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 hover:scale-105">
                 <Link to="/contact" className="flex items-center gap-3">
                   <Contact className="w-6 h-6" />
                   Get Expert Consultation
@@ -122,14 +122,14 @@ const Index = () => {
           
           {/* Scroll indicator */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ChevronDown className="w-8 h-8 text-white/70" />
+            <ChevronDown className="w-8 h-8 text-dark-gray/70" />
           </div>
         </section>
 
         <EnhancedAboutUs />
         
         {/* Add proper spacing and visual separation before CallToAction */}
-        <div className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-dark-gray dark:to-dark-gray/80 border-t border-yellow-primary/20">
           <CallToAction />
         </div>
         

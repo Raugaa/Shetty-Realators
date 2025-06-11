@@ -6,53 +6,55 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 16%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 16%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 0 0% 16%;
+    --primary: 44 98% 52%;
+    --primary-foreground: 0 0% 16%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 16%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 44 98% 52%;
+    --accent-foreground: 0 0% 16%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --chart-1: 12 76% 61%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 44 98% 52%;
+    --chart-1: 44 98% 52%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --yellow-primary: 44 98% 52%;
+    --dark-gray: 0 0% 16%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 0 0% 16%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 16%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 16%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 44 98% 52%;
+    --primary-foreground: 0 0% 16%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 44 98% 52%;
+    --accent-foreground: 0 0% 16%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 44 98% 52%;
+    --chart-1: 44 98% 52%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
@@ -72,16 +74,16 @@
 /* Timeline improvements - bringing cards closer and making them visible */
 .timeline-card {
   background: rgba(255, 255, 255, 0.95) !important;
-  border: 2px solid rgba(71, 85, 105, 0.3) !important;
+  border: 2px solid rgba(249, 190, 8, 0.3) !important;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(71, 85, 105, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(249, 190, 8, 0.2) !important;
   margin: 0 8px !important; /* Bringing cards much closer to timeline */
 }
 
 .dark .timeline-card {
-  background: rgba(31, 41, 55, 0.95) !important;
-  border: 2px solid rgba(148, 163, 184, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(148, 163, 184, 0.2) !important;
+  background: rgba(41, 41, 41, 0.95) !important;
+  border: 2px solid rgba(249, 190, 8, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(249, 190, 8, 0.2) !important;
 }
 
 /* Infinite Image Scroller Animations */
@@ -197,4 +199,25 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Custom yellow and dark gray utilities */
+.bg-yellow-primary {
+  background-color: #F9BE08;
+}
+
+.text-yellow-primary {
+  color: #F9BE08;
+}
+
+.bg-dark-gray {
+  background-color: #292929;
+}
+
+.text-dark-gray {
+  color: #292929;
+}
+
+.border-yellow-primary {
+  border-color: #F9BE08;
 }

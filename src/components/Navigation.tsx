@@ -21,7 +21,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-white/10 transition-all duration-500">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-dark-gray/95 backdrop-blur-xl border-b border-yellow-primary/20 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Company Name */}
@@ -34,7 +34,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
               />
             </div>
             <div className="hidden sm:block">
-              <span className="text-2xl font-bold text-white group-hover:text-blue-200 transition-colors duration-300">
+              <span className="text-2xl font-bold text-white group-hover:text-yellow-primary transition-colors duration-300">
                 Sudhir Realtors
               </span>
               <p className="text-sm text-white/70">Premium Real Estate</p>
@@ -55,8 +55,8 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
                 >
                   <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
                     isActive
-                      ? "bg-white/20 text-white shadow-lg"
-                      : "text-white/80 hover:bg-white/10 hover:text-white"
+                      ? "bg-yellow-primary/20 text-yellow-primary shadow-lg"
+                      : "text-white/80 hover:bg-yellow-primary/10 hover:text-yellow-primary"
                   }`}>
                     <Icon className="w-5 h-5" />
                     <span className="font-medium">{item.name}</span>
@@ -70,7 +70,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
-              className="hover-scale ml-4 text-white hover:bg-white/10 p-3 rounded-xl"
+              className="hover-scale ml-4 text-white hover:bg-yellow-primary/10 hover:text-yellow-primary p-3 rounded-xl"
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </Button>
@@ -80,7 +80,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden text-white hover:bg-white/10 p-3 rounded-xl"
+            className="md:hidden text-white hover:bg-yellow-primary/10 hover:text-yellow-primary p-3 rounded-xl"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -90,7 +90,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-6 animate-fade-in">
-            <div className="bg-slate-800/95 backdrop-blur-xl rounded-2xl p-6 m-4">
+            <div className="bg-dark-gray/95 backdrop-blur-xl rounded-2xl p-6 m-4 border border-yellow-primary/20">
               {navItems.map((item, index) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
@@ -100,8 +100,8 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
                     to={item.path}
                     className={`flex items-center space-x-3 px-4 py-4 rounded-xl mb-3 transition-all duration-300 animate-slide-in ${
                       isActive
-                        ? "bg-white/20 text-white"
-                        : "text-white/80 hover:bg-white/10 hover:text-white"
+                        ? "bg-yellow-primary/20 text-yellow-primary"
+                        : "text-white/80 hover:bg-yellow-primary/10 hover:text-yellow-primary"
                     }`}
                     style={{ animationDelay: `${index * 0.1}s` }}
                     onClick={() => setIsMenuOpen(false)}
@@ -114,7 +114,7 @@ const Navigation = ({ isDarkMode, toggleTheme }: NavigationProps) => {
               <Button
                 variant="ghost"
                 onClick={toggleTheme}
-                className="w-full mt-4 text-white hover:bg-white/10 justify-start px-4 py-4 rounded-xl"
+                className="w-full mt-4 text-white hover:bg-yellow-primary/10 hover:text-yellow-primary justify-start px-4 py-4 rounded-xl"
               >
                 {isDarkMode ? <Sun className="w-5 h-5 mr-3" /> : <Moon className="w-5 h-5 mr-3" />}
                 {isDarkMode ? "Light Mode" : "Dark Mode"}
