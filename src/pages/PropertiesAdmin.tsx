@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -252,10 +251,10 @@ const PropertiesAdmin = () => {
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
               <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-                Premium <span className="text-gray-300">Properties</span>
+                Premium <span className="text-yellow-primary">Properties</span>
                 <Badge className="ml-4 bg-green-600 hover:bg-green-700 text-white">ADMIN MODE</Badge>
               </h1>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-xl text-black max-w-3xl mx-auto">
                 Admin Dashboard - Manage premium properties with cloud storage
               </p>
             </div>
@@ -283,7 +282,7 @@ const PropertiesAdmin = () => {
                     setSelectedImages([]);
                     setShowAddProperty(true);
                   }}
-                  className="professional-btn text-white"
+                  className="bg-dark-gray hover:bg-dark-gray/90 text-white"
                   disabled={isLoading}
                 >
                   <Plus className="w-4 h-4 mr-2" />
@@ -291,7 +290,7 @@ const PropertiesAdmin = () => {
                 </Button>
                 <Button 
                   onClick={() => setShowManageProperties(true)}
-                  className="professional-btn text-white"
+                  className="bg-dark-gray hover:bg-dark-gray/90 text-white"
                 >
                   <Settings className="w-4 h-4 mr-2" />
                   Manage Properties ({properties.length})
@@ -299,7 +298,7 @@ const PropertiesAdmin = () => {
               </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
-                className="glass-effect border-white/20 text-white hover:bg-white/20"
+                className="bg-dark-gray hover:bg-dark-gray/90 text-white"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -427,7 +426,7 @@ const PropertiesAdmin = () => {
                   <Button 
                     onClick={resetFilters}
                     variant="outline"
-                    className="professional-btn-outline text-white border-white/20 hover:bg-white/20"
+                    className="bg-dark-gray hover:bg-dark-gray/90 text-white border-dark-gray"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Clear All Filters
@@ -457,7 +456,7 @@ const PropertiesAdmin = () => {
                       <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </div>
                     <div className="absolute bottom-4 left-4">
-                      <Badge className="professional-btn text-white">
+                      <Badge className="bg-dark-gray hover:bg-dark-gray/90 text-white">
                         {property.type}
                       </Badge>
                     </div>
@@ -466,7 +465,7 @@ const PropertiesAdmin = () => {
                       <Button 
                         size="sm" 
                         onClick={() => handleEditProperty(property.id)}
-                        className="professional-btn text-white text-xs"
+                        className="bg-dark-gray hover:bg-dark-gray/90 text-white text-xs"
                         disabled={isLoading}
                       >
                         <Edit className="w-3 h-3 mr-1" />
@@ -520,7 +519,7 @@ const PropertiesAdmin = () => {
                     <div className="flex gap-3 mt-auto">
                       <Button 
                         onClick={() => openGallery(property, 0)}
-                        className="flex-1 professional-btn text-white"
+                        className="flex-1 bg-dark-gray hover:bg-dark-gray/90 text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details ({property.images?.length || 0} photos)
@@ -642,7 +641,7 @@ const PropertiesAdmin = () => {
                             input.value = '';
                           }
                         }}
-                        className="professional-btn text-white"
+                        className="bg-dark-gray hover:bg-dark-gray/90 text-white"
                         type="button"
                       >
                         Add
@@ -669,7 +668,7 @@ const PropertiesAdmin = () => {
                   <div className="flex gap-4">
                     <Button 
                       onClick={handleAddProperty} 
-                      className="professional-btn text-white flex-1"
+                      className="bg-dark-gray hover:bg-dark-gray/90 text-white flex-1"
                       disabled={isLoading}
                     >
                       {isLoading ? 'Processing...' : (editingPropertyId ? 'Update Property' : 'Add Property')}
@@ -720,7 +719,7 @@ const PropertiesAdmin = () => {
                           <Button
                             size="sm"
                             onClick={() => handleEditProperty(property.id)}
-                            className="professional-btn text-white"
+                            className="bg-dark-gray hover:bg-dark-gray/90 text-white"
                           >
                             <Edit className="w-4 h-4 mr-1" />
                             Edit
@@ -812,7 +811,7 @@ const PropertiesAdmin = () => {
                           </div>
                         </div>
                         
-                        <Button className="w-full mt-6 professional-btn text-white">
+                        <Button className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white">
                           Contact for This Property
                         </Button>
                       </div>
@@ -852,7 +851,7 @@ const PropertiesAdmin = () => {
                 </div>
                 <Button 
                   onClick={resetFilters}
-                  className="mt-4 professional-btn text-white"
+                  className="mt-4 bg-dark-gray hover:bg-dark-gray/90 text-white"
                 >
                   Clear All Filters
                 </Button>
@@ -861,7 +860,7 @@ const PropertiesAdmin = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-white/20 text-white hover:bg-white/20">
+              <Button variant="outline" asChild className="hover-lift px-8 py-4 rounded-xl font-semibold bg-dark-gray hover:bg-dark-gray/90 text-white border-dark-gray">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -102,9 +101,9 @@ const Contact = () => {
             {/* Header */}
             <div className="text-center mb-20 animate-fade-in-up">
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8">
-                Get In <span className="professional-text">Touch</span>
+                Get In <span className="text-yellow-primary">Touch</span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-black max-w-3xl mx-auto leading-relaxed">
                 Ready to find your dream property? Our expert team is here to guide you through every step of your real estate journey.
               </p>
             </div>
@@ -218,7 +217,7 @@ const Contact = () => {
 
                     <Button 
                       type="submit" 
-                      className="w-full hover-lift professional-btn py-4 text-lg font-semibold rounded-xl bg-dark-gray hover:bg-dark-gray/90 text-white"
+                      className="w-full hover-lift py-4 text-lg font-semibold rounded-xl bg-dark-gray hover:bg-dark-gray/90 text-white"
                     >
                       Send Message
                     </Button>
@@ -234,7 +233,7 @@ const Contact = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift professional-btn-outline px-8 py-4 rounded-xl font-semibold border-gray-300 text-gray-700 hover:bg-gray-100">
+              <Button variant="outline" asChild className="hover-lift px-8 py-4 rounded-xl font-semibold bg-dark-gray hover:bg-dark-gray/90 text-white border-dark-gray">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Contact, Building } from "lucide-react";
@@ -79,12 +78,12 @@ const Index = () => {
           </div>
           <h1 className="text-6xl md:text-8xl font-bold text-black mb-8 animate-scale-in">
             Welcome to{" "}
-            <span className="text-black block mt-4">
+            <span className="text-yellow-primary block mt-4">
               {showTypewriter ? (
                 <>
                   {typewriterText}
                   {typewriterText.length < "Shetty Realtors".length && (
-                    <span className="animate-pulse text-black">|</span>
+                    <span className="animate-pulse text-yellow-primary">|</span>
                   )}
                 </>
               ) : (
@@ -92,7 +91,7 @@ const Index = () => {
               )}
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-dark-gray/90 mb-12 max-w-4xl mx-auto animate-fade-in animate-delay-200">
+          <p className="text-xl md:text-2xl text-black mb-12 max-w-4xl mx-auto animate-fade-in animate-delay-200">
             Your Trusted Partner in Indian Real Estate - Discover Premium Properties Across India
           </p>
 
