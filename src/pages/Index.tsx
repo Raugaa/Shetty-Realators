@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Contact, Building } from "lucide-react";
@@ -67,7 +68,7 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-white pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="bg-yellow-primary pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className={`max-w-7xl mx-auto text-center relative z-10 ${isLoaded ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <div className="animate-float">
             <img 
@@ -78,12 +79,12 @@ const Index = () => {
           </div>
           <h1 className="text-6xl md:text-8xl font-bold text-black mb-8 animate-scale-in">
             Welcome to{" "}
-            <span className="text-yellow-primary block mt-4">
+            <span className="text-black block mt-4">
               {showTypewriter ? (
                 <>
                   {typewriterText}
                   {typewriterText.length < "Shetty Realtors".length && (
-                    <span className="animate-pulse text-yellow-primary">|</span>
+                    <span className="animate-pulse text-black">|</span>
                   )}
                 </>
               ) : (
