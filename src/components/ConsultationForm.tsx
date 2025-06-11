@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -143,7 +142,7 @@ const ConsultationForm = () => {
 
           <Button 
             type="submit" 
-            className="w-full hover-lift professional-btn py-3 text-lg font-semibold rounded-xl bg-slate-700 hover:bg-slate-800 text-white"
+            className="w-full hover-lift professional-btn py-3 text-lg font-semibold rounded-xl bg-dark-gray hover:bg-dark-gray/90 text-white"
           >
             Schedule Free Consultation
           </Button>

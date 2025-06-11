@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -116,7 +115,7 @@ const Properties = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
                 Premium <span className="text-yellow-primary">Properties</span>
               </h1>
               <p className="text-xl text-black max-w-3xl mx-auto">
@@ -325,14 +324,6 @@ const Properties = () => {
                         <span>{property.area}</span>
                       </div>
                     </div>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {property.features.map((feature, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs bg-gray-100 text-gray-700">
-                          {feature}
-                        </Badge>
-                      ))}
-                    </div>
                     
                     <div className="flex gap-3 mt-auto">
                       <Button 
@@ -393,14 +384,6 @@ const Properties = () => {
                           <span>{selectedProperty.location}</span>
                         </div>
                         <p className="text-gray-600 mb-4">{selectedProperty.description}</p>
-                        
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {selectedProperty.features.map((feature: string, idx: number) => (
-                            <Badge key={idx} variant="secondary" className="bg-gray-100 text-gray-700">
-                              {feature}
-                            </Badge>
-                          ))}
-                        </div>
                       </div>
                       
                       <div>
@@ -485,3 +468,5 @@ const Properties = () => {
 };
 
 export default Properties;
+
+</edits_to_apply>

@@ -250,7 +250,7 @@ const PropertiesAdmin = () => {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
                 Premium <span className="text-yellow-primary">Properties</span>
                 <Badge className="ml-4 bg-green-600 hover:bg-green-700 text-white">ADMIN MODE</Badge>
               </h1>
@@ -877,3 +877,5 @@ const PropertiesAdmin = () => {
 };
 
 export default PropertiesAdmin;
+
+</initial_code>
