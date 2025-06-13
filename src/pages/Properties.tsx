@@ -468,5 +468,3 @@ const Properties = () => {
 };
 
 export default Properties;
-
-</edits_to_apply>

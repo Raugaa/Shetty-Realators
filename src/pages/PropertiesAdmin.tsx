@@ -877,5 +877,3 @@ const PropertiesAdmin = () => {
 };
 
 export default PropertiesAdmin;
-
-</initial_code>
