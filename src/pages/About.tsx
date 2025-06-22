@@ -57,8 +57,8 @@ const About = () => {
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 About Shetty Realtors
               </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Building dreams, creating homes, and fostering communities for over a decade
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+                With over 30 years of experience in Pune's dynamic real estate market, Shetty Realtors has become a trusted name in commercial property transactions, corporate office leasing, and co-working space solutions. Our expertise has shaped the city's commercial growth, with over 10 lakh sq. ft. of rental space successfully leased across Pune.
               </p>
             </div>
 
@@ -72,10 +72,7 @@ const About = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 leading-relaxed">
-                    To provide exceptional real estate services that exceed our clients' expectations 
-                    while maintaining the highest standards of integrity, professionalism, and customer care. 
-                    We are committed to making the property buying and selling experience smooth, 
-                    transparent, and rewarding for every client.
+                    To provide transparent, value-driven commercial real estate solutions that help businesses thrive while fostering enduring relationships.
                   </p>
                 </CardContent>
               </Card>
@@ -88,10 +85,7 @@ const About = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 leading-relaxed">
-                    To be the most trusted and innovative real estate company in the region, 
-                    known for our expertise, ethical practices, and commitment to building 
-                    lasting relationships with our clients and communities. We envision a 
-                    future where finding the perfect property is an enjoyable and fulfilling experience.
+                    To be Pune's most trusted partner for commercial real estate, known for integrity, expertise, and delivering end-to-end leasing and workspace solutions that enable long-term growth.
                   </p>
                 </CardContent>
               </Card>
@@ -103,26 +97,37 @@ const About = () => {
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
                   Our Story
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div className="space-y-6 text-gray-600 leading-relaxed">
+                  <p>
+                    Established with a vision to transform Pune's commercial real estate landscape, Shetty Realtors has built a strong foundation rooted in professionalism, transparency, and deep market knowledge. From humble beginnings to becoming a key player in commercial leasing, our journey has been driven by long-term relationships and value creation.
+                  </p>
+                  <p>
+                    We proudly serve a diverse clientele across banking, IT, retail, hospitality, and more. Our partnerships include Tata Elxsi, ARaymond, and leading nationalized and multinational banks. We've facilitated over 70+ branch setups for banks alone, creating lasting impact for both clients and property owners.
+                  </p>
+                  <p>
+                    Our strong ties with top real estate builders in Pune allow us to offer premium commercial developments tailored to strategic business needs.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mt-8">
                   <div>
-                    <div className="text-4xl font-bold text-blue-600 mb-2">2009</div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Founded</h3>
+                    <div className="text-4xl font-bold text-blue-600 mb-2">30+</div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Years Experience</h3>
                     <p className="text-gray-600">
-                      Started with a vision to transform the real estate experience
+                      Three decades of expertise in Pune's commercial real estate market
                     </p>
                   </div>
                   <div>
-                    <div className="text-4xl font-bold text-green-600 mb-2">2015</div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Expansion</h3>
+                    <div className="text-4xl font-bold text-green-600 mb-2">10L+</div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Sq. Ft. Leased</h3>
                     <p className="text-gray-600">
-                      Expanded services to include commercial and luxury properties
+                      Successfully leased over 10 lakh square feet of commercial space
                     </p>
                   </div>
                   <div>
-                    <div className="text-4xl font-bold text-purple-600 mb-2">2024</div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Innovation</h3>
+                    <div className="text-4xl font-bold text-purple-600 mb-2">70+</div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Bank Branches</h3>
                     <p className="text-gray-600">
-                      Leading with technology and customer-centric solutions
+                      Facilitated setups for leading banks and financial institutions
                     </p>
                   </div>
                 </div>

@@ -74,16 +74,38 @@
 /* Timeline improvements - bringing cards closer and making them visible */
 .timeline-card {
   background: rgba(255, 255, 255, 0.95) !important;
-  border: 2px solid rgba(249, 190, 8, 0.3) !important;
+  border: 2px solid rgba(203, 213, 225, 0.5) !important;
   backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(249, 190, 8, 0.2) !important;
-  margin: 0 8px !important; /* Bringing cards much closer to timeline */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.timeline-card:hover {
+  border-color: #F9BE08 !important;
+  box-shadow: 0 12px 40px rgba(249, 190, 8, 0.3) !important;
+  transform: translateY(-2px);
 }
 
 .dark .timeline-card {
   background: rgba(41, 41, 41, 0.95) !important;
-  border: 2px solid rgba(249, 190, 8, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(249, 190, 8, 0.2) !important;
+  border: 2px solid rgba(71, 85, 105, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .timeline-card:hover {
+  border-color: #F9BE08 !important;
+  box-shadow: 0 12px 40px rgba(249, 190, 8, 0.3) !important;
+}
+
+/* Enhanced hover effect for timeline cards */
+.hover-yellow-border {
+  transition: all 0.3s ease;
+}
+
+.hover-yellow-border:hover {
+  border-color: #F9BE08;
+  box-shadow: 0 12px 40px rgba(249, 190, 8, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Infinite Image Scroller Animations */
