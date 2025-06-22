@@ -128,11 +128,6 @@ const Properties = () => {
                 <Button className="bg-yellow-primary hover:bg-yellow-primary/90 text-black">
                   🏠 {properties.length} Properties Available
                 </Button>
-                <Button asChild className="bg-dark-gray hover:bg-dark-gray/90 text-white">
-                  <Link to="/properties/admin-sr2024-mgmt-portal-xyz789">
-                    👨‍💼 Admin Mode
-                  </Link>
-                </Button>
               </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}

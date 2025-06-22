@@ -93,7 +93,7 @@ const Index = () => {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-black mb-12 max-w-4xl mx-auto animate-fade-in animate-delay-200">
-            Your Trusted Partner in Indian Real Estate - Discover Premium Properties Across India
+            Connecting Businesses with the Right Space
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animate-delay-400">
