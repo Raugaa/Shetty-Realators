@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
-import { supabasePropertyStore, type Property } from "@/utils/supabasePropertyStore";
+import { cmsPropertyStore, type Property } from "@/utils/cmsPropertyStore";
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,12 +45,12 @@ const Properties = () => {
     connectivity: "all"
   });
 
-  // Load properties from Supabase and subscribe to changes
+  // Load properties from CMS and subscribe to changes
   useEffect(() => {
-    setProperties(supabasePropertyStore.getProperties());
+    setProperties(cmsPropertyStore.getProperties());
     
-    const unsubscribe = supabasePropertyStore.subscribe(() => {
-      setProperties(supabasePropertyStore.getProperties());
+    const unsubscribe = cmsPropertyStore.subscribe(() => {
+      setProperties(cmsPropertyStore.getProperties());
     });
     
     return unsubscribe;
