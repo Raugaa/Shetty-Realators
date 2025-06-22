@@ -1,34 +1,33 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { 
   Home, 
   Search, 
   MapPin, 
-  Bed, 
-  Bath, 
   Square, 
-  Calendar,
   ChevronLeft,
   ChevronRight,
   Eye,
   Camera,
   Filter,
-  X
+  X,
+  Building
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
-import { supabasePropertyStore, type Property } from "@/utils/supabasePropertyStore";
+import { cmsPropertyStore, type Property } from "@/utils/cmsPropertyStore";
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
@@ -37,20 +36,15 @@ const Properties = () => {
   const [filters, setFilters] = useState({
     location: "all",
     propertyType: "all",
-    bhk: "all",
-    priceRange: "all",
-    seaView: "all",
-    parking: "all",
-    garden: "all",
-    connectivity: "all"
+    area: "all"
   });
 
-  // Load properties from Supabase and subscribe to changes
+  // Load properties from CMS store
   useEffect(() => {
-    setProperties(supabasePropertyStore.getProperties());
+    setProperties(cmsPropertyStore.getProperties());
     
-    const unsubscribe = supabasePropertyStore.subscribe(() => {
-      setProperties(supabasePropertyStore.getProperties());
+    const unsubscribe = cmsPropertyStore.subscribe(() => {
+      setProperties(cmsPropertyStore.getProperties());
     });
     
     return unsubscribe;
@@ -62,15 +56,11 @@ const Properties = () => {
     
     const matchesLocation = filters.location === "all" || property.location.toLowerCase().includes(filters.location.toLowerCase());
     const matchesType = filters.propertyType === "all" || property.type.toLowerCase() === filters.propertyType.toLowerCase();
-    const matchesBHK = filters.bhk === "all" || property.bhk === filters.bhk;
-    const matchesSeaView = filters.seaView === "all" || (filters.seaView === "yes" && property.features.includes("Sea View"));
-    const matchesParking = filters.parking === "all" || (filters.parking === "yes" && property.features.includes("Parking"));
-    const matchesGarden = filters.garden === "all" || (filters.garden === "yes" && property.features.includes("Garden"));
 
-    return matchesSearch && matchesLocation && matchesType && matchesBHK && matchesSeaView && matchesParking && matchesGarden;
+    return matchesSearch && matchesLocation && matchesType;
   });
 
-  const openGallery = (property: any, imageIndex: number = 0) => {
+  const openGallery = (property: Property, imageIndex: number = 0) => {
     setSelectedProperty(property);
     setCurrentImageIndex(imageIndex);
   };
@@ -95,12 +85,7 @@ const Properties = () => {
     setFilters({
       location: "all",
       propertyType: "all",
-      bhk: "all",
-      priceRange: "all",
-      seaView: "all",
-      parking: "all",
-      garden: "all",
-      connectivity: "all"
+      area: "all"
     });
     setSearchTerm("");
   };
@@ -108,35 +93,32 @@ const Properties = () => {
   return (
     <div className="min-h-screen">
       <LoadingBar />
-      <div className="professional-bg min-h-screen transition-all duration-700">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-all duration-700">
         <Navigation />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
-                Premium <span className="text-yellow-primary">Properties</span>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                Commercial <span className="text-yellow-primary">Properties</span>
               </h1>
-              <p className="text-xl text-black max-w-3xl mx-auto">
-                Discover premium properties across India with stunning visuals and detailed information
+              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                Discover premium commercial spaces across Pune - from modern offices to retail outlets
               </p>
             </div>
 
+            {/* Filter Controls */}
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-4">
-                <Button className="bg-yellow-primary hover:bg-yellow-primary/90 text-black">
-                  🏠 {properties.length} Properties Available
-                </Button>
-                <Button asChild className="bg-dark-gray hover:bg-dark-gray/90 text-white">
-                  <Link to="/properties/admin-sr2024-mgmt-portal-xyz789">
-                    👨‍💼 Admin Mode
-                  </Link>
-                </Button>
+                <Badge variant="secondary" className="px-4 py-2">
+                  <Building className="w-4 h-4 mr-2" />
+                  {properties.length} Properties Available
+                </Badge>
               </div>
               <Button
                 onClick={() => setShowFilters(!showFilters)}
-                className="bg-dark-gray hover:bg-dark-gray/90 text-white"
+                className="bg-yellow-primary hover:bg-yellow-primary/90 text-black"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
@@ -145,118 +127,61 @@ const Properties = () => {
 
             {/* Filters */}
             {showFilters && (
-              <Card className="mb-8 filter-card">
+              <Card className="mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
                 <CardContent className="p-6">
                   {/* Search */}
                   <div className="mb-6">
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <Input
-                        placeholder="Search properties..."
+                        placeholder="Search properties by name or location..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10 professional-input"
+                        className="pl-10"
                       />
                     </div>
                   </div>
 
                   {/* Filter Options */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <Select value={filters.location} onValueChange={(value) => setFilters({...filters, location: value})}>
-                      <SelectTrigger className="professional-input">
+                      <SelectTrigger>
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
+                      <SelectContent>
                         <SelectItem value="all">All Locations</SelectItem>
-                        <SelectItem value="mumbai">Mumbai</SelectItem>
-                        <SelectItem value="pune">Pune</SelectItem>
-                        <SelectItem value="delhi">Delhi</SelectItem>
-                        <SelectItem value="bangalore">Bangalore</SelectItem>
+                        <SelectItem value="baner">Baner</SelectItem>
+                        <SelectItem value="hinjewadi">Hinjewadi</SelectItem>
+                        <SelectItem value="koregaon park">Koregaon Park</SelectItem>
+                        <SelectItem value="viman nagar">Viman Nagar</SelectItem>
+                        <SelectItem value="fc road">FC Road</SelectItem>
+                        <SelectItem value="chakan">Chakan</SelectItem>
                       </SelectContent>
                     </Select>
 
                     <Select value={filters.propertyType} onValueChange={(value) => setFilters({...filters, propertyType: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="Type" />
+                      <SelectTrigger>
+                        <SelectValue placeholder="Property Type" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
+                      <SelectContent>
                         <SelectItem value="all">All Types</SelectItem>
-                        <SelectItem value="apartment">Apartment</SelectItem>
-                        <SelectItem value="villa">Villa</SelectItem>
-                        <SelectItem value="penthouse">Penthouse</SelectItem>
-                        <SelectItem value="studio">Studio</SelectItem>
+                        <SelectItem value="office">Office</SelectItem>
+                        <SelectItem value="retail">Retail</SelectItem>
+                        <SelectItem value="warehouse">Warehouse</SelectItem>
+                        <SelectItem value="co-working">Co-working</SelectItem>
+                        <SelectItem value="bank branch">Bank Branch</SelectItem>
                       </SelectContent>
                     </Select>
 
-                    <Select value={filters.bhk} onValueChange={(value) => setFilters({...filters, bhk: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="BHK" />
+                    <Select value={filters.area} onValueChange={(value) => setFilters({...filters, area: value})}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Area Range" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all">All BHK</SelectItem>
-                        <SelectItem value="1BHK">1 BHK</SelectItem>
-                        <SelectItem value="2BHK">2 BHK</SelectItem>
-                        <SelectItem value="3BHK">3 BHK</SelectItem>
-                        <SelectItem value="4BHK">4 BHK</SelectItem>
-                        <SelectItem value="5BHK">5+ BHK</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={filters.priceRange} onValueChange={(value) => setFilters({...filters, priceRange: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="Price" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all">All Prices</SelectItem>
-                        <SelectItem value="under-1cr">Under ₹1 Cr</SelectItem>
-                        <SelectItem value="1-3cr">₹1-3 Cr</SelectItem>
-                        <SelectItem value="3-5cr">₹3-5 Cr</SelectItem>
-                        <SelectItem value="above-5cr">Above ₹5 Cr</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={filters.seaView} onValueChange={(value) => setFilters({...filters, seaView: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="Sea View" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all">Any</SelectItem>
-                        <SelectItem value="yes">Sea View</SelectItem>
-                        <SelectItem value="no">No Sea View</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={filters.parking} onValueChange={(value) => setFilters({...filters, parking: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="Parking" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all">Any</SelectItem>
-                        <SelectItem value="yes">Parking Available</SelectItem>
-                        <SelectItem value="no">No Parking</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={filters.garden} onValueChange={(value) => setFilters({...filters, garden: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="Garden" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all">Any</SelectItem>
-                        <SelectItem value="yes">Garden Available</SelectItem>
-                        <SelectItem value="no">No Garden</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={filters.connectivity} onValueChange={(value) => setFilters({...filters, connectivity: value})}>
-                      <SelectTrigger className="professional-input">
-                        <SelectValue placeholder="Connectivity" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all">Any</SelectItem>
-                        <SelectItem value="metro">Near Metro</SelectItem>
-                        <SelectItem value="highway">Highway Access</SelectItem>
-                        <SelectItem value="airport">Near Airport</SelectItem>
+                      <SelectContent>
+                        <SelectItem value="all">All Sizes</SelectItem>
+                        <SelectItem value="small">Under 2000 sq ft</SelectItem>
+                        <SelectItem value="medium">2000-10000 sq ft</SelectItem>
+                        <SelectItem value="large">Above 10000 sq ft</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -264,7 +189,7 @@ const Properties = () => {
                   <Button 
                     onClick={resetFilters}
                     variant="outline"
-                    className="bg-dark-gray hover:bg-dark-gray/90 text-white border-dark-gray"
+                    className="border-yellow-primary text-yellow-primary hover:bg-yellow-primary hover:text-black"
                   >
                     <X className="w-4 h-4 mr-2" />
                     Clear All Filters
@@ -278,23 +203,20 @@ const Properties = () => {
               {filteredProperties.map((property, index) => (
                 <Card 
                   key={property.id} 
-                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 backdrop-blur-md`}
+                  className={`hover:shadow-xl transition-all duration-300 hover:transform hover:scale-[1.02] animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-0 shadow-lg`}
                 >
                   <div className="relative">
                     <img 
-                      src={property.images && property.images.length > 0 ? property.images[0].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"} 
+                      src={property.images[0] || "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"} 
                       alt={property.title}
                       className="w-full h-64 object-cover rounded-t-xl cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => openGallery(property, 0)}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
-                      }}
                     />
-                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2">
-                      <Camera className="w-4 h-4 text-gray-600" />
+                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2">
+                      <Camera className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </div>
                     <div className="absolute bottom-4 left-4">
-                      <Badge className="bg-dark-gray hover:bg-dark-gray/90 text-white">
+                      <Badge className="bg-yellow-primary hover:bg-yellow-primary/90 text-black">
                         {property.type}
                       </Badge>
                     </div>
@@ -302,36 +224,41 @@ const Properties = () => {
                   
                   <CardContent className="p-6">
                     <div className="mb-4">
-                      <h3 className="text-xl font-bold text-gray-900">{property.title}</h3>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">{property.title}</h3>
                     </div>
                     
-                    <div className="flex items-center text-gray-600 mb-4">
+                    <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
                       <MapPin className="w-4 h-4 mr-2" />
                       <span>{property.location}</span>
                     </div>
                     
-                    <div className="flex items-center gap-6 mb-4 text-gray-600">
-                      <div className="flex items-center">
-                        <Bed className="w-4 h-4 mr-1" />
-                        <span>{property.bedrooms}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Bath className="w-4 h-4 mr-1" />
-                        <span>{property.bathrooms}</span>
-                      </div>
+                    <div className="flex items-center gap-6 mb-4 text-gray-600 dark:text-gray-400">
                       <div className="flex items-center">
                         <Square className="w-4 h-4 mr-1" />
                         <span>{property.area}</span>
                       </div>
                     </div>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {property.features.slice(0, 3).map((feature, idx) => (
+                        <Badge key={idx} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                          {feature}
+                        </Badge>
+                      ))}
+                      {property.features.length > 3 && (
+                        <Badge variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                          +{property.features.length - 3} more
+                        </Badge>
+                      )}
+                    </div>
                     
                     <div className="flex gap-3 mt-auto">
                       <Button 
                         onClick={() => openGallery(property, 0)}
-                        className="flex-1 bg-dark-gray hover:bg-dark-gray/90 text-white"
+                        className="flex-1 bg-yellow-primary hover:bg-yellow-primary/90 text-black"
                       >
                         <Eye className="w-4 h-4 mr-2" />
-                        View Details ({property.images?.length || 0} photos)
+                        View Details ({property.images.length} photos)
                       </Button>
                     </div>
                   </CardContent>
@@ -341,18 +268,19 @@ const Properties = () => {
 
             {/* Gallery Modal */}
             <Dialog open={!!selectedProperty} onOpenChange={() => setSelectedProperty(null)}>
-              <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white">
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-gray-800">
                 {selectedProperty && (
                   <div className="space-y-6">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold">{selectedProperty.title}</DialogTitle>
+                    </DialogHeader>
+                    
                     {/* Image Gallery */}
                     <div className="relative">
                       <img 
-                        src={selectedProperty.images && selectedProperty.images[currentImageIndex] ? selectedProperty.images[currentImageIndex].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"}
+                        src={selectedProperty.images[currentImageIndex]} 
                         alt={selectedProperty.title}
                         className="w-full h-96 object-cover rounded-lg"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
-                        }}
                       />
                       {selectedProperty.images.length > 1 && (
                         <>
@@ -378,32 +306,37 @@ const Properties = () => {
                     {/* Property Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedProperty.title}</h2>
-                        <div className="flex items-center text-gray-600 mb-4">
+                        <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
                           <MapPin className="w-5 h-5 mr-2" />
                           <span>{selectedProperty.location}</span>
                         </div>
-                        <p className="text-gray-600 mb-4">{selectedProperty.description}</p>
+                        <p className="text-gray-600 dark:text-gray-400 mb-4">{selectedProperty.description}</p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {selectedProperty.features.map((feature: string, idx: number) => (
+                            <Badge key={idx} variant="secondary" className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                              {feature}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                       
                       <div>
                         <div className="space-y-4">
-                          <div className="flex items-center gap-4 text-gray-600">
-                            <Bed className="w-5 h-5" />
-                            <span>{selectedProperty.bedrooms} Bedrooms</span>
-                          </div>
-                          <div className="flex items-center gap-4 text-gray-600">
-                            <Bath className="w-5 h-5" />
-                            <span>{selectedProperty.bathrooms} Bathrooms</span>
-                          </div>
-                          <div className="flex items-center gap-4 text-gray-600">
+                          <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
                             <Square className="w-5 h-5" />
                             <span>{selectedProperty.area}</span>
                           </div>
+                          <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+                            <Building className="w-5 h-5" />
+                            <span>{selectedProperty.type}</span>
+                          </div>
                         </div>
                         
-                        <Button className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white">
-                          Contact for This Property
+                        <Button className="w-full mt-6 bg-yellow-primary hover:bg-yellow-primary/90 text-black" asChild>
+                          <Link to="/contact">
+                            Contact for This Property
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -411,18 +344,15 @@ const Properties = () => {
                     {/* Thumbnail Gallery */}
                     {selectedProperty.images.length > 1 && (
                       <div className="flex gap-2 overflow-x-auto">
-                        {selectedProperty.images.map((image: any, index: number) => (
+                        {selectedProperty.images.map((image: string, index: number) => (
                           <img
                             key={index}
-                            src={image.image_url}
+                            src={image}
                             alt={`${selectedProperty.title} ${index + 1}`}
                             className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 ${
-                              currentImageIndex === index ? 'border-slate-700' : 'border-transparent'
+                              currentImageIndex === index ? 'border-yellow-primary' : 'border-transparent'
                             }`}
                             onClick={() => setCurrentImageIndex(index)}
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80";
-                            }}
                           />
                         ))}
                       </div>
@@ -435,14 +365,14 @@ const Properties = () => {
             {/* No Results */}
             {filteredProperties.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-white/70 mb-4">
+                <div className="text-gray-600 dark:text-gray-400 mb-4">
                   <Search className="w-16 h-16 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold">No properties found</h3>
                   <p>Try adjusting your search criteria</p>
                 </div>
                 <Button 
                   onClick={resetFilters}
-                  className="mt-4 bg-dark-gray hover:bg-dark-gray/90 text-white"
+                  className="mt-4 bg-yellow-primary hover:bg-yellow-primary/90 text-black"
                 >
                   Clear All Filters
                 </Button>
@@ -451,7 +381,7 @@ const Properties = () => {
 
             {/* Back to Home */}
             <div className="text-center mt-16">
-              <Button variant="outline" asChild className="hover-lift px-8 py-4 rounded-xl font-semibold bg-dark-gray hover:bg-dark-gray/90 text-white border-dark-gray">
+              <Button variant="outline" asChild className="hover:bg-yellow-primary hover:text-black px-8 py-4 rounded-xl font-semibold border-yellow-primary text-yellow-primary">
                 <Link to="/" className="flex items-center gap-3">
                   <Home className="w-5 h-5" />
                   Back to Home
