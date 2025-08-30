@@ -227,8 +227,16 @@ const PropertiesAdmin = () => {
   };
 
   const handleContactProperty = () => {
-    setSelectedProperty(null); // Close the modal
-    navigate('/contact'); // Redirect to contact page
+    console.log('Contact button clicked!'); // Debug log
+    try {
+      setSelectedProperty(null); // Close the modal
+      console.log('Navigating to /contact...'); // Debug log
+      navigate('/contact'); // Redirect to contact page
+    } catch (error) {
+      console.error('Navigation error:', error);
+      // Fallback: try to navigate using window.location
+      window.location.href = '/contact';
+    }
   };
 
   const handleFeatureChange = (feature: string, checked: boolean) => {
@@ -852,6 +860,7 @@ const PropertiesAdmin = () => {
                         <Button 
                           onClick={handleContactProperty}
                           className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white"
+                          disabled={!selectedProperty}
                         >
                           Contact for This Property
                         </Button>
