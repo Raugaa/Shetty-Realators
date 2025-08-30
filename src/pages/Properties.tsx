@@ -275,7 +275,8 @@ const Properties = () => {
                   key={property.id} 
                   className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} bg-white/95 backdrop-blur-md`}
                 >
-                  <div className="relative">
+                  {/* Image section commented out temporarily */}
+                  {/* <div className="relative">
                     <img 
                       src={property.images && property.images.length > 0 ? property.images[0].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"} 
                       alt={property.title}
@@ -293,7 +294,7 @@ const Properties = () => {
                         {property.type}
                       </Badge>
                     </div>
-                  </div>
+                  </div> */}
                   
                   <CardContent className="p-6">
                     <div className="mb-4">
@@ -326,7 +327,7 @@ const Properties = () => {
                         className="flex-1 bg-dark-gray hover:bg-dark-gray/90 text-white"
                       >
                         <Eye className="w-4 h-4 mr-2" />
-                        View Details ({property.images?.length || 0} photos)
+                        View Details {/* ({property.images?.length || 0} photos) */}
                       </Button>
                     </div>
                   </CardContent>
@@ -339,8 +340,8 @@ const Properties = () => {
               <DialogContent className="max-w-4xl max-h-[90vh] overflow-auto bg-white">
                 {selectedProperty && (
                   <div className="space-y-6">
-                    {/* Image Gallery */}
-                    <div className="relative">
+                    {/* Image Gallery - commented out temporarily */}
+                    {/* <div className="relative">
                       <img 
                         src={selectedProperty.images && selectedProperty.images[currentImageIndex] ? selectedProperty.images[currentImageIndex].image_url : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"}
                         alt={selectedProperty.title}
@@ -368,7 +369,7 @@ const Properties = () => {
                       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                         {currentImageIndex + 1} / {selectedProperty.images.length}
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* Property Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -403,8 +404,8 @@ const Properties = () => {
                       </div>
                     </div>
 
-                    {/* Thumbnail Gallery */}
-                    {selectedProperty.images.length > 1 && (
+                    {/* Thumbnail Gallery - commented out temporarily */}
+                    {/* {selectedProperty.images.length > 1 && (
                       <div className="flex gap-2 overflow-x-auto">
                         {selectedProperty.images.map((image: any, index: number) => (
                           <img
@@ -421,7 +422,7 @@ const Properties = () => {
                           />
                         ))}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 )}
               </DialogContent>

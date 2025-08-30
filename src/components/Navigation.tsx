@@ -59,6 +59,8 @@ const Navigation = () => {
                 </Link>
               );
             })}
+            
+
           </nav>
 
           {/* Mobile Menu Button */}
@@ -96,6 +98,8 @@ const Navigation = () => {
                   </Link>
                 );
               })}
+              
+
             </div>
           </div>
         )}

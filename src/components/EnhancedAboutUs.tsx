@@ -1,5 +1,5 @@
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
   Award, 
@@ -8,8 +8,13 @@ import {
   Calendar,
   Star,
   Shield,
-  Target
+  Target,
+  Clock,
+  MapPin,
+  Phone,
+  Mail
 } from "lucide-react";
+import { LottieAnimation } from "../components/LottieAnimations";
 
 const EnhancedAboutUs = () => {
   const milestones = [
@@ -43,36 +48,24 @@ const EnhancedAboutUs = () => {
     }
   ];
 
-  const policies = [
-    {
-      icon: Shield,
-      title: "Trust & Transparency",
-      description: "We believe in complete transparency in all our commercial dealings and building long-term business relationships."
-    },
-    {
-      icon: Users,
-      title: "Client Success First",
-      description: "Our clients' business growth is our priority. We deliver value-driven solutions that exceed expectations."
-    },
-    {
-      icon: Star,
-      title: "Market Excellence",
-      description: "We strive for excellence in commercial real estate, from property selection to lease execution and support."
-    },
-    {
-      icon: Award,
-      title: "Expert Commercial Team",
-      description: "Our team consists of experienced professionals who understand Pune's commercial real estate market inside out."
-    }
-  ];
+
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         {/* About Shetty Realtors */}
         <div className="text-center mb-16 animate-fade-in-up">
+          {/* Main Icon with Lottie Animation */}
+          <div className="relative mb-8">
+            <div className="w-32 h-32 mx-auto bg-yellow-primary rounded-full flex items-center justify-center animate-pulse-glow">
+              <Users className="w-16 h-16 text-white" />
+            </div>
+            <div className="absolute -top-4 -right-4 w-16 h-16">
+              <LottieAnimation type="realEstate" className="w-full h-full" />
+            </div>
+          </div>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            About <span className="professional-text">Shetty Realtors</span>
+            About Shetty <span className="text-yellow-primary">Realtors</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
             With over 30 years of experience in Pune's dynamic real estate market, Shetty Realtors has become a trusted name in commercial property transactions, corporate office leasing, and co-working space solutions. Our expertise has shaped the city's commercial growth, with over 10 lakh sq. ft. of rental space successfully leased across Pune.
@@ -116,21 +109,37 @@ const EnhancedAboutUs = () => {
 
         {/* Achievements */}
         <div className="mb-20">
-          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Achievements</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Our <span className="text-yellow-primary">Achievements</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Milestones that showcase our expertise and success in commercial real estate
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {achievements.map((achievement, index) => {
               const Icon = achievement.icon;
               return (
                 <Card 
                   key={index} 
-                  className={`professional-card hover-lift animate-fade-in animate-delay-${(index + 1) * 100} text-center`}
+                  className={`text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left animate-delay-${(index + 1) * 100}`}
+                  style={{ animationDelay: `${(index + 1) * 0.1}s` }}
                 >
-                  <CardContent className="p-6">
-                    <div className="w-16 h-16 bg-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-4 hover-scale">
-                      <Icon className="w-8 h-8 text-white" />
+                  <CardHeader>
+                    <div className="relative mx-auto mb-4">
+                      <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8">
+                        <LottieAnimation type="success" className="w-full h-full" />
+                      </div>
                     </div>
-                    <h4 className="font-bold text-gray-900 dark:text-white mb-2 text-sm">{achievement.title}</h4>
-                    <p className="text-gray-600 dark:text-gray-300 text-xs">{achievement.description}</p>
+                    <CardTitle className="text-xl font-bold text-gray-900">{achievement.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600">{achievement.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -170,35 +179,116 @@ const EnhancedAboutUs = () => {
           </div>
         </div>
 
-        {/* Why Choose Us - Policies Section */}
-        <div>
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Why Choose <span className="professional-text">Shetty Realtors</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Our core values and principles that make us Pune's most trusted commercial real estate partner
-            </p>
+
+
+        {/* Stats and Features Section */}
+        <div className="mt-20">
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Why Choose Shetty Realtors?</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <Card className="text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left">
+              <CardHeader>
+                <div className="relative mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                    <Award className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8">
+                    <LottieAnimation type="success" className="w-full h-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl font-bold text-gray-900">30+ Years Experience</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Decades of expertise in commercial real estate, helping businesses find their perfect space.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
+              <CardHeader>
+                <div className="relative mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8">
+                    <LottieAnimation type="success" className="w-full h-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl font-bold text-gray-900">1000+ Happy Clients</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Trusted by businesses of all sizes, from startups to multinational corporations.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-right">
+              <CardHeader>
+                <div className="relative mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8">
+                    <LottieAnimation type="success" className="w-full h-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl font-bold text-gray-900">Premium Service</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Dedicated support throughout your real estate journey with personalized attention.</p>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {policies.map((policy, index) => {
-              const Icon = policy.icon;
-              return (
-                <Card 
-                  key={policy.title} 
-                  className={`professional-card hover-lift animate-fade-in-up animate-delay-${(index + 1) * 100}`}
-                >
-                  <CardContent className="p-8 text-center">
-                    <div className="w-16 h-16 bg-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-6 hover-scale">
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{policy.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{policy.description}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Key Features</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left">
+              <CardHeader>
+                <div className="relative mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                    <Clock className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8">
+                    <LottieAnimation type="loading" className="w-full h-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl font-bold text-gray-900">24/7 Support</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Round-the-clock assistance for all your real estate needs and emergencies.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
+              <CardHeader>
+                <div className="relative mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                    <MapPin className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8">
+                    <LottieAnimation type="house" className="w-full h-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl font-bold text-gray-900">Local Expertise</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Deep knowledge of local markets and property trends across the region.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-right">
+              <CardHeader>
+                <div className="relative mx-auto mb-4">
+                  <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                    <Star className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8">
+                    <LottieAnimation type="success" className="w-full h-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl font-bold text-gray-900">Quality Assurance</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Every property is carefully vetted to ensure it meets our high standards.</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

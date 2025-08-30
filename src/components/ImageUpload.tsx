@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from "@/components/ui/button";
-import { X, Upload } from 'lucide-react';
+import { X, Upload, Image as ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
   onImagesChange: (files: File[]) => void;
@@ -21,7 +21,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     const newFiles = [...selectedFiles, ...acceptedFiles].slice(0, maxImages);
     setSelectedFiles(newFiles);
     
-    // Create preview URLs
+    // Create preview URLs for new files
     const newPreviewUrls = newFiles.map(file => URL.createObjectURL(file));
     setPreviewUrls(newPreviewUrls);
     
@@ -31,7 +31,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.webp']
+      'image/*': ['.jpeg', '.jpg', '.png', '.webp', '.gif']
     },
     multiple: true,
     maxFiles: maxImages
@@ -42,7 +42,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     const newPreviewUrls = previewUrls.filter((_, i) => i !== index);
     
     // Revoke the URL to prevent memory leaks
-    URL.revokeObjectURL(previewUrls[index]);
+    if (previewUrls[index]) {
+      URL.revokeObjectURL(previewUrls[index]);
+    }
     
     setSelectedFiles(newFiles);
     setPreviewUrls(newPreviewUrls);
@@ -72,8 +74,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 Drag & drop property images here, or click to select
               </p>
               <p className="text-sm text-gray-500 mt-1">
-                PNG, JPG, WEBP up to 10MB each (max {maxImages} images)
+                PNG, JPG, WEBP, GIF up to 10MB each (max {maxImages} images)
               </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Current: {totalImages}/{maxImages} images
+              </p>
+              {existingImages.length > 0 && (
+                <p className="text-xs text-blue-600 mt-1 font-medium">
+                  ⚠️ New images will replace existing ones
+                </p>
+              )}
             </div>
           )}
         </div>
@@ -82,17 +92,35 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       {/* Existing Images */}
       {existingImages.length > 0 && (
         <div>
-          <h4 className="text-sm font-medium mb-2">Existing Images</h4>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Existing Images ({existingImages.length})
+            </h4>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              className="text-xs"
+              onClick={() => onImagesChange([])}
+            >
+              Clear All
+            </Button>
+          </div>
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
             {existingImages.map((url, index) => (
-              <div key={index} className="relative">
+              <div key={`existing-${index}`} className="relative group">
                 <img
                   src={url}
                   alt={`Existing ${index + 1}`}
-                  className="w-full h-20 object-cover rounded border"
+                  className="w-full h-20 object-cover rounded border border-gray-200 dark:border-gray-600"
                 />
                 <div className="absolute top-1 right-1 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                   ✓
+                </div>
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 rounded flex items-center justify-center">
+                  <span className="text-white opacity-0 group-hover:opacity-100 text-xs font-medium">
+                    Existing
+                  </span>
                 </div>
               </div>
             ))}
@@ -100,35 +128,49 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         </div>
       )}
 
-      {/* New Image Previews */}
+      {/* New Selected Images */}
       {selectedFiles.length > 0 && (
         <div>
-          <h4 className="text-sm font-medium mb-2">New Images to Upload</h4>
-          <div className="grid grid-cols-3 gap-2">
-            {previewUrls.map((url, index) => (
-              <div key={index} className="relative">
+          <h4 className="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+            New Images ({selectedFiles.length})
+          </h4>
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+            {selectedFiles.map((file, index) => (
+              <div key={`new-${index}`} className="relative group">
                 <img
-                  src={url}
-                  alt={`Preview ${index + 1}`}
-                  className="w-full h-20 object-cover rounded border"
+                  src={previewUrls[index]}
+                  alt={`New ${index + 1}`}
+                  className="w-full h-20 object-cover rounded border border-blue-300 dark:border-blue-600"
                 />
+                <div className="absolute top-1 right-1 bg-blue-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  +
+                </div>
                 <Button
                   type="button"
                   size="sm"
+                  variant="destructive"
+                  className="absolute top-1 left-1 w-5 h-5 p-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                   onClick={() => removeFile(index)}
-                  className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 p-0"
                 >
                   <X className="w-3 h-3" />
                 </Button>
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 rounded-b">
+                  {file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name}
+                </div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      <div className="text-sm text-gray-500">
-        Total images: {totalImages}/{maxImages}
-      </div>
+      {/* No Images Message */}
+      {totalImages === 0 && (
+        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          <ImageIcon className="w-12 h-12 mx-auto mb-2 opacity-50" />
+          <p>No images selected yet</p>
+          <p className="text-sm">Upload some images to showcase your property</p>
+        </div>
+      )}
     </div>
   );
 };

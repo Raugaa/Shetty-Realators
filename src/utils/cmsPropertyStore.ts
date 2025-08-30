@@ -23,8 +23,8 @@ export interface PropertyImage {
   created_at?: string | null;
 }
 
-// Mock CMS data with sample properties and images
-const mockProperties: Property[] = [
+// Initial mock data with sample properties and images
+const initialProperties: Property[] = [
   {
     id: "1",
     title: "Luxury Sea View Apartment",
@@ -223,13 +223,40 @@ const mockProperties: Property[] = [
 
 class CMSPropertyStore {
   private listeners: (() => void)[] = [];
-  private properties: Property[] = [...mockProperties];
+  private properties: Property[] = [];
+  private storageKey = 'sudhir-realtors-properties';
 
   constructor() {
-    // Simulate initial load delay
+    this.loadPropertiesFromStorage();
+    // If no properties in storage, initialize with mock data
+    if (this.properties.length === 0) {
+      this.properties = [...initialProperties];
+      this.savePropertiesToStorage();
+    }
+    // Notify listeners after initialization
     setTimeout(() => {
       this.notifyListeners();
     }, 100);
+  }
+
+  private loadPropertiesFromStorage(): void {
+    try {
+      const stored = localStorage.getItem(this.storageKey);
+      if (stored) {
+        this.properties = JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error('Error loading properties from storage:', error);
+      this.properties = [...initialProperties];
+    }
+  }
+
+  private savePropertiesToStorage(): void {
+    try {
+      localStorage.setItem(this.storageKey, JSON.stringify(this.properties));
+    } catch (error) {
+      console.error('Error saving properties to storage:', error);
+    }
   }
 
   getProperties(): Property[] {
@@ -238,58 +265,124 @@ class CMSPropertyStore {
 
   async addProperty(property: Omit<Property, 'id'>, imageFiles: File[] = []): Promise<void> {
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 100)); // Reduced delay for faster updates
+    
+    const propertyId = Date.now().toString();
     
     const newProperty: Property = {
       ...property,
-      id: Date.now().toString(),
+      id: propertyId,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       images: imageFiles.map((file, index) => ({
-        id: `img_${Date.now()}_${index}`,
-        property_id: Date.now().toString(),
-        image_url: URL.createObjectURL(file), // In real CMS, this would be uploaded to CDN
+        id: `img_${propertyId}_${index}`,
+        property_id: propertyId,
+        image_url: URL.createObjectURL(file), // Convert File to blob URL
         image_order: index,
         created_at: new Date().toISOString()
       }))
     };
 
     this.properties.unshift(newProperty);
+    this.savePropertiesToStorage();
     this.notifyListeners();
   }
 
   async updateProperty(id: string, property: Omit<Property, 'id'>, imageFiles: File[] = []): Promise<void> {
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 100)); // Reduced delay for faster updates
     
     const index = this.properties.findIndex(p => p.id === id);
     if (index !== -1) {
       const existingImages = this.properties[index].images || [];
-      const newImages = imageFiles.map((file, index) => ({
-        id: `img_${Date.now()}_${index}`,
-        property_id: id,
-        image_url: URL.createObjectURL(file), // In real CMS, this would be uploaded to CDN
-        image_order: existingImages.length + index,
-        created_at: new Date().toISOString()
-      }));
+      let finalImages = [...existingImages];
+      
+      // Only add new images if they exist
+      if (imageFiles.length > 0) {
+        const newImages = imageFiles.map((file, index) => ({
+          id: `img_${id}_${Date.now()}_${index}`,
+          property_id: id,
+          image_url: URL.createObjectURL(file), // Convert File to blob URL
+          image_order: existingImages.length + index,
+          created_at: new Date().toISOString()
+        }));
+        finalImages = [...existingImages, ...newImages];
+      }
 
       this.properties[index] = {
         ...property,
         id,
         updated_at: new Date().toISOString(),
-        images: [...existingImages, ...newImages]
+        images: finalImages
       };
       
+      this.savePropertiesToStorage();
       this.notifyListeners();
     }
   }
 
   async deleteProperty(id: string): Promise<void> {
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 100)); // Reduced delay for faster updates
+    
+    // Clean up blob URLs before deleting
+    const property = this.properties.find(p => p.id === id);
+    if (property && property.images) {
+      property.images.forEach(image => {
+        if (image.image_url.startsWith('blob:')) {
+          URL.revokeObjectURL(image.image_url);
+        }
+      });
+    }
     
     this.properties = this.properties.filter(p => p.id !== id);
+    this.savePropertiesToStorage();
     this.notifyListeners();
+  }
+
+  // Method to clean up blob URLs when component unmounts
+  cleanupBlobUrls(): void {
+    this.properties.forEach(property => {
+      if (property.images) {
+        property.images.forEach(image => {
+          if (image.image_url.startsWith('blob:')) {
+            URL.revokeObjectURL(image.image_url);
+          }
+        });
+      }
+    });
+  }
+
+  // Method to replace all images for a property
+  async replaceAllImages(propertyId: string, imageFiles: File[]): Promise<void> {
+    const index = this.properties.findIndex(p => p.id === propertyId);
+    if (index !== -1) {
+      // Clean up existing blob URLs
+      const existingImages = this.properties[index].images || [];
+      existingImages.forEach(image => {
+        if (image.image_url.startsWith('blob:')) {
+          URL.revokeObjectURL(image.image_url);
+        }
+      });
+
+      // Create new images
+      const newImages = imageFiles.map((file, index) => ({
+        id: `img_${propertyId}_${Date.now()}_${index}`,
+        property_id: propertyId,
+        image_url: URL.createObjectURL(file),
+        image_order: index,
+        created_at: new Date().toISOString()
+      }));
+
+      this.properties[index] = {
+        ...this.properties[index],
+        images: newImages,
+        updated_at: new Date().toISOString()
+      };
+
+      this.savePropertiesToStorage();
+      this.notifyListeners();
+    }
   }
 
   subscribe(listener: () => void): () => void {
@@ -300,7 +393,14 @@ class CMSPropertyStore {
   }
 
   private notifyListeners(): void {
-    this.listeners.forEach(listener => listener());
+    // Notify all listeners immediately for instant updates
+    this.listeners.forEach(listener => {
+      try {
+        listener();
+      } catch (error) {
+        console.error('Error in listener:', error);
+      }
+    });
   }
 }
 

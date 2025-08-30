@@ -3,217 +3,311 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDown, ArrowUp, Home } from "lucide-react";
+import { 
+  ArrowDown, 
+  ArrowUp, 
+  Home, 
+  Award, 
+  Users, 
+  Building, 
+  Calendar,
+  Star,
+  Shield,
+  Target,
+  Clock,
+  MapPin,
+  Phone,
+  Mail,
+  Linkedin,
+  Twitter
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import LoadingBar from "@/components/LoadingBar";
+import { LottieAnimation } from "@/components/LottieAnimations";
 
 const About = () => {
-  const teamMembers = [
+  const achievements = [
     {
-      name: "Sudhir Kumar",
-      role: "Founder & CEO",
-      experience: "15+ years",
-      specialization: "Luxury Properties",
-      description: "Leading the company with vision and expertise in premium real estate."
+      icon: Award,
+      title: "30+ Years Experience",
+      description: "Three decades of expertise in Pune's commercial market"
     },
     {
-      name: "Priya Sharma",
-      role: "Senior Sales Manager",
-      experience: "10+ years",
-      specialization: "Residential Sales",
-      description: "Expert in residential properties with a focus on family homes."
+      icon: Star,
+      title: "10L+ Sq. Ft. Leased",
+      description: "Successfully leased over 10 lakh sq. ft. of space"
     },
     {
-      name: "Raj Patel",
-      role: "Property Consultant",
-      experience: "8+ years",
-      specialization: "Commercial Properties",
-      description: "Specializing in commercial real estate and investment properties."
+      icon: Shield,
+      title: "70+ Bank Branches",
+      description: "Facilitated setups for leading financial institutions"
+    },
+    {
+      icon: Target,
+      title: "Premium Partnerships",
+      description: "Trusted by Tata Elxsi, ARaymond, and top banks"
     }
   ];
 
-  // Partner company images
-  const partnerImages = [
-    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&h=200&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=200&fit=crop&crop=center"
+  const coreValues = [
+    {
+      icon: Shield,
+      title: "Trust & Transparency",
+      description: "Complete transparency in all commercial dealings and building long-term business relationships."
+    },
+    {
+      icon: Users,
+      title: "Client Success First",
+      description: "Client business growth is the priority. Delivering value-driven solutions that exceed expectations."
+    },
+    {
+      icon: Star,
+      title: "Market Excellence",
+      description: "Striving for excellence in commercial real estate, from property selection to lease execution."
+    },
+    {
+      icon: Award,
+      title: "Expert Knowledge",
+      description: "Deep understanding of Pune's commercial real estate market inside out."
+    }
   ];
 
   return (
     <div className="min-h-screen">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen transition-all duration-500">
+      <LoadingBar />
+      <div className="professional-bg min-h-screen transition-all duration-700">
         <Navigation />
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-16 animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                About Shetty Realtors
+            {/* Hero Section */}
+            <div className="text-center mb-20 animate-fade-in-up">
+              <div className="relative mb-8">
+                <div className="w-32 h-32 mx-auto bg-yellow-primary rounded-full flex items-center justify-center animate-pulse-glow">
+                  <Users className="w-16 h-16 text-white" />
+                </div>
+                <div className="absolute -top-4 -right-4 w-16 h-16">
+                  <LottieAnimation type="realEstate" className="w-full h-full" />
+                </div>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
+                About <span className="text-yellow-primary">Sudhir Kumar</span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-                With over 30 years of experience in Pune's dynamic real estate market, Shetty Realtors has become a trusted name in commercial property transactions, corporate office leasing, and co-working space solutions. Our expertise has shaped the city's commercial growth, with over 10 lakh sq. ft. of rental space successfully leased across Pune.
+              <p className="text-xl text-black max-w-4xl mx-auto leading-relaxed">
+                Founder & CEO of Shetty Realtors with over 30 years of experience in Pune's dynamic real estate market. 
+                A trusted name in commercial property transactions, corporate office leasing, and co-working space solutions.
               </p>
             </div>
 
-            {/* Mission & Vision */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              <Card className="hover-scale bg-white/50 backdrop-blur-sm border-gray-200 animate-fade-in">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-gray-900">
-                    Our Mission
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 leading-relaxed">
-                    To provide transparent, value-driven commercial real estate solutions that help businesses thrive while fostering enduring relationships.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="hover-scale bg-white/50 backdrop-blur-sm border-gray-200 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-gray-900">
-                    Our Vision
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 leading-relaxed">
-                    To be Pune's most trusted partner for commercial real estate, known for integrity, expertise, and delivering end-to-end leasing and workspace solutions that enable long-term growth.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Company Story */}
-            <Card className="mb-16 bg-gradient-to-r from-blue-50 to-indigo-50 border-0 animate-fade-in">
-              <CardContent className="p-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-                  Our Story
-                </h2>
-                <div className="space-y-6 text-gray-600 leading-relaxed">
-                  <p>
-                    Established with a vision to transform Pune's commercial real estate landscape, Shetty Realtors has built a strong foundation rooted in professionalism, transparency, and deep market knowledge. From humble beginnings to becoming a key player in commercial leasing, our journey has been driven by long-term relationships and value creation.
-                  </p>
-                  <p>
-                    We proudly serve a diverse clientele across banking, IT, retail, hospitality, and more. Our partnerships include Tata Elxsi, ARaymond, and leading nationalized and multinational banks. We've facilitated over 70+ branch setups for banks alone, creating lasting impact for both clients and property owners.
-                  </p>
-                  <p>
-                    Our strong ties with top real estate builders in Pune allow us to offer premium commercial developments tailored to strategic business needs.
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mt-8">
-                  <div>
-                    <div className="text-4xl font-bold text-blue-600 mb-2">30+</div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Years Experience</h3>
-                    <p className="text-gray-600">
-                      Three decades of expertise in Pune's commercial real estate market
-                    </p>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold text-green-600 mb-2">10L+</div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Sq. Ft. Leased</h3>
-                    <p className="text-gray-600">
-                      Successfully leased over 10 lakh square feet of commercial space
-                    </p>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold text-purple-600 mb-2">70+</div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Bank Branches</h3>
-                    <p className="text-gray-600">
-                      Facilitated setups for leading banks and financial institutions
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Team Members */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Meet Our Team
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {teamMembers.map((member, index) => (
-                  <Card
-                    key={index}
-                    className="hover-scale bg-white/50 backdrop-blur-sm border-gray-200 text-center animate-fade-in"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <CardHeader>
-                      <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl font-bold text-white">
-                          {member.name.split(' ').map(n => n[0]).join('')}
+            {/* Personal Profile Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+              {/* Profile Image & Info */}
+              <div className="animate-fade-in-up">
+                <Card className="professional-card hover-lift bg-white/95 dark:bg-gray-800/95 backdrop-blur-md">
+                  <CardContent className="p-8">
+                    <div className="text-center mb-8">
+                      <div className="w-48 h-48 mx-auto bg-gradient-to-br from-yellow-primary to-orange-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
+                        <span className="text-6xl font-bold text-white">
+                          SK
                         </span>
                       </div>
-                      <CardTitle className="text-xl font-bold text-gray-900">
-                        {member.name}
-                      </CardTitle>
-                      <CardDescription>
-                        <Badge variant="outline" className="mb-2">{member.role}</Badge>
-                        <div className="text-sm text-gray-600">
-                          {member.experience} • {member.specialization}
-                        </div>
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-600 text-sm">
-                        {member.description}
+                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Sudhir Kumar
+                      </h2>
+                      <p className="text-xl text-yellow-primary font-semibold mb-4">
+                        Founder & CEO
                       </p>
-                    </CardContent>
-                  </Card>
-                ))}
+                      <div className="flex justify-center space-x-4">
+                        <Badge className="bg-dark-gray text-white">30+ Years Experience</Badge>
+                        <Badge className="bg-yellow-primary text-black">Commercial Expert</Badge>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-3">
+                        <MapPin className="w-5 h-5 text-yellow-primary" />
+                        <span className="text-gray-600 dark:text-gray-300">Pune, Maharashtra</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <Building className="w-5 h-5 text-yellow-primary" />
+                        <span className="text-gray-600 dark:text-gray-300">Shetty Realtors</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <Award className="w-5 h-5 text-yellow-primary" />
+                        <span className="text-gray-600 dark:text-gray-300">Commercial Real Estate Specialist</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Personal Story */}
+              <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <Card className="professional-card hover-lift bg-white/95 dark:bg-gray-800/95 backdrop-blur-md h-full">
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                      <Building className="w-6 h-6 text-yellow-primary mr-3" />
+                      My Story
+                    </h3>
+                    <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+                      <p>
+                        Established with a vision to transform Pune's commercial real estate landscape, I have built Shetty Realtors 
+                        on a strong foundation rooted in professionalism, transparency, and deep market knowledge.
+                      </p>
+                      <p>
+                        From humble beginnings to becoming a key player in commercial leasing, my journey has been driven by 
+                        long-term relationships and value creation. We proudly serve a diverse clientele across banking, IT, 
+                        retail, hospitality, and more.
+                      </p>
+                      <p>
+                        Our partnerships include Tata Elxsi, ARaymond, and leading nationalized and multinational banks. 
+                        We've facilitated over 70+ branch setups for banks alone, creating lasting impact for both clients 
+                        and property owners.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
 
-            {/* Our Partners - Infinite Image Scroller */}
-            <div className="mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Our Trusted Partners
-              </h2>
-              <div className="relative overflow-hidden w-full bg-white rounded-lg py-8 shadow-lg">
-                <div className="flex animate-scroll-infinite">
-                  {/* First set of images */}
-                  {partnerImages.map((image, index) => (
-                    <div
-                      key={`first-${index}`}
-                      className="flex-shrink-0 mx-4 partner-image-container"
-                    >
-                      <img
-                        src={image}
-                        alt={`Partner ${index + 1}`}
-                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
-                      />
-                    </div>
-                  ))}
-                  {/* Duplicate set for seamless loop */}
-                  {partnerImages.map((image, index) => (
-                    <div
-                      key={`second-${index}`}
-                      className="flex-shrink-0 mx-4 partner-image-container"
-                    >
-                      <img
-                        src={image}
-                        alt={`Partner ${index + 1}`}
-                        className="w-72 h-48 object-cover rounded-lg shadow-md partner-image"
-                      />
-                    </div>
-                  ))}
-                </div>
+            {/* Mission & Vision */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+              <Card className="professional-card hover-lift bg-white/95 dark:bg-gray-800/95 backdrop-blur-md animate-fade-in-up">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                    <Target className="w-6 h-6 text-yellow-primary mr-3" />
+                    My Mission
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    To provide transparent, value-driven commercial real estate solutions that help businesses thrive while 
+                    fostering enduring relationships. Every client's success is my personal commitment.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="professional-card hover-lift bg-white/95 dark:bg-gray-800/95 backdrop-blur-md animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                    <Star className="w-6 h-6 text-yellow-primary mr-3" />
+                    My Vision
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    To be Pune's most trusted partner for commercial real estate, known for integrity, expertise, and 
+                    delivering end-to-end leasing and workspace solutions that enable long-term growth.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Achievements */}
+            <div className="mb-20">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+                  My <span className="text-yellow-primary">Achievements</span>
+                </h2>
+                <p className="text-xl text-black max-w-3xl mx-auto">
+                  Milestones that showcase my expertise and success in commercial real estate
+                </p>
               </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {achievements.map((achievement, index) => {
+                  const Icon = achievement.icon;
+                  return (
+                    <Card 
+                      key={index} 
+                      className={`text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left animate-delay-${(index + 1) * 100}`}
+                      style={{ animationDelay: `${(index + 1) * 0.1}s` }}
+                    >
+                      <CardHeader>
+                        <div className="relative mx-auto mb-4">
+                          <div className="w-16 h-16 bg-yellow-primary rounded-full flex items-center justify-center">
+                            <Icon className="w-8 h-8 text-white" />
+                          </div>
+                          <div className="absolute -top-2 -right-2 w-8 h-8">
+                            <LottieAnimation type="success" className="w-full h-full" />
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl font-bold text-gray-900">{achievement.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-600">{achievement.description}</p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Core Values */}
+            <div className="mb-20">
+              <div className="text-center mb-16 animate-fade-in-up">
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+                  My <span className="text-yellow-primary">Core Values</span>
+                </h2>
+                <p className="text-xl text-black max-w-3xl mx-auto">
+                  The principles that guide my approach to commercial real estate
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {coreValues.map((value, index) => {
+                  const Icon = value.icon;
+                  return (
+                    <Card 
+                      key={index} 
+                      className={`text-center hover:shadow-lg transition-shadow duration-300 animate-slide-in-left animate-delay-${(index + 1) * 100}`}
+                      style={{ animationDelay: `${(index + 1) * 0.1}s` }}
+                    >
+                      <CardHeader>
+                        <div className="relative mx-auto mb-4">
+                          <div className="w-16 h-16 bg-dark-gray rounded-full flex items-center justify-center">
+                            <Icon className="w-8 h-8 text-white" />
+                          </div>
+                          <div className="absolute -top-2 -right-2 w-8 h-8">
+                            <LottieAnimation type="success" className="w-full h-full" />
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl font-bold text-gray-900">{value.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-600">{value.description}</p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Contact CTA */}
+            <div className="text-center mb-16">
+              <Card className="professional-card hover-lift bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-2 border-yellow-primary/20 max-w-2xl mx-auto">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ready to Work Together?</h3>
+                  <p className="mb-6 text-gray-600 dark:text-gray-300">
+                    Let's discuss your commercial real estate needs and find the perfect solution for your business.
+                  </p>
+                  <Button asChild size="lg" className="bg-yellow-primary hover:bg-yellow-primary/90 text-black">
+                    <Link to="/contact">
+                      <Phone className="w-5 h-5 mr-2" />
+                      Get in Touch
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Back to Home */}
             <div className="text-center">
-              <Button variant="outline" asChild className="hover-scale">
-                <Link to="/" className="flex items-center gap-2">
-                  <Home className="w-4 h-4" />
+              <Button variant="outline" asChild className="hover-lift px-8 py-4 rounded-xl font-semibold bg-dark-gray hover:bg-dark-gray/90 text-white border-dark-gray">
+                <Link to="/" className="flex items-center gap-3">
+                  <Home className="w-5 h-5" />
                   Back to Home
                 </Link>
               </Button>
