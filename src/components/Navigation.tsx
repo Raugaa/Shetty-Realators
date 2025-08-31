@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Home, Building, User, Phone, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import logo from "../images/Logo.png";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center space-x-4 hover-scale group">
             <div className="relative">
               <img 
-                src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
+                src={logo} 
                 alt="Shetty Realtors" 
                 className="w-12 h-12 rounded-lg group-hover:shadow-lg transition-all duration-300 object-contain"
               />
