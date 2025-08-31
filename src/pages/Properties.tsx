@@ -410,11 +410,11 @@ const Properties = () => {
                           </div>
                         </div>
                         
-                        <Button 
+                        {/* <Button 
                         onClick={handleContactProperty}
                         className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white">
                           Contact for This Property
-                        </Button>
+                        </Button> */}
                       </div>
                     </div>
 
