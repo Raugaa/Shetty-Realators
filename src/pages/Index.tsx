@@ -85,7 +85,7 @@ const Index = () => {
           {/* Logo with pulse glow animation */}
           <div className="mb-8 animate-pulse-glow">
             <img 
-              src="/public/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
+              src="/src/assets/images/logo.png" 
               alt="Shetty Realtors" 
               className="w-[600px] h-[120px] mx-auto object-contain"
             />
