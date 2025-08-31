@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Calendar, Phone, Mail, Home } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 const ConsultationForm = () => {
   const [formData, setFormData] = useState({
@@ -26,20 +26,20 @@ const ConsultationForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     emailjs.send(
-      'service_949txpg',
-      'template_u1f3ju4',
+      'service_6i68u03',
+      'template_614eb5c',
       {
-        from_name: formData.name,
-        from_email: formData.email,
-        phone: formData.phone,
-        message: `Consultation Request - Property Preference: ${formData.property_preference}`,
+        from_name: formData.name,      // matches template
+        from_email: formData.email,    // matches template
+        phone: formData.phone,         // matches template
+        message: `Consultation Request - Property Preference: ${formData.property_preference}`, // matches template
         to_email: 'Shettyrealtorspune@gmail.com'
       },
-      'RRyLeIklwDC07w7WT'
+      '3gxZaPe-2eAEODFoQ'
     ).then((result) => {
-      console.log(result.text);
+      console.log("EmailJS result:", result);
       toast({
         title: "Consultation Scheduled!",
         description: "Thank you! We'll contact you within 24 hours to schedule your free consultation.",
@@ -51,7 +51,7 @@ const ConsultationForm = () => {
         property_preference: ""
       });
     }).catch((error) => {
-      console.error(error);
+      console.error("EmailJS error:", error);
       toast({
         title: "Error",
         description: "Failed to schedule consultation. Please try again later.",

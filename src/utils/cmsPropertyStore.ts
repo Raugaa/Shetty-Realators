@@ -1,4 +1,3 @@
-
 export interface Property {
   id: string;
   title: string;
@@ -27,197 +26,93 @@ export interface PropertyImage {
 const initialProperties: Property[] = [
   {
     id: "1",
-    title: "Luxury Sea View Apartment",
-    location: "Marine Drive, Mumbai",
-    type: "Apartment",
-    bhk: "3BHK",
-    area: "1500 sq ft",
-    bedrooms: 3,
-    bathrooms: 2,
-    description: "Beautiful sea-facing apartment with modern amenities and stunning views of the Arabian Sea.",
-    features: ["Sea View", "Parking", "Swimming Pool", "Gym", "Security"],
+    title: "Office Premise for Lease",
+    location: "Baner Road, Near Kapli Malahar",
+    type: "Office",
+    bhk: "Commercial",
+    area: "5 lacs sq.ft.",
+    bedrooms: 0,
+    bathrooms: 0,
+    description: "Showroom area - 18 thousand sq.ft for lease.",
+    features: [],
     created_at: "2024-01-15T10:00:00Z",
     updated_at: "2024-01-15T10:00:00Z",
-    images: [
-      {
-        id: "img1",
-        property_id: "1",
-        image_url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-        image_order: 0,
-        created_at: "2024-01-15T10:00:00Z"
-      },
-      {
-        id: "img2",
-        property_id: "1", 
-        image_url: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80",
-        image_order: 1,
-        created_at: "2024-01-15T10:00:00Z"
-      },
-      {
-        id: "img3",
-        property_id: "1",
-        image_url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
-        image_order: 2,
-        created_at: "2024-01-15T10:00:00Z"
-      }
-    ]
+    
   },
   {
     id: "2",
-    title: "Modern Business Center",
-    location: "Bandra Kurla Complex, Mumbai",
+    title: "Office Premise for Rent/Lease",
+    location: "Balewadi Highstreet",
     type: "Office",
     bhk: "Commercial",
-    area: "2500 sq ft",
+    area: "10 lacs sq.ft.",
     bedrooms: 0,
-    bathrooms: 4,
-    description: "State-of-the-art commercial space perfect for growing businesses with modern infrastructure.",
-    features: ["Parking", "Conference Rooms", "High Speed Internet", "Security", "HVAC"],
+    bathrooms: 0,
+    description: "",
+    features: [],
     created_at: "2024-01-16T10:00:00Z",
     updated_at: "2024-01-16T10:00:00Z",
-    images: [
-      {
-        id: "img4",
-        property_id: "2",
-        image_url: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-        image_order: 0,
-        created_at: "2024-01-16T10:00:00Z"
-      },
-      {
-        id: "img5",
-        property_id: "2",
-        image_url: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80",
-        image_order: 1,
-        created_at: "2024-01-16T10:00:00Z"
-      }
-    ]
+    
   },
   {
     id: "3",
-    title: "Corporate Headquarters",
-    location: "Cyber City, Gurgaon",
+    title: "Athawade Office Premise",
+    location: "Athawade",
     type: "Office",
     bhk: "Commercial",
-    area: "5000 sq ft",
+    area: "50 lacs sq.ft.",
     bedrooms: 0,
-    bathrooms: 6,
-    description: "Premium corporate space with panoramic city views and world-class amenities.",
-    features: ["Parking", "Conference Rooms", "Cafeteria", "Security", "HVAC", "Reception"],
+    bathrooms: 0,
+    description: "For Rent/Lease. Under construction.",
+    features: [],
     created_at: "2024-01-17T10:00:00Z",
     updated_at: "2024-01-17T10:00:00Z",
-    images: [
-      {
-        id: "img6",
-        property_id: "3",
-        image_url: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-        image_order: 0,
-        created_at: "2024-01-17T10:00:00Z"
-      },
-      {
-        id: "img7",
-        property_id: "3",
-        image_url: "https://images.unsplash.com/photo-1541746972996-4e0b0f93e586?auto=format&fit=crop&w=800&q=80",
-        image_order: 1,
-        created_at: "2024-01-17T10:00:00Z"
-      },
-      {
-        id: "img8",
-        property_id: "3",
-        image_url: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80",
-        image_order: 2,
-        created_at: "2024-01-17T10:00:00Z"
-      }
-    ]
+    // images: [...]
   },
   {
     id: "4",
-    title: "Retail Space in Prime Location",
-    location: "Connaught Place, Delhi",
-    type: "Retail",
+    title: "Office Premise for Rent/Lease",
+    location: "Vimannagar, On New Airport road",
+    type: "Office",
     bhk: "Commercial",
-    area: "1200 sq ft",
+    area: "12 lacs sq.ft.",
     bedrooms: 0,
-    bathrooms: 2,
-    description: "High-footfall retail space in the heart of Delhi's business district.",
-    features: ["Parking", "High Visibility", "HVAC", "Security"],
+    bathrooms: 0,
+    description: "Showroom around 5,000 sq.ft.",
+    features: [],
     created_at: "2024-01-18T10:00:00Z",
     updated_at: "2024-01-18T10:00:00Z",
-    images: [
-      {
-        id: "img9",
-        property_id: "4",
-        image_url: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
-        image_order: 0,
-        created_at: "2024-01-18T10:00:00Z"
-      },
-      {
-        id: "img10",
-        property_id: "4",
-        image_url: "https://images.unsplash.com/photo-1555529902-72004966eaff?auto=format&fit=crop&w=800&q=80",
-        image_order: 1,
-        created_at: "2024-01-18T10:00:00Z"
-      }
-    ]
+    // images: [...]
   },
   {
     id: "5",
-    title: "Tech Hub Office Space",
-    location: "Electronic City, Bangalore",
+    title: "Office Premises for Rent/Lease",
+    location: "Kharadi",
     type: "Office",
     bhk: "Commercial",
-    area: "3500 sq ft",
+    area: "5 lacs sq.ft.",
     bedrooms: 0,
-    bathrooms: 4,
-    description: "Modern office space in Bangalore's premier IT hub with excellent connectivity.",
-    features: ["Parking", "Conference Rooms", "High Speed Internet", "Security", "HVAC", "Cafeteria"],
+    bathrooms: 0,
+    description: "",
+    features: [],
     created_at: "2024-01-19T10:00:00Z",
     updated_at: "2024-01-19T10:00:00Z",
-    images: [
-      {
-        id: "img11",
-        property_id: "5",
-        image_url: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80",
-        image_order: 0,
-        created_at: "2024-01-19T10:00:00Z"
-      },
-      {
-        id: "img12",
-        property_id: "5",
-        image_url: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80",
-        image_order: 1,
-        created_at: "2024-01-19T10:00:00Z"
-      }
-    ]
+    // images: [...]
   },
   {
     id: "6",
-    title: "Warehouse & Distribution Center",
-    location: "Bhiwandi, Mumbai",
-    type: "Warehouse",
+    title: "Office Premise for Rent/Lease",
+    location: "Mundhwa, Koregaon Annex",
+    type: "Office",
     bhk: "Commercial",
-    area: "10000 sq ft",
+    area: "20 lacs sq.ft.",
     bedrooms: 0,
-    bathrooms: 4,
-    description: "Large warehouse facility with loading docks and excellent transportation connectivity.",
-    features: ["Parking", "Loading Dock", "Security", "HVAC", "High Ceiling"],
+    bathrooms: 0,
+    description: "Showroom around 25,000 sq.ft.",
+    features: [],
     created_at: "2024-01-20T10:00:00Z",
     updated_at: "2024-01-20T10:00:00Z",
-    images: [
-      {
-        id: "img13",
-        property_id: "6",
-        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
-        image_order: 0,
-        created_at: "2024-01-20T10:00:00Z"
-      },
-      {
-        id: "img14",
-        property_id: "6",
-        image_url: "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?auto=format&fit=crop&w=800&q=80",
-        image_order: 1,
-        created_at: "2024-01-20T10:00:00Z"
-      }
-    ]
+    // images: [...]
   }
 ];
 
@@ -404,4 +299,107 @@ class CMSPropertyStore {
   }
 }
 
+
 export const cmsPropertyStore = new CMSPropertyStore();
+
+// Add a property
+// await cmsPropertyStore.addProperty({
+//   title: "New Property",
+//   location: "Some Location",
+//   type: "Apartment",
+//   bhk: "2BHK",
+//   area: "1200 sq ft",
+//   bedrooms: 2,
+//   bathrooms: 2,
+//   description: "Description here",
+//   features: [],
+//   created_at: null,
+//   updated_at: null,
+//   images: []
+// }, [/* image files here */]);
+
+// Update a property
+// await cmsPropertyStore.updateProperty("1", {
+//   title: "Updated Property Title",
+//   location: "Updated Location",
+//   type: "Office",
+//   bhk: "Commercial",
+//   area: "5000 sq ft",
+//   bedrooms: 0,
+//   bathrooms: 4,
+//   description: "Updated description",
+//   features: [],
+//   created_at: null,
+//   updated_at: null,
+//   images: []
+// }, [/* new image files here */]);
+
+// Delete a property
+// await cmsPropertyStore.deleteProperty("1");
+//   updated_at: null,
+//   images: []
+// }, [/* image files here */]);
+
+// Update a property
+// await cmsPropertyStore.updateProperty("1", {
+//   title: "Updated Property Title",
+//   location: "Updated Location",
+//   type: "Office",
+//   bhk: "Commercial",
+//   area: "5000 sq ft",
+//   bedrooms: 0,
+//   bathrooms: 4,
+//   description: "Updated description",
+//   features: [],
+//   created_at: null,
+//   updated_at: null,
+//   images: []
+// }, [/* new image files here */]);
+
+// Delete a property
+// await cmsPropertyStore.deleteProperty("1");
+//   location: "Updated Location",
+//   type: "Office",
+//   bhk: "Commercial",
+//   area: "5000 sq ft",
+//   bedrooms: 0,
+//   bathrooms: 4,
+//   description: "Updated description",
+//   features: [],
+//   created_at: null,
+//   updated_at: null,
+//   images: []
+// }, [/* new image files here */]);
+
+// Delete a property
+// await cmsPropertyStore.deleteProperty("1");
+//   location: "Updated Location",
+//   type: "Office",
+//   bhk: "Commercial",
+//   area: "5000 sq ft",
+//   bedrooms: 0,
+//   bathrooms: 4,
+//   description: "Updated description",
+//   features: [],
+//   created_at: null,
+//   updated_at: null,
+//   images: []
+// }, [/* new image files here */]);
+
+// Delete a property
+// await cmsPropertyStore.deleteProperty("1");
+//   location: "Updated Location",
+//   type: "Office",
+//   bhk: "Commercial",
+//   area: "5000 sq ft",
+//   bedrooms: 0,
+//   bathrooms: 4,
+//   description: "Updated description",
+//   features: [],
+//   created_at: null,
+//   updated_at: null,
+//   images: []
+// }, [/* new image files here */]);
+
+// Delete a property
+// await cmsPropertyStore.deleteProperty("1");

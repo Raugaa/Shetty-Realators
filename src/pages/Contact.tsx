@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import ConsultationForm from "@/components/ConsultationForm";
 import { toast } from "@/components/ui/use-toast";
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -32,21 +32,21 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     emailjs.send(
-      'service_949txpg',
-      'template_u1f3ju4',
+      'service_6i68u03',
+      'template_614eb5c',
       {
-        from_name: formData.name,
-        from_email: formData.email,
-        phone: formData.phone,
-        subject: formData.subject,
-        message: formData.message,
+        from_name: formData.name,      // matches template
+        from_email: formData.email,    // matches template
+        phone: formData.phone,         // matches template
+        subject: formData.subject,     // matches template
+        message: formData.message,     // matches template
         to_email: 'Shettyrealtorspune@gmail.com'
       },
-      'RRyLeIklwDC07w7WT'
+      '3gxZaPe-2eAEODFoQ' // <-- use your public key here
     ).then((result) => {
-      console.log(result.text);
+      console.log("EmailJS result:", result);
       toast({
         title: "Message Sent Successfully!",
         description: "Thank you for contacting us. We'll get back to you within 24 hours.",
@@ -60,7 +60,7 @@ const Contact = () => {
         message: ""
       });
     }).catch((error) => {
-      console.error(error);
+      console.error("EmailJS error:", error); // more detailed error logging
       toast({
         title: "Error",
         description: "Failed to send message. Please try again later.",

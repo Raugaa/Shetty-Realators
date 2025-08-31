@@ -18,11 +18,13 @@ import { LottieAnimation } from "../components/LottieAnimations";
 
 const EnhancedAboutUs = () => {
   const milestones = [
-    { year: "1994", event: "Company Founded", description: "Started with a vision to transform Pune's commercial real estate landscape" },
-    { year: "2000", event: "First Major Bank Partnership", description: "Secured our first major banking client relationship" },
-    { year: "2005", event: "IT Sector Expansion", description: "Expanded operations to serve Pune's growing IT industry" },
-    { year: "2015", event: "10 Lakh Sq. Ft. Milestone", description: "Successfully leased over 10 lakh sq. ft. of commercial space" },
-    { year: "2024", event: "70+ Bank Branches", description: "Facilitated setups for over 70 bank branches across Pune" }
+    { year: "1988", event: "Company Founded", description: "Started with Residential Properties" },
+    { year: "1998", event: "Commercial Entry", description: "Entered the commercial premises leasing sector" },
+    { year: "2002", event: "Diversification", description: "Expanded portfolio with restaurants and showrooms" },
+    { year: "2010", event: "Banking Partnerships", description: " Offered premises to leading Indian banks" },
+    { year: "2018", event: "RERA Compliance", description: "Registered under RERA, strengthening compliance and credibility" },
+    { year: "2020", event: " Global Expansion", description: "Expanded portfolio with multinational companies, international brands, and the IT sector" },
+    { year: "2024", event: " 2M Milestone", description: "Achieved a milestone of leasing over 2 million sq. ft. of commercial space" }
   ];
 
   const achievements = [

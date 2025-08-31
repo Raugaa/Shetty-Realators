@@ -55,6 +55,18 @@ const Properties = () => {
     
     return unsubscribe;
   }, []);
+  const handleContactProperty = () => {
+    console.log('Contact button clicked!'); // Debug log
+    try {
+      setSelectedProperty(null); // Close the modal
+      console.log('Navigating to /contact...'); // Debug log
+      navigate('/contact'); // Redirect to contact page
+    } catch (error) {
+      console.error('Navigation error:', error);
+      // Fallback: try to navigate using window.location
+      window.location.href = '/contact';
+    }
+  };
 
   const filteredProperties = properties.filter(property => {
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -398,7 +410,9 @@ const Properties = () => {
                           </div>
                         </div>
                         
-                        <Button className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white">
+                        <Button 
+                        onClick={handleContactProperty}
+                        className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white">
                           Contact for This Property
                         </Button>
                       </div>
