@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import EnhancedAboutUs from "@/components/EnhancedAboutUs";
 import { HeroAnimation, FloatingAnimation, LottieAnimation } from "../components/LottieAnimations";
+import logo from "../images/Logo.png";
 
 
 const Index = () => {
@@ -85,7 +86,7 @@ const Index = () => {
           {/* Logo with pulse glow animation */}
           <div className="mb-8 animate-pulse-glow">
             <img 
-              src="/src/assets/images/logo.png" 
+              src={logo} 
               alt="Shetty Realtors" 
               className="w-[600px] h-[120px] mx-auto object-contain"
             />
