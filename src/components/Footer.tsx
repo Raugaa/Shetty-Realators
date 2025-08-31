@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import logo from "../images/Logo.png";
 
 const Footer = () => {
   return (
@@ -10,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <img 
-                src="/lovable-uploads/52d0ead8-fce0-4e43-9b59-8105eea822a8.png" 
+                src={logo} 
                 alt="Shetty Realtors Logo" 
                 className="w-12 h-6 object-contain"
               />
