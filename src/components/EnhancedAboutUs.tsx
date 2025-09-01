@@ -70,7 +70,7 @@ const EnhancedAboutUs = () => {
             About Shetty <span className="text-yellow-primary">Realtors</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            With over 30 years of experience in Pune's dynamic real estate market, Shetty Realtors has become a trusted name in commercial property transactions, corporate office leasing, and co-working space solutions. Our expertise has shaped the city's commercial growth, with over 10 lakh sq. ft. of rental space successfully leased across Pune.
+            With 30+ years of experience, Shetty Realtors is Pune’s trusted name in commercial property, office leasing, and co-working spaces. Having successfully leased over 20 lakh sq. ft., we specialize in delivering the right spaces for businesses to grow.
           </p>
         </div>
 
@@ -152,7 +152,9 @@ const EnhancedAboutUs = () => {
         {/* Timeline */}
         <div className="mb-20">
           <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Our Journey</h3>
-          <div className="relative max-w-4xl mx-auto">
+          
+          {/* Desktop Timeline */}
+          <div className="hidden md:block relative max-w-4xl mx-auto">
             {/* Timeline line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-slate-300 dark:bg-slate-600"></div>
             
@@ -175,6 +177,37 @@ const EnhancedAboutUs = () => {
                   
                   {/* Timeline dot */}
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-slate-700 rounded-full border-4 border-white dark:border-gray-900"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Timeline */}
+          <div className="md:hidden relative max-w-2xl mx-auto">
+            {/* Mobile Timeline line */}
+            <div className="absolute left-8 top-0 w-0.5 h-full bg-slate-300 dark:bg-slate-600"></div>
+            
+            <div className="space-y-8">
+              {milestones.map((milestone, index) => (
+                <div 
+                  key={index} 
+                  className={`flex items-start animate-fade-in animate-delay-${(index + 1) * 100}`}
+                  style={{ animationDelay: `${(index + 1) * 0.1}s` }}
+                >
+                  {/* Mobile Timeline dot */}
+                  <div className="flex-shrink-0 w-4 h-4 bg-slate-700 rounded-full border-4 border-white dark:border-gray-900 mt-2 relative z-10"></div>
+                  
+                  {/* Mobile Card */}
+                  <Card className="timeline-card hover-yellow-border ml-6 flex-1">
+                    <CardContent className="p-4">
+                      <div className="flex items-center mb-3">
+                        <Calendar className="w-4 h-4 text-slate-600 mr-2" />
+                        <Badge className="bg-slate-700 text-white text-xs">{milestone.year}</Badge>
+                      </div>
+                      <h4 className="font-bold text-gray-900 dark:text-white mb-2 text-lg">{milestone.event}</h4>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{milestone.description}</p>
+                    </CardContent>
+                  </Card>
                 </div>
               ))}
             </div>

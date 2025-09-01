@@ -97,6 +97,20 @@
   box-shadow: 0 12px 40px rgba(249, 190, 8, 0.3) !important;
 }
 
+/* Mobile timeline specific styles */
+@media (max-width: 768px) {
+  .timeline-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  .timeline-card .p-4 {
+    padding: 1rem !important;
+  }
+}
+
 /* Enhanced hover effect for timeline cards */
 
 /* Lottie Animation Styles */

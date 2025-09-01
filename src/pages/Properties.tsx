@@ -20,7 +20,7 @@ import {
   Filter,
   X
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
@@ -60,7 +60,7 @@ const Properties = () => {
     try {
       setSelectedProperty(null); // Close the modal
       console.log('Navigating to /contact...'); // Debug log
-      navigate('/contact'); // Redirect to contact page
+      Navigate({to: '/contact'}); // Redirect to contact page
     } catch (error) {
       console.error('Navigation error:', error);
       // Fallback: try to navigate using window.location
@@ -410,11 +410,11 @@ const Properties = () => {
                           </div>
                         </div>
                         
-                        {/* <Button 
+                        <Button 
                         onClick={handleContactProperty}
                         className="w-full mt-6 bg-dark-gray hover:bg-dark-gray/90 text-white">
                           Contact for This Property
-                        </Button> */}
+                        </Button>
                       </div>
                     </div>
 

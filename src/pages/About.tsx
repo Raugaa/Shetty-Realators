@@ -93,7 +93,7 @@ const About = () => {
                 </div>
               </div>
               <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
-                About <span className="text-yellow-primary">Sudhir Kumar</span>
+                About <span className="text-yellow-primary">Sudhir Shetty</span>
               </h1>
               <p className="text-xl text-black max-w-4xl mx-auto leading-relaxed">
                 Founder & CEO of Shetty Realtors with over 30 years of experience in Pune's dynamic real estate market. 
@@ -110,11 +110,11 @@ const About = () => {
                     <div className="text-center mb-8">
                       <div className="w-48 h-48 mx-auto bg-gradient-to-br from-yellow-primary to-orange-500 rounded-full flex items-center justify-center mb-6 shadow-xl">
                         <span className="text-6xl font-bold text-white">
-                          SK
+                          SS
                         </span>
                       </div>
                       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                        Sudhir Kumar
+                        Sudhir Shetty
                       </h2>
                       <p className="text-xl text-yellow-primary font-semibold mb-4">
                         Founder & CEO
@@ -132,7 +132,7 @@ const About = () => {
                       </div>
                       <div className="flex items-center space-x-3">
                         <Building className="w-5 h-5 text-yellow-primary" />
-                        <span className="text-gray-600 dark:text-gray-300">Shetty Realtors</span>
+                        <span className="text-gray-600 dark:text-gray-300"> Managing Director of Shetty Realtors</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <Award className="w-5 h-5 text-yellow-primary" />
@@ -153,8 +153,7 @@ const About = () => {
                     </h3>
                     <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
                       <p>
-                        Established with a vision to transform Pune's commercial real estate landscape, I have built Shetty Realtors 
-                        on a strong foundation rooted in professionalism, transparency, and deep market knowledge.
+                        Sudhir Shetty, Managing Director of Shetty Realtors, is a seasoned real estate professional with over three decades of experience in Pune’s commercial property market. Under his leadership, Shetty Realtors has successfully leased more than 20 lakh sq. ft. of office and co-working spaces, building long-standing relationships with corporates and business owners alike. His commitment to transparency, client satisfaction, and market excellence has made him a trusted name in the industry.
                       </p>
                       <p>
                         From humble beginnings to becoming a key player in commercial leasing, my journey has been driven by 
