@@ -25,6 +25,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import { cmsPropertyStore, type Property } from "@/utils/cmsPropertyStore";
+import premiumPropertyImage from "../images/Premium_Property.jpg";
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -125,15 +126,54 @@ const Properties = () => {
         
         <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12 animate-fade-in-up">
-              <h1 className="text-5xl md:text-6xl font-bold text-black mb-6">
-                Premium <span className="text-yellow-primary">Properties</span>
-              </h1>
-              <p className="text-xl text-black max-w-3xl mx-auto">
-                Discover premium properties across India with stunning visuals and detailed information
-              </p>
-            </div>
+            {/* Header with Background Image */}
+            <section className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center overflow-hidden mb-12 rounded-2xl">
+              {/* Background Image */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url(${premiumPropertyImage})`,
+                  filter: 'brightness(0.7) contrast(1.1)',
+                  backgroundPosition: 'center center'
+                }}
+              ></div>
+              
+              {/* Text Content Overlay */}
+              <div className="relative z-10 text-center px-4 sm:px-6 animate-scale-in-dramatic" style={{ animationDelay: '0.3s' }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '0.5s' }}>P</span>
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '0.6s' }}>r</span>
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '0.7s' }}>e</span>
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '0.8s' }}>m</span>
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '0.9s' }}>i</span>
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '1.0s' }}>u</span>
+                  <span className="inline-block animate-bounce-up-dramatic" style={{ animationDelay: '1.1s' }}>m</span>
+                  <span className="mx-2"></span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.2s' }}>P</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.3s' }}>r</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.4s' }}>o</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.5s' }}>p</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.6s' }}>e</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.7s' }}>r</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.8s' }}>t</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '1.9s' }}>i</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '2.0s' }}>e</span>
+                  <span className="inline-block text-yellow-primary animate-bounce-up-dramatic" style={{ animationDelay: '2.1s' }}>s</span>
+                </h1>
+                <div className="relative">
+                  <p className="text-lg sm:text-xl md:text-2xl text-white/90 drop-shadow-md max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '2.5s' }}>
+                    Discover premium properties across India with stunning visuals and detailed information
+                  </p>
+                </div>
+              </div>
+              
+              {/* Subtle Real Estate Themed Elements */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-6 right-8 w-3 h-3 bg-white/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute bottom-8 left-12 w-2 h-2 bg-yellow-primary/60 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-white/30 rounded-full animate-float" style={{ animationDelay: '3s' }}></div>
+              </div>
+            </section>
 
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-4">

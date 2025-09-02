@@ -18,22 +18,22 @@ const Navigation = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-yellow-primary/20 transition-all duration-500 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Company Name */}
-          <Link to="/" className="flex items-center space-x-4 hover-scale group">
+          <Link to="/" className="flex items-center space-x-3 hover-scale group">
             <div className="relative">
               <img 
                 src={logo} 
                 alt="Shetty Realtors" 
-                className="w-12 h-12 rounded-lg group-hover:shadow-lg transition-all duration-300 object-contain"
+                className="w-16 h-16 sm:w-14 sm:h-14 rounded-lg group-hover:shadow-lg transition-all duration-300 object-contain"
               />
             </div>
-            <div className="hidden sm:block">
-              <span className="text-2xl font-bold text-dark-gray group-hover:text-yellow-primary transition-colors duration-300">
+            <div className="hidden xs:block">
+              <span className="text-xl sm:text-2xl font-bold text-dark-gray group-hover:text-yellow-primary transition-colors duration-300">
                 Shetty Realtors
               </span>
-              <p className="text-sm text-dark-gray/70">Premium Real Estate</p>
+              <p className="text-xs sm:text-sm text-dark-gray/70">Premium Real Estate</p>
             </div>
           </Link>
 
@@ -77,8 +77,8 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-6 animate-fade-in">
-            <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 m-4 border border-yellow-primary/20 shadow-lg">
+          <div className="md:hidden py-4 animate-fade-in">
+            <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-4 mx-2 border border-yellow-primary/20 shadow-lg">
               {navItems.map((item, index) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
