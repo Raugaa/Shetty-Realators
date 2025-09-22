@@ -84,17 +84,17 @@ const Index = () => {
         
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto flex flex-col justify-center min-h-[calc(100vh-6rem)]">
           {/* Mobile-Responsive Logo */}
-          <div className="mb-4 sm:mb-6 animate-bounce-in-scale" style={{ animationDelay: '0.1s' }}>
-            <img 
-              src={logo} 
-              alt="Shetty Realtors" 
-              className="w-[600px] h-[120px] sm:w-[900px] sm:h-[180px] md:w-[1200px] md:h-[240px] lg:w-[1500px] lg:h-[300px] xl:w-[1800px] xl:h-[360px] mx-auto object-contain animate-glow-pulse"
+          <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 mx-auto rounded-full overflow-hidden animate-glow-pulse">
+            <img
+              src={logo}
+              alt="Shetty Realtors"
+              className="w-full h-full object-cover"
             />
           </div>
 
           {/* Mobile-Responsive Company Name */}
           <div className="mb-3 sm:mb-4 overflow-hidden">
-            <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-gray-900 animate-slide-down-dramatic leading-tight" style={{ animationDelay: '0.3s' }}>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 animate-slide-down-dramatic leading-tight" style={{ animationDelay: '0.3s' }}>
               <span className="inline-block animate-letter-bounce" style={{ animationDelay: '0.4s' }}>S</span>
               <span className="inline-block animate-letter-bounce" style={{ animationDelay: '0.5s' }}>H</span>
               <span className="inline-block animate-letter-bounce" style={{ animationDelay: '0.6s' }}>E</span>

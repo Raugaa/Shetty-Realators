@@ -35,8 +35,8 @@ const EnhancedAboutUs = () => {
     },
     {
       icon: Star,
-      title: "10L+ Sq. Ft. Leased",
-      description: "Successfully leased over 10 lakh sq. ft. of space"
+      title: "20L+ Sq. Ft. Leased",
+      description: "Successfully leased over 20 lakh sq. ft. of space"
     },
     {
       icon: Shield,

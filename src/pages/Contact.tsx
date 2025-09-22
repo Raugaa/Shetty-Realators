@@ -123,7 +123,25 @@ const Contact = () => {
                       </div>
                       <h3 className="font-bold text-gray-900 mb-4 text-xl">{info.title}</h3>
                       {info.details.map((detail, idx) => (
-                        <p key={idx} className="text-gray-600 text-sm mb-2">{detail}</p>
+                        <p key={idx} className="text-gray-600 text-sm mb-2">
+                          {info.title === "Email Us" ? (
+                            <a 
+                              href={`mailto:${detail}`} 
+                              className="text-gray-600 hover:text-yellow-primary transition-colors"
+                            >
+                              {detail}
+                            </a>
+                          ) : info.title === "Call Us" ? (
+                            <a 
+                              href={`tel:${detail.replace(/\s/g, '')}`} 
+                              className="text-gray-600 hover:text-yellow-primary transition-colors"
+                            >
+                              {detail}
+                            </a>
+                          ) : (
+                            detail
+                          )}
+                        </p>
                       ))}
                     </CardContent>
                   </Card>

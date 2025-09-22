@@ -18,7 +18,7 @@ const Footer = () => {
               <span className="text-lg font-bold text-yellow-primary">Shetty Realtors</span>
             </div>
             <p className="text-white/80 mb-4">
-              Your trusted partner in real estate. Helping families find their perfect homes for over 15 years across India.
+              With 30+ years of experience, Shetty Realtors is Pune’s trusted name in commercial property, office leasing, and co-working spaces. Having successfully leased over 20 lakh sq. ft., we specialize in delivering the right spaces for businesses to grow
             </p>
           </div>
 
@@ -53,8 +53,22 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-yellow-primary">Contact Info</h3>
             <div className="space-y-2 text-white/80">
-              <p>📧 Shettyrealtorspune@gmail.com</p>
-              <p>📞 9422005110</p>
+              <p>
+                <a 
+                  href="mailto:Shettyrealtorspune@gmail.com" 
+                  className="text-white/80 hover:text-yellow-primary transition-colors"
+                >
+                  📧 Shettyrealtorspune@gmail.com
+                </a>
+              </p>
+              <p>
+                <a 
+                  href="tel:9422005110" 
+                  className="text-white/80 hover:text-yellow-primary transition-colors"
+                >
+                  📞 9422005110
+                </a>
+              </p>
               <p>📍 Pune, Maharashtra, India</p>
             </div>
           </div>

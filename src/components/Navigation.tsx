@@ -26,11 +26,11 @@ const Navigation = () => {
               <img 
                 src={logo} 
                 alt="Shetty Realtors" 
-                className="w-16 h-16 sm:w-14 sm:h-14 rounded-lg group-hover:shadow-lg transition-all duration-300 object-contain"
+                className="w-16 h-16 sm:w-14 sm:h-14 rounded-full group-hover:shadow-lg transition-all duration-300 object-contain"
               />
             </div>
             <div className="hidden xs:block">
-              <span className="text-xl sm:text-2xl font-bold text-dark-gray group-hover:text-yellow-primary transition-colors duration-300">
+              <span className="text-lg sm:text-xl font-bold text-dark-gray group-hover:text-yellow-primary transition-colors duration-300">
                 Shetty Realtors
               </span>
               <p className="text-xs sm:text-sm text-dark-gray/70">Premium Real Estate</p>
