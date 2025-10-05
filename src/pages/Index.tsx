@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import EnhancedAboutUs from "@/components/EnhancedAboutUs";
 import { HeroAnimation, FloatingAnimation, LottieAnimation } from "../components/LottieAnimations";
+import SEO from "@/components/SEO";
 import logo from "../images/Logo.png";
 
 
@@ -73,6 +74,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="Premium Commercial Real Estate Solutions in Pune"
+        description="Shetty Realtors - Connecting businesses with the right commercial spaces for over 30 years. Specializing in office leasing, co-working spaces, and property management in Pune."
+        keywords="real estate, commercial property, office leasing, co-working spaces, property management, Pune real estate, commercial real estate, business spaces, office spaces, Shetty Realtors"
+        ogTitle="Shetty Realtors - Premium Commercial Real Estate Solutions in Pune"
+        ogDescription="Connecting businesses with the right commercial spaces for over 30 years. Specializing in office leasing, co-working spaces, and property management in Pune."
+        canonicalUrl="https://shettyrealtors.com"
+      />
       <LoadingBar />
       <Navigation />
       

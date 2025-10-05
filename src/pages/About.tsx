@@ -29,6 +29,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import { LottieAnimation } from "@/components/LottieAnimations";
+import SEO from "@/components/SEO";
 
 const About = () => {
   const achievements = [
@@ -79,6 +80,14 @@ const About = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="About Sudhir Shetty - 30+ Years Commercial Real Estate Expertise"
+        description="Learn about Sudhir Shetty, founder of Shetty Realtors with over 30 years of experience in Pune's commercial real estate market. Discover our mission, vision, and core values."
+        keywords="Sudhir Shetty, commercial real estate, Pune real estate, property expert, real estate founder, commercial property specialist, business premises, office leasing"
+        ogTitle="About Sudhir Shetty - 30+ Years Commercial Real Estate Expertise"
+        ogDescription="Learn about Sudhir Shetty, founder of Shetty Realtors with over 30 years of experience in Pune's commercial real estate market. Discover our mission, vision, and core values."
+        canonicalUrl="https://shettyrealtors.com/about"
+      />
       <LoadingBar />
       <div className="professional-bg min-h-screen transition-all duration-700">
         <Navigation />

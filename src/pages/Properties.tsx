@@ -25,6 +25,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import { cmsPropertyStore, type Property } from "@/utils/cmsPropertyStore";
+import SEO from "@/components/SEO";
 import premiumPropertyImage from "../images/Premium_Property.jpg";
 
 const Properties = () => {
@@ -120,6 +121,14 @@ const Properties = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Premium Commercial Properties for Lease in Pune"
+        description="Discover our premium commercial properties across India. Find the perfect office space, co-working environment, or business premises for your company."
+        keywords="commercial properties, office spaces, business premises, co-working spaces, property leasing, Pune properties, commercial real estate, office leasing"
+        ogTitle="Premium Commercial Properties for Lease in Pune"
+        ogDescription="Discover our premium commercial properties across India. Find the perfect office space, co-working environment, or business premises for your company."
+        canonicalUrl="https://shettyrealtors.com/properties"
+      />
       <LoadingBar />
       <div className="professional-bg min-h-screen transition-all duration-700">
         <Navigation />

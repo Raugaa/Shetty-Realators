@@ -31,6 +31,7 @@ import Footer from "@/components/Footer";
 import LoadingBar from "@/components/LoadingBar";
 import { cmsPropertyStore, type Property } from "@/utils/cmsPropertyStore";
 import ImageUpload from "@/components/ImageUpload";
+import SEO from "@/components/SEO";
 
 const PropertiesAdmin = () => {
   const navigate = useNavigate();
@@ -274,6 +275,14 @@ const PropertiesAdmin = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Property Management Dashboard - Shetty Realtors Admin"
+        description="Admin dashboard for managing commercial properties. Add, edit, and delete property listings with our comprehensive CMS system."
+        keywords="property management, real estate admin, commercial property CMS, property listing management, real estate dashboard"
+        ogTitle="Property Management Dashboard - Shetty Realtors Admin"
+        ogDescription="Admin dashboard for managing commercial properties. Add, edit, and delete property listings with our comprehensive CMS system."
+        canonicalUrl="https://shettyrealtors.com/admin"
+      />
       <LoadingBar />
       <div className="professional-bg min-h-screen transition-all duration-700">
         <Navigation />

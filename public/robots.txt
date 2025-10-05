@@ -12,3 +12,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://shettyrealtors.com/sitemap.xml
+
+User-agent: *
+Disallow: /admin/

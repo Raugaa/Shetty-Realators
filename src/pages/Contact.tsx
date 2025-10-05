@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Home, Mail, Phone, MapPin } from "lucide-react";
+import { Home, Mail, Phone, MapPin, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -12,6 +12,9 @@ import LoadingBar from "@/components/LoadingBar";
 import ConsultationForm from "@/components/ConsultationForm";
 import { toast } from "@/components/ui/use-toast";
 import emailjs from '@emailjs/browser';
+import { useEffect } from "react";
+import SEO from "@/components/SEO";
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -73,7 +76,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email Us",
-      details: ["Shettyrealtorspune@gmail.com", "sales@sudhirrealtors.com"],
+      details: ["Shettyrealtorspune@gmail.com"],
       color: "bg-dark-gray"
     },
     {
@@ -87,11 +90,25 @@ const Contact = () => {
       title: "Visit Us",
       details: ["123 Real Estate Avenue", "Pune, Maharashtra 400001", "India"],
       color: "bg-dark-gray"
-    }
+    },
+    {
+      icon: Linkedin,
+      title: "Connect with Us",
+      details: ["linkedin.com/in/sudhir-realtors"],
+      color: "bg-dark-gray"
+    },
   ];
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Contact Shetty Realtors - Premium Commercial Real Estate Solutions"
+        description="Get in touch with Shetty Realtors for premium commercial real estate solutions in Pune. Contact us for property inquiries, consultations, or partnership opportunities."
+        keywords="contact real estate, commercial property contact, office leasing inquiry, property consultation, Pune real estate contact, business premises inquiry"
+        ogTitle="Contact Shetty Realtors - Premium Commercial Real Estate Solutions"
+        ogDescription="Get in touch with Shetty Realtors for premium commercial real estate solutions in Pune. Contact us for property inquiries, consultations, or partnership opportunities."
+        canonicalUrl="https://shettyrealtors.com/contact"
+      />
       <LoadingBar />
       <div className="min-h-screen transition-all duration-700 bg-gray-50">
         <Navigation />
@@ -109,7 +126,7 @@ const Contact = () => {
             </div>
 
             {/* Contact Info Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {contactInfo.map((info, index) => {
                 const Icon = info.icon;
                 return (
@@ -134,6 +151,15 @@ const Contact = () => {
                           ) : info.title === "Call Us" ? (
                             <a 
                               href={`tel:${detail.replace(/\s/g, '')}`} 
+                              className="text-gray-600 hover:text-yellow-primary transition-colors"
+                            >
+                              {detail}
+                            </a>
+                          ) : info.title === "Connect with Us" ? (
+                            <a 
+                              href={`https://${detail}`} 
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="text-gray-600 hover:text-yellow-primary transition-colors"
                             >
                               {detail}
