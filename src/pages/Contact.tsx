@@ -94,7 +94,8 @@ const Contact = () => {
     {
       icon: Linkedin,
       title: "Connect with Us",
-      details: ["linkedin.com/in/sudhir-realtors"],
+      details: ["Sudhir Shetty - LinkedIn Profile"],
+      linkedinUrl: "https://www.linkedin.com/in/sudhir-shetty-5ab602101?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
       color: "bg-dark-gray"
     },
   ];
@@ -157,7 +158,7 @@ const Contact = () => {
                             </a>
                           ) : info.title === "Connect with Us" ? (
                             <a 
-                              href={`https://${detail}`} 
+                              href={info.linkedinUrl} 
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-gray-600 hover:text-yellow-primary transition-colors"
