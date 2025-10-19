@@ -88,7 +88,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Visit Us",
-      details: ["123 Real Estate Avenue", "Pune, Maharashtra 400001", "India"],
+      details: ["Kalyani Nagar", "Pune,Maharashtra","India 411006"],
       color: "bg-dark-gray"
     },
     {
