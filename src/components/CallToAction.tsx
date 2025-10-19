@@ -117,11 +117,11 @@ const CallToAction = () => {
       </div>
       
       {/* Mobile-Responsive Scroll indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-white/70">
-        <div className="flex flex-col items-center">
-          <span className="text-xs sm:text-sm mb-2">Scroll to explore</span>
-          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-0.5 h-2 sm:w-1 sm:h-3 bg-white/50 rounded-full mt-1.5 sm:mt-2" style={{ animation: 'none' }}></div>
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-white/70" style={{ animation: 'none', transition: 'none' }}>
+        <div className="flex flex-col items-center" style={{ animation: 'none', transition: 'none' }}>
+          <span className="text-xs sm:text-sm mb-2" style={{ animation: 'none', transition: 'none' }}>Scroll to explore</span>
+          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center" style={{ animation: 'none', transition: 'none' }}>
+            <div className="w-0.5 h-2 sm:w-1 sm:h-3 bg-white/50 rounded-full mt-1.5 sm:mt-2" style={{ animation: 'none', transition: 'none' }}></div>
           </div>
         </div>
       </div>
