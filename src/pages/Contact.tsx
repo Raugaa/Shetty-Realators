@@ -82,7 +82,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Call Us",
-      details: ["9422005110", "+91 87654 32109"],
+      details: ["9422005110"],
       color: "bg-dark-gray"
     },
     {

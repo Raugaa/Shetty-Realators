@@ -117,7 +117,7 @@ const CallToAction = () => {
       </div>
       
       {/* Mobile-Responsive Scroll indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70" style={{ marginLeft: '-50px' }}>
         <div className="flex flex-col items-center">
           <span className="text-xs sm:text-sm mb-2">Scroll to explore</span>
           <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center">
