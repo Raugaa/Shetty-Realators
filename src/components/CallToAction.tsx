@@ -1,11 +1,88 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Building, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import dreamPropertyImage from "../images/Dream_Property.webp";
+import { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 
 const CallToAction = () => {
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowScrollIndicator(false);
+      } else {
+        setShowScrollIndicator(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Create a completely independent scroll indicator that's attached to the document body
+  const ScrollIndicator = () => {
+    if (typeof document === 'undefined') return null;
+    
+    return ReactDOM.createPortal(
+      showScrollIndicator ? (
+        <div style={{ 
+          position: 'fixed', 
+          bottom: '20px', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          color: 'rgba(0, 0, 0, 0.7)',
+          textAlign: 'center',
+          zIndex: 9999,
+          pointerEvents: 'none',
+          animation: 'none',
+          transition: 'none',
+          cursor: 'default'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            animation: 'none',
+            transition: 'none'
+          }}>
+            <span style={{ 
+              fontSize: '14px', 
+              marginBottom: '8px',
+              animation: 'none',
+              transition: 'none',
+              fontWeight: '500',
+              textShadow: '0 1px 2px rgba(255, 255, 255, 0.5)'
+            }}>Scroll to explore</span>
+            <div style={{ 
+              width: '20px', 
+              height: '32px', 
+              border: '2px solid rgba(0, 0, 0, 0.3)', 
+              borderRadius: '10px',
+              display: 'flex',
+              justifyContent: 'center',
+              animation: 'none',
+              transition: 'none'
+            }}>
+              <div style={{ 
+                width: '2px', 
+                height: '8px', 
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                borderRadius: '1px',
+                marginTop: '6px',
+                animation: 'none',
+                transition: 'none'
+              }}></div>
+            </div>
+          </div>
+        </div>
+      ) : null,
+      document.body
+    );
+  };
+
   return (
     <section className="relative min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Mobile-Optimized Background Image with Parallax Effect */}
@@ -116,52 +193,8 @@ const CallToAction = () => {
         </Card>
       </div>
       
-      {/* Mobile-Responsive Scroll indicator */}
-      <div style={{ 
-        position: 'absolute', 
-        bottom: '20px', 
-        left: '50%', 
-        transform: 'translateX(-50%)',
-        color: 'rgba(255, 255, 255, 0.7)',
-        textAlign: 'center',
-        animation: 'none',
-        transition: 'none'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center',
-          animation: 'none',
-          transition: 'none'
-        }}>
-          <span style={{ 
-            fontSize: '14px', 
-            marginBottom: '8px',
-            animation: 'none',
-            transition: 'none'
-          }}>Scroll to explore</span>
-          <div style={{ 
-            width: '20px', 
-            height: '32px', 
-            border: '2px solid rgba(255, 255, 255, 0.3)', 
-            borderRadius: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-            animation: 'none',
-            transition: 'none'
-          }}>
-            <div style={{ 
-              width: '2px', 
-              height: '8px', 
-              backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-              borderRadius: '1px',
-              marginTop: '6px',
-              animation: 'none',
-              transition: 'none'
-            }}></div>
-          </div>
-        </div>
-      </div>
+      {/* Independent Scroll Indicator - rendered via React Portal */}
+      <ScrollIndicator />
     </section>
   );
 };

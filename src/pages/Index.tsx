@@ -157,7 +157,7 @@ const Index = () => {
         </div>
 
         {/* Mobile-Responsive Scroll Indicator */}
-        <div className="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce-gentle" style={{ animationDelay: '3.5s' }}>
+        {/* <div className="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce-gentle" style={{ animationDelay: '3.5s' }}>
           <div className="relative group cursor-pointer">
             <div className="absolute inset-0 bg-yellow-primary rounded-full opacity-20 animate-ping"></div>
             <div className="relative z-10 p-2 sm:p-3 bg-white/10 backdrop-blur-sm rounded-full border border-yellow-primary/30 group-hover:bg-yellow-primary/20 transition-all duration-300">
@@ -168,7 +168,7 @@ const Index = () => {
             </div>
           </div>
           <p className="text-xs sm:text-sm text-gray-600 mt-2 animate-fade-in text-center ml-[-15px]" style={{ animationDelay: '4s' }}>Scroll to explore</p>
-        </div>
+        </div> */}
       </section>
 
       {/* Stats Section */}
